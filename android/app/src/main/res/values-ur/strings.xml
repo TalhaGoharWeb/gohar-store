@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">تلہا گوہر ایپس</string>
+    <string name="app_subtitle">میری تمام ایپس، ایک جگہ۔</string>
+    <string name="search_hint">ایپس، زمرے تلاش کریں…</string>
+    <string name="featured_label">✦ نمایاں</string>
+    <string name="all_apps">تمام ایپس</string>
+    <string name="your_apps">آپ کی ایپس</string>
+    <string name="results">نتائج</string>
+    <string name="discover">دریافت کریں</string>
+    <string name="updates">اپڈیٹس</string>
+    <string name="install">انسٹال کریں</string>
+    <string name="update">اپڈیٹ کریں</string>
+    <string name="open">کھولیں</string>
+    <string name="downloading">ڈاؤن لوڈ ہو رہا ہے…</string>
+    <string name="coming_soon">جلد آ رہا ہے</string>
+    <string name="update_badge">اپڈیٹ</string>
+    <string name="view_details">تفصیل دیکھیں</string>
+    <string name="check_for_updates">اپڈیٹس چیک کریں</string>
+    <string name="loading_catalogue">فہرست لوڈ ہو رہی ہے…</string>
+    <string name="online_catalogue">اپڈیٹ شدہ %1$s · آن لائن فہرست</string>
+    <string name="offline_catalogue">آف لائن فہرست · تازہ کرنے کے لیے اپڈیٹس چیک کریں</string>
+    <string name="about_app">اس ایپ کے بارے میں</string>
+    <string name="whats_new">نیا کیا ہے</string>
+    <string name="details">تفصیلات</string>
+    <string name="installed_older">انسٹال شدہ ورژن پرانا ہے — اپڈیٹ دستیاب ہے۔</string>
+    <string name="installed_uptodate">انسٹال شدہ اور تازہ ترین ہے۔</string>
+    <string name="downloading_progress">ڈاؤن لوڈ ہو رہا ہے… %1$d%%</string>
+    <string name="could_not_open">%1$s کھولنا ممکن نہیں</string>
+    <string name="no_download_link">%1$s کے لیے ابھی ڈاؤن لوڈ لنک نہیں ہے</string>
+    <string name="allow_install_first">پہلے تلہا گوہر ایپس سے انسٹال کی اجازت دیں — سیٹنگز کھل رہی ہیں</string>
+    <string name="downloading_app">%1$s ڈاؤن لوڈ ہو رہا ہے…</string>
+    <string name="allow_install_again">تلہا گوہر ایپس سے انسٹال کی اجازت دیں، پھر دوبارہ انسٹال دبائیں</string>
+    <string name="download_apk_first">پہلے APK ڈاؤن لوڈ کریں</string>
+    <string name="download_in_progress">ڈاؤن لوڈ جاری ہے…</string>
+    <string name="no_apps_search">کوئی ایپ اس تلاش سے مطابق نہیں۔</string>
+    <string name="no_apps_installed">ابھی کوئی ایپ انسٹال نہیں۔\nدریافت کریں سے ایک انسٹال کریں، اپڈیٹس یہاں نظر آئیں گی۔</string>
+    <string name="store_footer">ڈاؤن لوڈ براہ راست تلہا کے GitHub Releases سے آتے ہیں۔ پہلی بار اینڈرائیڈ تلہا گوہر ایپس سے انسٹال کی اجازت مانگے گا — گوگل پلے سے باہر اسٹورز کے لیے یہ معمول ہے۔</string>
+    <string name="language_urdu">اردو</string>
+    <string name="language_english">English</string>
+    <string name="size_unknown">سائز —</string>
+</resources>

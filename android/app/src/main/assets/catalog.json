@@ -1,0 +1,132 @@
+{
+  "apps": [
+    {
+      "apkUrl": "https://github.com/TalhaGoharWeb/sett-browser/releases/download/v0.25.0/Sett-Browser-v0.25.0-arm64.apk",
+      "apkUrlArm64": "https://github.com/TalhaGoharWeb/sett-browser/releases/download/v0.25.0/Sett-Browser-v0.25.0-arm64.apk",
+      "apkUrlArmv7": "https://github.com/TalhaGoharWeb/sett-browser/releases/download/v0.25.0/Sett-Browser-v0.25.0-armv7.apk",
+      "category": "Browser",
+      "description": "Sett is a private Android browser built on GeckoView, with Enhanced Tracking Protection, Total Cookie Protection, HTTPS-Only mode and a built-in SETT Search. Your tabs, history and searches stay on your device.",
+      "developer": "Talha Gohar",
+      "featured": true,
+      "iconColor": "#0E9594",
+      "iconLetter": "S",
+      "id": "sett-browser",
+      "minSdk": 26,
+      "name": "Sett Browser",
+      "packageName": "app.privatex.browser",
+      "sizeBytes": 247895848,
+      "tagline": "A private browser, guarded like a burrow.",
+      "versionCode": 31,
+      "versionName": "0.25.0",
+      "whatsNew": [
+        "White-label SETT Search with public SearXNG instances, named on screen",
+        "Branded search home and rich result cards",
+        "Fixed general search, keyboard auto-open and the white home page"
+      ],
+      "iconColor2": "#0B2545",
+      "taglineUr": "ایک نجی براؤزر، جو آپ کی حفاظت کرے۔",
+      "descriptionUr": "Sett ایک نجی اینڈرائیڈ براؤزر ہے جو GeckoView پر بنا ہے، جس میں ٹریکنگ سے حفاظت، مکمل کوکی تحفظ، HTTPS-Only موڈ اور SETT Search شامل ہے۔ آپ کے ٹیبز، تاریخ اور تلاشیں آپ کے آلے پر ہی رہتی ہیں۔",
+      "categoryUr": "براؤزر",
+      "whatsNewUr": [
+        "وائٹ لیبل SETT Search — عوامی SearXNG، اسکرین پر نام کے ساتھ",
+        "برانڈڈ سرچ ہوم اور بہتر نتائج کارڈ",
+        "عام تلاش، کی بورڈ اور سفید ہوم پیج کی درستگی"
+      ]
+    },
+    {
+      "apkUrl": null,
+      "category": "Security",
+      "comingSoon": "The v1.1.0 APK is built and verified, but not published to GitHub Releases yet. Publish it and paste its link here to enable downloads.",
+      "description": "PRIVACY X is a free, offline-first, no-accounts Android security and privacy suite: encrypted password vault, TOTP authenticator, firewall and DNS, tracker analysis, file encryption, metadata removal, phishing link scanner, permission auditor, private browser and device security check.",
+      "developer": "Talha Gohar",
+      "featured": false,
+      "iconColor": "#1B4F72",
+      "iconLetter": "P",
+      "id": "privacy-x",
+      "minSdk": 24,
+      "name": "PRIVACY X",
+      "packageName": "app.privacyx.privacy_x",
+      "sizeBytes": 59700000,
+      "tagline": "Free, offline-first security suite.",
+      "versionCode": 2,
+      "versionName": "1.1.0",
+      "whatsNew": [
+        "v1.1.0 build, verified and signed",
+        "All 10 modules: vault, authenticator, firewall, tracker, encryption and more"
+      ],
+      "iconColor2": "#0B2545",
+      "taglineUr": "مفت، آف لائن سیکیورٹی سوٹ۔",
+      "descriptionUr": "PRIVACY X ایک مفت، آف لائن، بغیر اکاؤنٹ کے اینڈرائیڈ سیکیورٹی اور پرائیویسی سوٹ ہے: خفیہ پاس ورڈ والٹ، TOTP آتھینٹیکیٹر، فائر وال اور DNS، ٹریکر تجزیہ، فائل خفیہ کاری، میٹا ڈیٹا ہٹانا، فشنگ لنک اسکینر، پرمیشن آڈیٹر، نجی براؤزر اور ڈیوائس سیکیورٹی چیک۔",
+      "categoryUr": "سیکیورٹی",
+      "whatsNewUr": [
+        "v1.1.0 بلڈ، تصدیق شدہ اور دستخط شدہ",
+        "تمام 10 ماڈیولز: والٹ، آتھینٹیکیٹر، فائر وال، ٹریکر، خفیہ کاری اور مزید"
+      ],
+      "comingSoonUr": "v1.1.0 APK بن چکا اور تصدیق شدہ ہے، لیکن ابھی GitHub Releases پر شائع نہیں ہوا۔ اسے شائع کریں اور لنک یہاں لگائیں تاکہ ڈاؤن لوڈ شروع ہو۔"
+    },
+    {
+      "apkUrl": null,
+      "category": "Books & Reference",
+      "comingSoon": "v1.5.70 is the latest code on GitHub, but no release APK is published yet. Publish a release and paste its link here to enable downloads.",
+      "description": "Nigaarish is an Urdu diary app for poetry and prose — write ghazals and nazms, style them with beautiful fonts and layouts, keep a daily diary, and export your work as images.",
+      "developer": "Talha Gohar",
+      "featured": false,
+      "iconColor": "#7C3AED",
+      "iconLetter": "N",
+      "id": "nigaarish",
+      "minSdk": 21,
+      "name": "Nigaarish",
+      "packageName": "com.talhagohar.nigaarish",
+      "sizeBytes": 0,
+      "tagline": "Your Urdu poetry and prose diary.",
+      "versionCode": 79,
+      "versionName": "1.5.70",
+      "whatsNew": [
+        "Andaaz named styles and Manzar in-editor preview",
+        "Long and curved kashida, 6 character styles, Aref Ruqaa font",
+        "4 original divider designs"
+      ],
+      "iconColor2": "#DB2777",
+      "taglineUr": "آپ کی اردو شاعری اور نثر کی ڈائری۔",
+      "descriptionUr": "نِگارش اردو شاعری اور نثر کے لیے ایک ڈائری ایپ ہے — غزلیں اور نظمیں لکھیں، خوبصورت فونٹس اور انداز سے سجائیں، روزانہ ڈائری رکھیں اور اپنا کام تصاویر کی صورت میں محفوظ کریں۔",
+      "categoryUr": "کتب و حوالہ",
+      "whatsNewUr": [
+        "انداز نام والے اسٹائل اور منظر ان ایڈیٹر پیش نظارہ",
+        "لمبی اور خم دار کشیدہ، 6 کریکٹر اسٹائل، عارف رقعہ فونٹ",
+        "4 اصل ڈیوائیڈر ڈیزائن"
+      ],
+      "comingSoonUr": "v1.5.70 GitHub پر تازہ ترین کوڈ ہے، لیکن ابھی کوئی ریلیز APK شائع نہیں ہوا۔ ریلیز شائع کریں اور لنک یہاں لگائیں تاکہ ڈاؤن لوڈ شروع ہو۔"
+    },
+    {
+      "apkUrl": "https://github.com/TalhaGoharWeb/releases/releases/download/v1.0.0/Maliki.Fiqh.Hub.apk",
+      "category": "Education",
+      "description": "Maliki Fiqh Hub brings the bilingual Maliki fiqh articles and quiz database together in one app — English plus simple scholarly Urdu, with self-explanatory questions.",
+      "developer": "Talha Gohar",
+      "featured": false,
+      "iconColor": "#B45309",
+      "iconLetter": "M",
+      "id": "maliki-fiqh-hub",
+      "minSdk": 21,
+      "name": "Maliki Fiqh Hub",
+      "packageName": "com.hijaziapps.maliki_fiqh_user",
+      "sizeBytes": 47091736,
+      "tagline": "Maliki fiqh, articles and quizzes.",
+      "versionCode": 1,
+      "versionName": "1.0",
+      "whatsNew": [
+        "First public release"
+      ],
+      "iconColor2": "#D97706",
+      "taglineUr": "مالکی فقہ، مضامین اور کوئز۔",
+      "descriptionUr": "مالکی فقہ ہب میں دو لسانی مالکی فقہ مضامین اور کوئز ڈیٹا بیس یکجا ہیں — انگریزی اور سادہ علمی اردو، خود واضح سوالات کے ساتھ۔",
+      "categoryUr": "تعلیم",
+      "whatsNewUr": [
+        "پہلی عوامی ریلیز"
+      ]
+    }
+  ],
+  "catalogVersion": 1,
+  "storeName": "Talha Gohar Apps",
+  "tagline": "All my apps, in one place.",
+  "updated": "2026-11-26"
+}

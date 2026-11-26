@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Talha Gohar Apps</string>
+    <string name="app_subtitle">All my apps, in one place.</string>
+    <string name="search_hint">Search apps, categories…</string>
+    <string name="featured_label">✦ FEATURED</string>
+    <string name="all_apps">All apps</string>
+    <string name="your_apps">Your apps</string>
+    <string name="results">Results</string>
+    <string name="discover">Discover</string>
+    <string name="updates">Updates</string>
+    <string name="install">Install</string>
+    <string name="update">Update</string>
+    <string name="open">Open</string>
+    <string name="downloading">Downloading…</string>
+    <string name="coming_soon">Coming soon</string>
+    <string name="update_badge">UPDATE</string>
+    <string name="view_details">View details</string>
+    <string name="check_for_updates">Check for updates</string>
+    <string name="loading_catalogue">Loading catalogue…</string>
+    <string name="online_catalogue">Updated %1$s · online catalogue</string>
+    <string name="offline_catalogue">Offline catalogue · check for updates to refresh</string>
+    <string name="about_app">About this app</string>
+    <string name="whats_new">What’s new</string>
+    <string name="details">Details</string>
+    <string name="installed_older">Installed version is older — an update is available.</string>
+    <string name="installed_uptodate">Installed and up to date.</string>
+    <string name="downloading_progress">Downloading… %1$d%%</string>
+    <string name="could_not_open">Could not open %1$s</string>
+    <string name="no_download_link">No download link yet for %1$s</string>
+    <string name="allow_install_first">Allow installs from Talha Gohar Apps first — opening settings</string>
+    <string name="downloading_app">Downloading %1$s…</string>
+    <string name="allow_install_again">Allow installs from Talha Gohar Apps, then tap Install again</string>
+    <string name="download_apk_first">Download the APK first</string>
+    <string name="download_in_progress">Download in progress…</string>
+    <string name="no_apps_search">No apps match that search.</string>
+    <string name="no_apps_installed">No apps installed yet.\nInstall one from Discover and updates will show up here.</string>
+    <string name="store_footer">Downloads come straight from Talha’s GitHub Releases. Android will ask you to allow installs from Talha Gohar Apps the first time — that is normal for stores outside Google Play.</string>
+    <string name="language_urdu">اردو</string>
+    <string name="language_english">English</string>
+    <string name="size_unknown">Size —</string>
+</resources>
