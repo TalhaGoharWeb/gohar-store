@@ -22,35 +22,37 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="116dp"
+            android:layout_height="72dp"
             android:background="@color/gohar_navy"
             app:contentInsetEnd="0dp"
             app:contentInsetStart="0dp"
             app:title="">
 
-            <!-- Title on top, banner big at the bottom centre (v1.3.11).
-                 The toolbar is 116dp tall on this screen only (other
-                 screens keep @dimen/toolbar_height): title row on top,
-                 banner 64dp tall (= 170dp wide, 935x351, aspect kept)
-                 centred horizontally and flush with the bottom edge.
-                 Measured at 360dp: UR title 15sp Nastaleeq ~37dp tall
-                 + 10dp top margin + 64dp banner = ~111dp of 116dp, so
-                 nothing clips; EN title is shorter, the weight-1 Space
-                 absorbs the slack. The title keeps a 48dp end margin
-                 so it never runs under the overflow menu.
+            <!-- One row (v1.3.12): hamburger + title + banner, all
+                 vertically centred, app bar 72dp — just the 64dp icon
+                 + 4dp padding top and bottom, no empty space above it.
+                 The banner is centre-cropped to 72dp wide: the avatar
+                 fills the view at the same 64dp height, the wide side
+                 decorations are cut (verified: the avatar is fully
+                 visible in the middle 394px of the 935px art, and the
+                 crop corners are fully transparent, so no white box
+                 on the navy bar). Measured at 360dp: hamburger 56 +
+                 title (EN ~136dp realistic, UR ~49dp) + banner 72 =
+                 ~264dp, so the full title always fits in both locales.
+                 The hamburger is the Toolbar's navigation icon
+                 (ActionBarDrawerToggle), before this row.
                  No subtitle — title only, as asked. -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/toolbarTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="48dp"
                     android:ellipsize="none"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -60,17 +62,16 @@
                     android:textStyle="bold" />
 
                 <Space
-                    android:layout_width="1dp"
-                    android:layout_height="0dp"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
                     android:layout_weight="1" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="72dp"
                     android:layout_height="64dp"
-                    android:layout_gravity="center_horizontal"
-                    android:adjustViewBounds="true"
+                    android:layout_marginEnd="12dp"
                     android:contentDescription="@string/app_name"
-                    android:scaleType="fitCenter"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/toolbar_banner" />
 
             </LinearLayout>
