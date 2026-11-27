@@ -13,6 +13,14 @@
         <package android:name="com.talhagohar.nigaarish" />
         <package android:name="com.talhagohar.poetry" />
         <package android:name="com.hijaziapps.maliki_fiqh_user" />
+        <!-- v1.3.14: every catalogue package must be listed, or
+             getPackageInfo() throws NameNotFoundException on
+             Android 11+ and the app can never see the app as
+             installed (no Open, no Update — always Install). -->
+        <package android:name="com.hijazi.maliki_fiqh_admin" />
+        <package android:name="com.talhagohar.kisandost" />
+        <package android:name="com.talhagohar.malikiprayertimes" />
+        <package android:name="com.talhagohar.meraroznamcha" />
     </queries>
 
     <application
