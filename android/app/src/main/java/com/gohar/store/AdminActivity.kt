@@ -300,10 +300,215 @@ class AdminActivity : AppCompatActivity() {
         }
         b.appPackage.text = app.packageName
         val editable = !readOnly
+        b.updateButton.visibility = if (editable) View.VISIBLE else View.GONE
         b.editButton.visibility = if (editable) View.VISIBLE else View.GONE
         b.deleteButton.visibility = if (editable) View.VISIBLE else View.GONE
+        b.updateButton.setOnClickListener { showManualUpdateDialog(app) }
         b.editButton.setOnClickListener { launchEditor(app) }
         b.deleteButton.setOnClickListener { confirmDelete(app) }
+    }
+
+    // ---- manual update (quick version bump) ------------------------------
+
+    /**
+     * The quick "Update" action: version + APK links + what's new
+     * only, prefilled from the app. Everything else (name, package,
+     * icon, screenshots, Urdu text…) is left exactly as it is — use
+     * full Edit for those. Like every console change, this only
+     * stages the new version in memory; nothing goes live until
+     * Publish is tapped.
+     */
+    private fun showManualUpdateDialog(app: StoreApp) {
+        val context = this
+        fun field(hintRes: Int, inputType: Int, initial: String): Pair<TextInputLayout, EditText> {
+            val layout = TextInputLayout(context).apply {
+                hint = getString(hintRes)
+                boxBackgroundMode = TextInputLayout.BOX_BACKGROUND_OUTLINE
+            }
+            val input = EditText(context).apply {
+                this.inputType = inputType
+                setText(initial)
+            }
+            layout.addView(input)
+            return layout to input
+        }
+        val (versionNameLayout, versionNameInput) = field(
+            R.string.field_version_name,
+            InputType.TYPE_CLASS_TEXT,
+            app.versionName,
+        )
+        val (versionCodeLayout, versionCodeInput) = field(
+            R.string.field_version_code,
+            InputType.TYPE_CLASS_NUMBER,
+            if (app.versionCode > 0) app.versionCode.toString() else "",
+        )
+        val (apkUrlLayout, apkUrlInput) = field(
+            R.string.field_apk_url,
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI,
+            app.apkUrl ?: "",
+        )
+        val (apkUrlArm64Layout, apkUrlArm64Input) = field(
+            R.string.field_apk_url_arm64,
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI,
+            app.apkUrlArm64 ?: "",
+        )
+        val (apkUrlArmv7Layout, apkUrlArmv7Input) = field(
+            R.string.field_apk_url_armv7,
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI,
+            app.apkUrlArmv7 ?: "",
+        )
+        val (sizeLayout, sizeInput) = field(
+            R.string.admin_field_size_mb,
+            InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL,
+            if (app.sizeBytes > 0) "%.1f".format(app.sizeBytes / 1_048_576.0) else "",
+        )
+        val (whatsNewLayout, whatsNewInput) = field(
+            R.string.field_whats_new,
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE,
+            app.whatsNew.joinToString("\n"),
+        )
+        val (whatsNewUrLayout, whatsNewUrInput) = field(
+            R.string.field_whats_new_ur,
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE,
+            app.whatsNewUr.joinToString("\n"),
+        )
+        val layout = LinearLayout(context).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(48, 16, 48, 0)
+            listOf(
+                versionNameLayout, versionCodeLayout, apkUrlLayout,
+                apkUrlArm64Layout, apkUrlArmv7Layout, sizeLayout,
+                whatsNewLayout, whatsNewUrLayout,
+            ).forEach { child ->
+                val params = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                ).apply { bottomMargin = 24 }
+                addView(child, params)
+            }
+        }
+        val scroll = android.widget.ScrollView(context).apply { addView(layout) }
+        val dialog = AlertDialog.Builder(context)
+            .setTitle(getString(R.string.admin_manual_update_title, app.name))
+            .setView(scroll)
+            .setPositiveButton(R.string.admin_save_app, null)
+            .setNegativeButton(R.string.admin_cancel, null)
+            .create()
+        dialog.show()
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            val updated = collectManualUpdate(
+                app,
+                versionNameLayout to versionNameInput,
+                versionCodeLayout to versionCodeInput,
+                apkUrlLayout to apkUrlInput,
+                apkUrlArm64Layout to apkUrlArm64Input,
+                apkUrlArmv7Layout to apkUrlArmv7Input,
+                sizeLayout to sizeInput,
+                whatsNewLayout to whatsNewInput,
+                whatsNewUrLayout to whatsNewUrInput,
+            ) ?: return@setOnClickListener
+            // Same guard as full Edit: a versionCode that does not
+            // rise is not an update for users — confirm explicitly.
+            if (updated.versionCode <= app.versionCode) {
+                AlertDialog.Builder(context)
+                    .setTitle(R.string.admin_version_warning_title)
+                    .setMessage(
+                        getString(
+                            R.string.admin_version_warning,
+                            updated.versionCode, app.versionCode,
+                        ),
+                    )
+                    .setPositiveButton(R.string.admin_save_anyway) { _, _ ->
+                        applyManualUpdate(app, updated)
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton(R.string.admin_go_back, null)
+                    .show()
+                return@setOnClickListener
+            }
+            applyManualUpdate(app, updated)
+            dialog.dismiss()
+        }
+    }
+
+    /**
+     * Validates the manual-update fields. Returns the updated app, or
+     * null (with inline errors set) when the form is not ready.
+     */
+    private fun collectManualUpdate(
+        app: StoreApp,
+        versionName: Pair<TextInputLayout, EditText>,
+        versionCode: Pair<TextInputLayout, EditText>,
+        apkUrl: Pair<TextInputLayout, EditText>,
+        apkUrlArm64: Pair<TextInputLayout, EditText>,
+        apkUrlArmv7: Pair<TextInputLayout, EditText>,
+        sizeMb: Pair<TextInputLayout, EditText>,
+        whatsNew: Pair<TextInputLayout, EditText>,
+        whatsNewUr: Pair<TextInputLayout, EditText>,
+    ): StoreApp? {
+        fun text(pair: Pair<TextInputLayout, EditText>): String =
+            pair.second.text?.toString()?.trim().orEmpty()
+        fun lines(pair: Pair<TextInputLayout, EditText>): List<String> =
+            pair.second.text?.toString()?.lines().orEmpty()
+                .map { it.trim() }.filter { it.isNotEmpty() }
+        fun isUrl(value: String): Boolean =
+            value.startsWith("http://") || value.startsWith("https://")
+        listOf(
+            versionName, versionCode, apkUrl, apkUrlArm64, apkUrlArmv7,
+            sizeMb, whatsNew, whatsNewUr,
+        ).forEach { it.first.error = null }
+        var ok = true
+        val newVersionName = text(versionName)
+        if (newVersionName.isEmpty()) {
+            versionName.first.error = getString(R.string.error_required); ok = false
+        }
+        val newVersionCode = text(versionCode).toLongOrNull()
+        if (newVersionCode == null || newVersionCode <= 0) {
+            versionCode.first.error = getString(R.string.error_version_code); ok = false
+        }
+        val urls = listOf(apkUrl, apkUrlArm64, apkUrlArmv7).map { text(it) }
+        if (urls.all { it.isEmpty() }) {
+            apkUrl.first.error = getString(R.string.admin_error_apk_required); ok = false
+        }
+        listOf(apkUrl, apkUrlArm64, apkUrlArmv7).zip(urls).forEach { (pair, value) ->
+            if (value.isNotEmpty() && !isUrl(value)) {
+                pair.first.error = getString(R.string.error_url); ok = false
+            }
+        }
+        val sizeText = text(sizeMb)
+        val sizeBytes = when {
+            sizeText.isEmpty() -> 0L
+            else -> sizeText.toDoubleOrNull()?.takeIf { it >= 0 }
+                ?.let { (it * 1_048_576).toLong() }
+        }
+        if (sizeBytes == null) {
+            sizeMb.first.error = getString(R.string.error_number); ok = false
+        }
+        if (!ok) {
+            Toast.makeText(this, R.string.admin_fix_errors, Toast.LENGTH_SHORT).show()
+            return null
+        }
+        return app.copy(
+            versionName = newVersionName,
+            versionCode = newVersionCode ?: app.versionCode,
+            apkUrl = urls[0].takeIf { it.isNotEmpty() },
+            apkUrlArm64 = urls[1].takeIf { it.isNotEmpty() },
+            apkUrlArmv7 = urls[2].takeIf { it.isNotEmpty() },
+            sizeBytes = sizeBytes ?: app.sizeBytes,
+            whatsNew = lines(whatsNew),
+            whatsNewUr = lines(whatsNewUr),
+        )
+    }
+
+    private fun applyManualUpdate(original: StoreApp, updated: StoreApp) {
+        val index = apps.indexOfFirst { it.id == original.id }
+        if (index < 0) return
+        apps[index] = updated
+        dirty = true
+        updateStatus()
+        adapter.notifyDataSetChanged()
+        invalidateOptionsMenu()
+        Toast.makeText(this, R.string.admin_manual_update_ready, Toast.LENGTH_LONG).show()
     }
 
     private fun launchEditor(app: StoreApp?) {

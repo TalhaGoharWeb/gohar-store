@@ -23,6 +23,16 @@
 
 **Talha Gohar Apps** is a personal Android app store. No server, no accounts, no payments, no tracking, no ads — the entire store runs off one JSON file and GitHub Releases. It is free forever, and it works offline from a bundled catalogue when there is no connection.
 
+## Apps in the store
+
+| App | Version | Status |
+|-----|---------|--------|
+| Maliki Fiqh Hub | 2.0.0 | Coming soon — no public release APK yet |
+| Nigaarish | 1.5.71 | Download |
+| Kisan Dost | 1.0.15 | Download |
+| Maliki Prayer Times | 1.3.9 | Download |
+| Mera Roznamcha | 1.1.4 | Coming soon |
+
 **Design principles**
 
 | Principle | What it means in practice |

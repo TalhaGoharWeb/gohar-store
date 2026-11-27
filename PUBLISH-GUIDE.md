@@ -1,5 +1,11 @@
 # Publishing an app in Talha Gohar Apps — the 3-minute guide
 
+> **Publishing rule (owner, 2026-11-27):** only an update the owner
+> has verified and sent goes into Talha Gohar Apps. No matter how many
+> apps or builds exist, nothing goes into the store directly — no
+> auto-publish, no assistant or worker publishing on its own. Every
+> catalogue change waits for the owner's verified go-ahead.
+
 There are two ways to publish. The **developer console inside the
 app** is the fast one; editing `catalog.json` by hand (below) still
 works as the alternative.
@@ -37,6 +43,26 @@ Open the store app → ⋮ menu → **Developer console**.
   fallback for offline first launch. After publishing, also update
   `android/app/src/main/assets/catalog.json` before the *next* store
   release, so fresh installs start from the latest list.
+
+## Manual update (quick version bump)
+
+For the common case — a new version of an app that is already listed —
+use the **Update** button on the app's row in the console, next to
+Edit/Delete. It opens a small dialog with only the fields a version
+bump needs, prefilled from the app: version name, version code, APK
+URL (single / arm64 / armv7), size in MB, and what's new in English
++ Urdu. Everything else (name, package, icon, screenshots, Urdu
+text…) stays exactly as it is — use full **Edit** for those.
+
+- The dialog validates like Edit does: version name required,
+  version code must be a positive number, at least one APK URL is
+  required, and every URL must start with `http://` or `https://`.
+- If the new `versionCode` is not higher than the current one, it
+  asks first ("Save anyway?") — users only see an update when the
+  code rises.
+- Saving only **stages** the change on the phone. Tap **Publish
+  changes** (⋮ menu) to make it live, exactly like any other console
+  edit.
 
 ## Owner sign-in (who sees the developer console)
 

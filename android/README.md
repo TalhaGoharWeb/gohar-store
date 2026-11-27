@@ -11,6 +11,20 @@ https://github.com/TalhaGoharWeb/talha-gohar-apps/releases/download/v1.3.3/Talha
 zipalign OK, served-file SHA-256 `c34fccd3…` matches local; release id
 460102654. Source pushed to the renamed repo as commit `edcf15bc`.)
 
+v1.3.4 changes, over v1.3.3 (in progress, not released yet):
+**manual Update in the developer console** — each app row now has an
+**Update** button next to Edit/Delete. It opens a small dialog with
+only the fields a version bump needs (version name/code, APK URLs,
+size in MB, what's new in English + Urdu), prefilled from the app.
+It stages the change like any console edit — **Publish changes**
+still makes it live. Also the catalogue now lists 5 apps: Maliki
+Fiqh Hub v2.0.0 (coming soon — no public release APK yet, and note
+its package is `com.hijazi.maliki_fiqh_admin`, not the v1 Hub
+package, so v1 users get a fresh install rather than an update),
+Nigaarish 1.5.71, Kisan Dost 1.0.15, Maliki Prayer Times 1.3.0
+(latest *published* release — local 1.3.9 has no public link yet),
+and Mera Roznamcha 1.1.4 (coming soon).
+
 v1.3.3 changes, over v1.3.2: **new launcher icon** from Talha's latest
 brand image — full-bleed dark navy (no rounded-square inset, no white
 corners at all); legacy mipmaps are the full mark scaled, the adaptive
@@ -104,14 +118,15 @@ no other developers.
 
 | App | Version | Download |
 |---|---|---|
-| Sett Browser | 0.25.0 (code 31) | Real GitHub Release URL, arm64 + armv7 |
-| Maliki Fiqh Hub | 1.0 (code 1) | Real URL in `TalhaGoharWeb/releases` |
-| PRIVACY X | 1.1.0 (code 2) | **Download** — published to TalhaGoharWeb/releases (privacy-x-v1.1.0) |
-| Nigaarish | 1.5.70 (code 79) | **Coming soon** — no release APK published yet |
+| Maliki Fiqh Hub | 2.0.0 (code 4) | **Coming soon** — no public release APK published yet (package changed to `com.hijazi.maliki_fiqh_admin`, so v1 users install fresh) |
+| Nigaarish | 1.5.71 (code 80) | R2 arm64 APK, 75,396,480 B — https://pub-068c48d4151d4dd293c2f7554cca1a5b.r2.dev/nigaarish-1.5.71-80-arm64.apk |
+| Kisan Dost | 1.0.15 (code 16) | R2 APK, 77,509,484 B — https://pub-3ff3b8ab882d499aacd31ce326d647f9.r2.dev/kisan-dost-v1.0.15.apk |
+| Maliki Prayer Times | 1.3.0 (code 6) | GitHub Release, 64,643,343 B — TalhaGoharWeb/maliki-prayer-times-app v1.3.0+6 |
+| Mera Roznamcha | 1.1.4 (code 7) | **Coming soon** |
 
-Package names and version codes were read from the real APKs with
-`aapt2 dump badging`, and both download URLs were checked live
-(HTTP 302 to GitHub release assets).
+Package names and version codes were read from the real APKs/pages with
+`curl -I -L` (HTTP 200 + Content-Length) on 2026-11-27, and the
+Nigaarish/Kisan Dost links from their live download pages.
 
 ## Build
 

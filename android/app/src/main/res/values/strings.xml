@@ -65,6 +65,11 @@
     <string name="admin_retry">Retry</string>
     <string name="admin_use_current">Use the store\'s current catalogue (read-only)</string>
     <string name="admin_add_app">Add app</string>
+    <string name="admin_update">Update</string>
+    <string name="admin_manual_update_title">Update %1$s</string>
+    <string name="admin_manual_update_ready">Update ready — tap Publish changes to make it live</string>
+    <string name="admin_field_size_mb">Size in MB (e.g. 71.9)</string>
+    <string name="admin_error_apk_required">Add at least one APK URL</string>
     <string name="admin_edit">Edit</string>
     <string name="admin_delete">Delete</string>
     <string name="admin_delete_title">Delete %1$s?</string>
