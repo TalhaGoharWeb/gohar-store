@@ -52,7 +52,7 @@
     },
     {
       "apkUrl": null,
-      "apkUrlArm64": "https://pub-068c48d4151d4dd293c2f7554cca1a5b.r2.dev/nigaarish-1.5.71-80-arm64.apk",
+      "apkUrlArm64": "https://pub-068c48d4151d4dd293c2f7554cca1a5b.r2.dev/nigaarish-1.5.72-81-arm64.apk",
       "category": "Books & Reference",
       "categoryUr": "کتب و حوالہ",
       "description": "Nigaarish is a diary for Urdu poetry and prose. Write ghazals, nazms and articles, style them with beautiful fonts and layouts, keep a daily diary, and export your work as images and Diwan PDFs. Its scansion engine checks the behr of your sher, the rhyme finder suggests qafiya, and voice dictation lets you write by speaking. Your work stays on your phone.",
@@ -72,27 +72,17 @@
       "sizeBytes": 75396480,
       "tagline": "Your Urdu poetry and prose diary.",
       "taglineUr": "آپ کی اردو شاعری اور نثر کی ڈائری۔",
-      "versionCode": 80,
-      "versionName": "1.5.71",
+      "versionCode": 81,
+      "versionName": "1.5.72",
       "whatsNew": [
-        "Urdu spell check and auto-correction",
-        "Word completion as you type",
-        "Picture editing — brightness, contrast, mirror",
-        "Linked text boxes",
-        "Auto chapter headings",
-        "Section breaks with separate numbering",
-        "ePUB export",
-        "Quran glossary tab"
+        "Sarwaraq design facility — seven designs with live preview",
+        "Change the sarwaraq design anytime from the «کتاب» panel",
+        "Image-only title page — «صرف تصویر» shows only the image"
       ],
       "whatsNewUr": [
-        "اردو املا کی جانچ اور خودکار تصحیح",
-        "لکھتے وقت الفاظ کی تکمیل",
-        "تصویر کی تدوین — چمک، تضاد، آئینہ",
-        "منسلک متنی خانے",
-        "خودکار باب کی سرخیاں",
-        "الگ نمبرنگ کے ساتھ حصوں کی تقسیم",
-        "ePUB برآمد",
-        "قرآن لغت ٹیب"
+        "سرورق ڈیزائن سہولت — سات انداز live preview کے ساتھ",
+        "«کتاب» پینل سے سرورق کا انداز کبھی بھی بدلیں",
+        "«صرف تصویر» — سرورق پر صرف تصویر"
       ]
     },
     {
