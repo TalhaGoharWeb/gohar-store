@@ -22,7 +22,6 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -41,7 +40,6 @@ class MainActivity : AppCompatActivity() {
     private enum class Tab { DISCOVER, UPDATES }
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var drawerToggle: ActionBarDrawerToggle
     private var catalog: Catalog = Catalog(emptyList(), "", false)
     private var query: String = ""
     private var category: String = ""
@@ -114,15 +112,13 @@ class MainActivity : AppCompatActivity() {
         // as the toolbar title too, so the name appears twice.
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        // Hamburger + side drawer (v1.3.11): the toggle draws the
-        // hamburger on the toolbar and opens the drawer; the old
-        // three-dot overflow menu is gone.
-        drawerToggle = ActionBarDrawerToggle(
-            this, binding.drawerLayout, binding.toolbar,
-            R.string.drawer_open, R.string.drawer_close,
-        )
-        binding.drawerLayout.addDrawerListener(drawerToggle)
-        drawerToggle.syncState()
+        // Hamburger + side drawer: the app bar's own 40dp hamburger
+        // button opens the drawer (v1.3.13 — the stock Toolbar
+        // navigation button is 56dp wide, too wide for the full
+        // uncropped banner to share the row with the title).
+        binding.drawerButton.setOnClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
+        }
         binding.navView.setNavigationItemSelectedListener { item ->
             handleDrawerItem(item)
             true

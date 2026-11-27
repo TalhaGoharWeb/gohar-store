@@ -28,19 +28,19 @@
             app:contentInsetStart="0dp"
             app:title="">
 
-            <!-- One row (v1.3.12): hamburger + title + banner, all
-                 vertically centred, app bar 72dp — just the 64dp icon
-                 + 4dp padding top and bottom, no empty space above it.
-                 The banner is centre-cropped to 72dp wide: the avatar
-                 fills the view at the same 64dp height, the wide side
-                 decorations are cut (verified: the avatar is fully
-                 visible in the middle 394px of the 935px art, and the
-                 crop corners are fully transparent, so no white box
-                 on the navy bar). Measured at 360dp: hamburger 56 +
-                 title (EN ~136dp realistic, UR ~49dp) + banner 72 =
-                 ~264dp, so the full title always fits in both locales.
-                 The hamburger is the Toolbar's navigation icon
-                 (ActionBarDrawerToggle), before this row.
+            <!-- One row (v1.3.13): hamburger + title + full banner,
+                 all vertically centred, app bar 72dp. The banner is
+                 NOT cropped (v1.3.12's centreCrop cut the side
+                 decorations): full 935x351 art at 58dp tall = 154dp
+                 wide. It only fits because the hamburger is the
+                 app's own 40dp button (the stock Toolbar navigation
+                 button is 56dp) and the margins are tight.
+                 Measured at 360dp: hamburger 40 + title margin 8 +
+                 title (EN 139dp measured in Noto Sans Bold, UR
+                 ~49dp) + banner 154 + end margin 8 = ~349dp of
+                 360dp, so the full title fits in both locales
+                 (Roboto is a touch narrower than Noto, so there is
+                 a little more room in practice).
                  No subtitle — title only, as asked. -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,11 +48,21 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
+                <ImageButton
+                    android:id="@+id/drawerButton"
+                    android:layout_width="40dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/drawer_open"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_menu"
+                    android:tint="@android:color/white" />
+
                 <TextView
                     android:id="@+id/toolbarTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="8dp"
                     android:ellipsize="none"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -67,11 +77,12 @@
                     android:layout_weight="1" />
 
                 <ImageView
-                    android:layout_width="72dp"
-                    android:layout_height="64dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="58dp"
+                    android:layout_marginEnd="8dp"
+                    android:adjustViewBounds="true"
                     android:contentDescription="@string/app_name"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/toolbar_banner" />
 
             </LinearLayout>
