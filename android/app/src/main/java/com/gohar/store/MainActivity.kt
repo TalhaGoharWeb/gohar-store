@@ -1,5 +1,8 @@
 package com.gohar.store
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
@@ -14,6 +17,9 @@ import android.view.View
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.ScrollView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
@@ -90,6 +96,11 @@ class MainActivity : AppCompatActivity() {
         // is swapped back to the real theme before anything inflates.
         setTheme(R.style.Theme_GoharStore)
         super.onCreate(savedInstanceState)
+        // If the previous run crashed, the global handler left a report
+        // (see GoharStoreApp). Checked BEFORE setContentView on purpose:
+        // a crash during layout inflation would otherwise hide the
+        // report forever, because onCreate would never reach the check.
+        showCrashReportIfAny()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
@@ -132,6 +143,56 @@ class MainActivity : AppCompatActivity() {
         }
 
         reload()
+    }
+
+    /** If the previous launch crashed, show the report the global
+     * handler wrote (see GoharStoreApp) so it can be copied and sent
+     * to us. "Copy report" keeps the file; "Dismiss" deletes it, so
+     * the dialog only shows once per crash. Never throws. */
+    private fun showCrashReportIfAny() {
+        val file = java.io.File(filesDir, GoharStoreApp.CRASH_REPORT_FILE)
+        if (!file.exists()) return
+        val report = try {
+            file.readText()
+        } catch (_: Exception) {
+            return
+        }
+        try {
+            val instruction = TextView(this).apply {
+                text = "Please copy this report and send it to us so the crash can be fixed."
+                setPadding(48, 32, 48, 16)
+            }
+            val traceView = TextView(this).apply {
+                text = report
+                setTextIsSelectable(true)
+                setPadding(48, 16, 48, 32)
+            }
+            val scroll = ScrollView(this).apply { addView(traceView) }
+            val content = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                addView(instruction)
+                addView(scroll)
+            }
+            AlertDialog.Builder(this)
+                .setTitle("The app crashed last time")
+                .setView(content)
+                .setPositiveButton("Copy report") { _, _ ->
+                    try {
+                        val clipboard =
+                            getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                        clipboard.setPrimaryClip(
+                            ClipData.newPlainText("crash report", report),
+                        )
+                        Toast.makeText(this, "Crash report copied", Toast.LENGTH_SHORT).show()
+                    } catch (_: Exception) {
+                        Toast.makeText(this, "Could not copy the report", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                .setNegativeButton("Dismiss") { _, _ -> file.delete() }
+                .show()
+        } catch (_: Exception) {
+            // Showing the report must never crash the app itself.
+        }
     }
 
     /** Back on the home screen: ask first, only exit on confirm. */

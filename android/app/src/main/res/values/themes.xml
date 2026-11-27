@@ -14,15 +14,13 @@
          is only the window background, so it shows instantly while the
          app starts and costs no extra time. MainActivity switches back
          to Theme.GoharStore in onCreate, before super.onCreate().
-         The windowSplashScreen* items are API 31+; they are ignored on
-         older devices, where the windowBackground below does the job.
-         No core-splashscreen dependency: it is not in this machine's
-         Gradle cache and a new download is not worth the fragility. -->
+         The API 31+ windowSplashScreen* items were removed in v1.3.5:
+         they are the only new native launch code in v1.3.4 and the app
+         crashed right after the splash on the phone, so the splash is
+         back to the plain windowBackground only. -->
     <style name="Theme.GoharStore.Splash" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowSplashScreenBackground">@color/gohar_icon_bg</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
     </style>
 
     <style name="Widget.GoharStore.Toolbar" parent="Widget.Material3.Toolbar">
