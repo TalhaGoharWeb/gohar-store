@@ -5,6 +5,8 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import org.json.JSONArray
 import org.json.JSONObject
@@ -26,6 +28,28 @@ fun applyUrduFontIfNeeded(view: TextView) {
     if (StoreApp.useUrdu()) {
         ResourcesCompat.getFont(view.context, R.font.urdu)?.let { view.typeface = it }
     }
+}
+
+/**
+ * Dialog button colours (C-43 / D-5.1, I-4.0.12): the confirm and
+ * cancel buttons use the confirm colour; on a destructive dialog the
+ * confirm (positive) button uses the error colour instead. Call
+ * AFTER show() — the buttons only exist then. Buttons are 48dp by
+ * default in Material 3; no height is forced here.
+ *
+ * Colours come from the night-qualified resources
+ * R.color.dialog_confirm (light #0A6E6D / dark #17D6B5) and
+ * R.color.dialog_destructive (light #B3261E / dark #F87171) — the
+ * theme worker owns those two resources.
+ */
+fun styleDialogButtons(dialog: AlertDialog, destructive: Boolean) {
+    val context = dialog.context
+    val confirm = ContextCompat.getColor(context, R.color.dialog_confirm)
+    val destructiveColor = ContextCompat.getColor(context, R.color.dialog_destructive)
+    dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        ?.setTextColor(if (destructive) destructiveColor else confirm)
+    dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(confirm)
+    dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.setTextColor(confirm)
 }
 
 /**

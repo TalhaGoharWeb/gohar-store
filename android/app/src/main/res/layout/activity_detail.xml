@@ -27,9 +27,9 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_height"
-                android:background="@color/gohar_navy"
-                app:navigationIconTint="@android:color/white"
-                app:titleTextColor="@android:color/white" />
+                android:background="@color/toolbar_background"
+                app:navigationIconTint="@color/toolbar_title"
+                app:titleTextColor="@color/toolbar_title" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -90,25 +90,24 @@
                         android:id="@+id/detailName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/white"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.GoharStore.Headline"
+                        android:textColor="@android:color/white" />
 
                     <TextView
                         android:id="@+id/detailTagline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:textColor="#DCE8F5"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/TextAppearance.GoharStore.BodyS"
+                        android:textColor="#DCE8F5" />
 
                     <TextView
                         android:id="@+id/detailDeveloper"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:textColor="#AEC6DE"
-                        android:textSize="13sp" />
+                        android:textAppearance="@style/TextAppearance.GoharStore.BodyS"
+                        android:textColor="#AEC6DE" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -173,18 +172,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="@string/uninstall"
-                android:textColor="#FF8A80"
+                android:textAppearance="@style/TextAppearance.GoharStore.LabelL"
+                android:textColor="@color/uninstall_red"
                 android:visibility="gone"
                 app:cornerRadius="24dp"
-                app:strokeColor="#FF8A80" />
+                app:strokeColor="@color/uninstall_red" />
 
             <TextView
                 android:id="@+id/installedNote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textAppearance="@style/TextAppearance.GoharStore.BodyS"
                 android:textColor="#DCE8F5"
-                android:textSize="13sp"
                 android:visibility="gone" />
 
             <ProgressBar
@@ -202,8 +202,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
+                android:textAppearance="@style/TextAppearance.GoharStore.BodyS"
                 android:textColor="@android:color/white"
-                android:textSize="13sp"
                 android:visibility="gone" />
 
             <!-- Pause / Resume / Cancel — only while a download is
@@ -222,8 +222,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/hero_button_height"
                     android:text="@string/pause_download"
+                    android:textAppearance="@style/TextAppearance.GoharStore.LabelL"
                     android:textColor="@android:color/white"
-                    android:textSize="13sp"
                     app:cornerRadius="18dp"
                     app:strokeColor="@android:color/white" />
 
@@ -234,8 +234,8 @@
                     android:layout_height="@dimen/hero_button_height"
                     android:layout_marginStart="10dp"
                     android:text="@string/cancel_download"
+                    android:textAppearance="@style/TextAppearance.GoharStore.LabelL"
                     android:textColor="@android:color/white"
-                    android:textSize="13sp"
                     app:cornerRadius="18dp"
                     app:strokeColor="@android:color/white" />
 
@@ -259,8 +259,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/screenshots"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/TextAppearance.GoharStore.TitleM" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/screenshotList"
@@ -294,8 +293,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
-                    android:textColor="#7A4A00"
-                    android:textSize="14sp" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.BodyS"
+                    android:textColor="#7A4A00" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -315,16 +314,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_app"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.GoharStore.TitleM" />
 
                     <TextView
                         android:id="@+id/detailDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:lineSpacingMultiplier="1.25"
-                        android:textSize="15sp" />
+                        android:textAppearance="@style/TextAppearance.GoharStore.BodyM" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -347,8 +344,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/whats_new"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.GoharStore.TitleM" />
 
                     <LinearLayout
                         android:id="@+id/whatsNewList"
@@ -376,16 +372,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/details"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
+                        android:textAppearance="@style/TextAppearance.GoharStore.TitleM" />
 
                     <TextView
                         android:id="@+id/detailMeta"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:lineSpacingMultiplier="1.35"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/TextAppearance.GoharStore.BodyS" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -395,7 +389,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/store_footer"
-                android:textSize="12sp" />
+                android:textAppearance="@style/TextAppearance.GoharStore.Caption" />
 
         </LinearLayout>
     </LinearLayout>
@@ -421,7 +415,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:layout_weight="1"
-            android:textSize="13sp" />
+            android:textAppearance="@style/TextAppearance.GoharStore.BodyS" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/actionButton"
@@ -429,9 +423,10 @@
             android:layout_height="wrap_content"
             android:minWidth="140dp"
             android:text="@string/install"
-            app:backgroundTint="@color/gohar_teal"
+            android:textAppearance="@style/TextAppearance.GoharStore.LabelL"
+            app:backgroundTint="@color/btn_primary_fill"
             app:cornerRadius="24dp"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/btn_primary_text" />
 
     </LinearLayout>
 

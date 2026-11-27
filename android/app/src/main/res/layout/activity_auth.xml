@@ -14,11 +14,41 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
-            android:background="@color/gohar_navy"
+            android:background="@color/toolbar_background"
             app:title="@string/owner_sign_in"
-            app:titleTextColor="@android:color/white" />
+            app:titleTextColor="@color/toolbar_title" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- S-08 brand header (C-15): square logo mark, 96dp, in a
+         rounded-rectangle container (radius_xl) on the navy header.
+         Never circle-cropped. The logo renders as a dark navy tile
+         on the light header — accepted as-is (D-6.13). -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gohar_navy"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            app:cardCornerRadius="@dimen/radius_xl"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logo_icon" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/owner_signin_intro"
-                android:textSize="15sp" />
+                android:textAppearance="@style/TextAppearance.GoharStore.BodyM" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/emailLayout"
@@ -72,6 +102,20 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Forgot password (sign-in mode only): text button like
+                 Reset, right-aligned under the password field. -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/forgotPasswordButton"
+                android:textAppearance="@style/TextAppearance.GoharStore.LabelL"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="4dp"
+                android:text="@string/forgot_password"
+                android:visibility="gone"
+                app:cornerRadius="24dp" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/confirmLayout"
                 android:layout_width="match_parent"
@@ -92,6 +136,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/linkGoogleButton"
+                android:textAppearance="@style/TextAppearance.GoharStore.LabelL"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,11 +150,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textSize="14sp"
+                android:textAppearance="@style/TextAppearance.GoharStore.BodyS"
                 android:visibility="gone" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/primaryButton"
+                android:textAppearance="@style/TextAppearance.GoharStore.LabelL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -117,8 +163,22 @@
                 app:backgroundTint="@color/gohar_teal"
                 app:cornerRadius="24dp" />
 
+            <!-- Sign-in spinner (C-55, S-08 §3): shown while signing
+                 in, with the button + inputs disabled; hidden on
+                 completion or error. Theme spinner treatment:
+                 ?attr/colorSecondary. No full-screen loader. -->
+            <ProgressBar
+                android:id="@+id/authLoading"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:indeterminateTint="?attr/colorSecondary"
+                android:visibility="gone" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/googleButton"
+                android:textAppearance="@style/TextAppearance.GoharStore.LabelL"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -129,6 +189,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/resetButton"
+                android:textAppearance="@style/TextAppearance.GoharStore.LabelL"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Primary button text (light, I-4.0.11): white, disabled
+     lt_text_disabled #9AA5B5. The disabled item must come first. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/text_disabled" android:state_enabled="false" />
+    <item android:color="@color/colorOnPrimary" />
+</selector>

@@ -14,9 +14,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
-            android:background="@color/gohar_navy"
+            android:background="@color/toolbar_background"
             app:title="@string/developer_console"
-            app:titleTextColor="@android:color/white" />
+            app:titleTextColor="@color/toolbar_title" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -52,8 +52,8 @@
                 android:paddingTop="10dp"
                 android:paddingEnd="12dp"
                 android:paddingBottom="10dp"
-                android:textColor="@color/gohar_text"
-                android:textSize="13sp" />
+                android:textAppearance="@style/TextAppearance.GoharStore.BodyS"
+                android:textColor="@color/gohar_text" />
 
         </LinearLayout>
 
@@ -69,14 +69,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="8dp" />
+            android:paddingBottom="88dp" />
 
-        <ProgressBar
+        <!-- First-load skeleton (C-52, Phase 5 §G1): four skeleton
+             rows replace the old centred spinner. The "Loading
+             catalogue…" text stays beneath them (BodyM, C-10, S-06).
+             Shown while the console catalogue loads (remote or
+             read-only fallback); hidden on success, error, or empty.
+             The alpha pulse is driven from AdminActivity. -->
+        <LinearLayout
             android:id="@+id/loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <include layout="@layout/item_skeleton_admin" />
+            <include layout="@layout/item_skeleton_admin" />
+            <include layout="@layout/item_skeleton_admin" />
+            <include layout="@layout/item_skeleton_admin" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:text="@string/loading_catalogue"
+                android:textAppearance="@style/TextAppearance.GoharStore.BodyM" />
+
+        </LinearLayout>
 
         <!-- Shown when the GitHub load fails. -->
         <LinearLayout
@@ -95,10 +116,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/admin_load_error"
-                android:textSize="15sp" />
+                android:textAppearance="@style/TextAppearance.GoharStore.BodyM" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/retryButton"
+                android:textAppearance="@style/TextAppearance.GoharStore.LabelL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -108,6 +130,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/useCurrentButton"
+                android:textAppearance="@style/TextAppearance.GoharStore.LabelL"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -117,35 +140,59 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/emptyState"
+        <!-- Empty-state mark (C-16): theme-aware logo mark (120dp, 40%
+             opacity) above the empty-state text. The mark starts gone;
+             its visibility must be toggled with emptyState by the
+             Kotlin worker (empty-state handling) — layout only here. -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:padding="32dp"
-            android:text="@string/no_apps_search"
-            android:textSize="15sp"
-            android:visibility="gone" />
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/emptyStateMark"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center_horizontal"
+                android:alpha="0.4"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logo_mark"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/emptyState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="32dp"
+                android:text="@string/no_apps_search"
+                android:textAppearance="@style/TextAppearance.GoharStore.BodyM"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <!-- Add app FAB (C-53, Phase 7 §A10): REPLACES the old
+             full-width "Add app" button at the bottom (I-4.0.18) —
+             one control for the action, not two. 56dp, M3 default
+             16dp corners, elevation 6dp (L3), primary-container fill
+             + on-primary-container icon. Bottom-end, 16dp margins.
+             The list's 88dp bottom padding clears it (see recycler
+             paddingBottom): 56dp FAB + 16dp margin + 16dp gap. -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/admin_add_app"
+            app:backgroundTint="?attr/colorPrimaryContainer"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_add"
+            app:tint="?attr/colorOnPrimaryContainer" />
 
     </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/addButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/admin_add_app"
-            app:backgroundTint="@color/gohar_teal"
-            app:cornerRadius="24dp"
-            app:icon="@drawable/ic_add"
-            app:iconGravity="textStart" />
-
-    </LinearLayout>
 
 </LinearLayout>

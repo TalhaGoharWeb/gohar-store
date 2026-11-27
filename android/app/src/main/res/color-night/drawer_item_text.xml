@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Drawer item text (dark, I-4.0.3): white when selected, slate otherwise. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/gohar_text" android:state_checked="true" />
+    <item android:color="@color/gohar_text_secondary" />
+</selector>

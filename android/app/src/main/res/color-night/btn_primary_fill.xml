@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Primary button fill (dark, I-4.0.11): Electric Blue, disabled
+     md_surface_container #122747. The disabled item must come first. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/colorSurfaceContainer" android:state_enabled="false" />
+    <item android:color="@color/colorPrimary" />
+</selector>

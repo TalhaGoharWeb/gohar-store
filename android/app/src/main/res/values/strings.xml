@@ -62,6 +62,13 @@
     <string name="details">Details</string>
     <string name="installed_older">Installed version is older — an update is available.</string>
     <string name="installed_uptodate">Installed and up to date.</string>
+    <string name="row_installed_suffix">· Installed</string>
+    <string name="detail_meta_version">Version %1$s (code %2$s)</string>
+    <string name="detail_meta_size">Size %1$s</string>
+    <string name="detail_meta_developer">Developer %1$s</string>
+    <string name="detail_meta_category">Category %1$s</string>
+    <string name="detail_meta_package">Package %1$s</string>
+    <string name="detail_meta_minsdk">Needs Android %1$s+</string>
     <string name="downloading_progress">Downloading… %1$d%%</string>
     <string name="could_not_open">Could not open %1$s</string>
     <string name="no_download_link">No download link yet for %1$s</string>
@@ -72,9 +79,13 @@
     <string name="download_in_progress">Download in progress…</string>
     <string name="no_apps_search">No apps match that search.</string>
     <string name="no_apps_installed">No apps installed yet.\nInstall one from Discover and updates will show up here.</string>
+    <string name="no_updates_available">All your apps are up to date.</string>
     <string name="store_footer">Downloads come straight from Talha’s GitHub Releases. Android will ask you to allow installs from Talha Gohar Apps the first time — that is normal for stores outside Google Play.</string>
     <string name="language_urdu">اردو</string>
     <string name="language_english">English</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_system">System</string>
     <string name="size_unknown">Size —</string>
 
     <!-- Exit + uninstall confirmations -->
@@ -85,6 +96,14 @@
     <string name="uninstall">Uninstall</string>
     <string name="uninstall_title">Uninstall %1$s?</string>
     <string name="uninstall_message">This will remove %1$s and its data from your phone.</string>
+
+    <!-- Crash report dialog -->
+    <string name="crash_title">The app crashed last time</string>
+    <string name="crash_instruction">Please copy this report and send it to us so the crash can be fixed.</string>
+    <string name="crash_copy">Copy report</string>
+    <string name="crash_dismiss">Dismiss</string>
+    <string name="crash_copied">Crash report copied</string>
+    <string name="crash_copy_failed">Could not copy the report</string>
 
     <!-- Developer console -->
     <string name="developer_console">Developer console</string>
@@ -99,8 +118,15 @@
     <string name="admin_status_dirty">%1$d apps · last published %2$s · unsaved changes</string>
     <string name="admin_status_readonly">Read-only — showing the store\'s current catalogue. Add a token to edit.</string>
     <string name="admin_load_error">Could not load the catalogue from GitHub</string>
+    <string name="github_error_401">GitHub rejected the token (401). Check the token or generate a new one.</string>
+    <string name="github_error_403">GitHub refused the request (403). The token may lack the repo/Contents permission, or the rate limit was hit.</string>
+    <string name="github_error_404">catalog.json was not found in TalhaGoharWeb/talha-gohar-apps (404).</string>
+    <string name="github_error_409">Someone changed the catalogue on GitHub — reload first, then publish again.</string>
+    <string name="github_error_422">GitHub rejected the update (422). %1$s</string>
+    <string name="github_error_generic">GitHub request failed (HTTP %1$s). %2$s</string>
     <string name="admin_retry">Retry</string>
     <string name="admin_use_current">Use the store\'s current catalogue (read-only)</string>
+    <string name="admin_empty_catalogue">No apps in the catalogue yet.</string>
     <string name="admin_add_app">Add app</string>
     <string name="admin_update">Update</string>
     <string name="admin_manual_update_title">Update %1$s</string>
@@ -197,8 +223,22 @@
     <string name="no_google_linked">No Google account was linked — sign in with email, or reset the setup</string>
     <string name="google_sign_in_failed">Google sign-in failed — that account is not linked</string>
     <string name="choose_google_account">Choose a Google account</string>
+    <!-- Forgot password (owner-ordered 28 Nov 2026): Google-linked
+         accounts verify with the device picker and set a new
+         password; without a linked account the only way is reset. -->
+    <string name="forgot_password">Forgot password?</string>
+    <string name="set_new_password">Set a new password</string>
+    <string name="set_new_password_intro">You confirmed your linked Google account. Choose a new password — at least 8 characters. Your email and linked Google account stay the same.</string>
+    <string name="new_password">New password</string>
+    <string name="save_new_password">Save new password</string>
+    <string name="password_changed">Password changed — signed in</string>
+    <string name="password_change_failed">Could not change the password — try again</string>
+    <string name="forgot_password_no_google_title">No Google account linked</string>
+    <string name="forgot_password_no_google_message">There is no way to reset your password by email — this app has no server and sends no reset links. The only way is to erase the owner sign-in on this phone and set it up again.</string>
     <string name="drawer_open">Open menu</string>
     <string name="drawer_close">Close menu</string>
+    <!-- Viewer close button (C-13). PROPOSED wording — unconfirmed by the owner. -->
+    <string name="close">Close</string>
     <string name="drawer_subtitle">Free apps by Muhammad Talha Bin Fareed</string>
     <string name="nav_version">Version %1$s</string>
 </resources>

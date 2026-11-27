@@ -6,14 +6,14 @@
 
 **One store for all of Talha's Android apps — browse, download and update, like a small Play Store.**
 
-[![Latest release](https://img.shields.io/badge/release-v1.3.9-0B2545)](https://github.com/TalhaGoharWeb/talha-gohar-apps)
+[![Latest release](https://img.shields.io/badge/release-v1.4.0-0B2545)](https://github.com/TalhaGoharWeb/talha-gohar-apps)
 [![Android](https://img.shields.io/badge/Android-8.0%2B_API_26-brightgreen)](https://developer.android.com/about/versions/oreo)
 [![Kotlin](https://img.shields.io/badge/Kotlin-AGP_9.1-7F52FF)](https://kotlinlang.org/)
 [![Material 3](https://img.shields.io/badge/Material_3-1.12.0-6750A4)](https://m3.material.io/)
 [![Target SDK](https://img.shields.io/badge/targetSdk-36-blue)](https://developer.android.com/about/versions/16)
 [![Urdu](https://img.shields.io/badge/Urdu-Jameel_Noori_Nastaleeq-gold)](#features)
 
-**Latest release:** v1.3.9 (code 13) · Package `com.gohar.store` · Android 8.0+ · ~15 MB · Urdu name: **طلحہ گوہر ایپس**
+**Latest release:** v1.4.0 (code 19) · Package `com.gohar.store` · Android 8.0+ · ~17 MB · Urdu name: **طلحہ گوہر ایپس**
 
 </div>
 
@@ -28,11 +28,11 @@
 | App | Version | Status |
 |-----|---------|--------|
 | Maliki Fiqh Hub | 2.0.0 | Coming soon — no public release APK yet |
-| Nigaarish | 1.5.71 | Download |
+| Nigaarish | 1.5.72 | Download |
 | Talha Gohar Writings | 1.5.0 | Download |
 | Kisan Dost | 1.0.15 | Download |
 | Maliki Prayer Times | 1.3.9 | Download |
-| Mera Roznamcha | 1.1.4 | Coming soon |
+| Mera Roznamcha | 1.1.6 | Download |
 
 **Design principles**
 
@@ -48,17 +48,19 @@
 
 ## Features
 
-- **Discover / Updates tabs** — browse every app, or only the ones installed on the phone, with an update badge when a newer `versionCode` appears in the catalogue.
-- **Play Store-style app pages** — real icons, swipeable screenshot gallery with a full-screen viewer, What's New, About, category and size.
+- **Discover / Updates tabs** — browse every app, or only the apps with an update available, with an update badge when a newer `versionCode` appears in the catalogue.
+- **Play Store-style app pages** — real icons, swipeable screenshot gallery with a full-screen viewer (pinch zoom, pan, thumbnail strip, ✕ to close), What's New, About, category and size.
+- **Dark / Light / System theme** — switch in the navigation drawer; the choice is saved and applies on launch. Dark is the designed default look; light is a genuine light theme, not an inversion. Status bar stays navy with light icons in both themes.
 - **Install / Update / Open** — APKs download straight from GitHub Releases, then the system installer takes over (Android asks once to allow installs from this store).
 - **Resumable downloads** — downloads are fetched with HTTP `Range` requests into `.part` files, so they can be **paused, resumed and cancelled** and survive an interrupted connection. Download state is persisted, so a resume works even after the app restarts.
-- **Search, categories, pull-to-refresh** — filter by name or category; swipe down to re-fetch the live catalogue.
-- **About the Author** — the author's own bio (Urdu verbatim, faithful English translation), with his Malikimadhab.org project and contact, from the ⋮ menu.
+- **Search, categories, pull-to-refresh** — filter by name or category; swipe down to re-fetch the live catalogue. First load shows skeleton placeholders instead of a bare spinner.
+- **About the Author** — the author's own bio (Urdu verbatim, faithful English translation), with his Malikimadhab.org project and contact, from the drawer.
 - **Responsive** — one column on phones, two-column grid on tablets (≥600dp), content capped at 720dp; section titles carry real catalogue counts, e.g. "All apps (6)".
 - **Sticky install bar** — the app page keeps version + size and the Install / Open / Update button visible while scrolling.
-- **Urdu + English** — a full Urdu version in the same APK (اردو / English switch in the ⋮ menu, or follows the phone language and Android 13 per-app language settings). Urdu text is set in **Jameel Noori Nastaleeq**, with per-locale dimensions so the tall Nastaliq script never clips.
-- **Featured hero** — the featured app gets a compact hero card that can be dismissed (⋮ → *Show featured app* brings it back).
-- **Developer console** — the owner manages the whole catalogue from inside the app: add, edit or remove apps, then publish. The change goes live for every user within seconds. See [PUBLISH-GUIDE.md](PUBLISH-GUIDE.md).
+- **Urdu + English** — a full Urdu version in the same APK (اردو / English switch in the drawer, or follows the phone language and Android 13 per-app language settings). Urdu text is set in **Jameel Noori Nastaleeq**, with per-locale dimensions so the tall Nastaliq script never clips. Every screen, dialog, toast and error message is translated — technical values (HTTP codes, URLs, package names, versions) stay in Latin script.
+- **Featured hero** — the featured app gets a compact hero card that can be dismissed (drawer → *Show featured app* brings it back).
+- **Developer console** — the owner manages the whole catalogue from inside the app: add, edit or remove apps, then publish. The change goes live for every user within seconds. See [PUBLISH-GUIDE.md](PUBLISH-GUIDE.md). Entry is hidden: **tap the version number in the drawer header 5 times** (opens sign-in when signed out, the console when signed in). The editor has a category dropdown (English/Urdu kept in step) and warns before discarding unsaved changes.
+- **Forgot password?** — on the owner sign-in screen. If a Google account was linked at setup, picking it lets the owner set a new password without wiping anything; otherwise the only way is to erase the owner sign-in and set it up again (there is no emailed reset — the app has no server).
 
 ---
 
@@ -86,7 +88,7 @@ flowchart LR
 1. On launch the app fetches `catalog.json` from `raw.githubusercontent.com/TalhaGoharWeb/talha-gohar-apps/main/catalog.json`. If the network fails, it falls back to the bundled copy in `assets/catalog.json`.
 2. Icons and screenshots are loaded from the same repo (`icons/`, `screenshots/<app-id>/`) with a disk + memory cache and downsampling.
 3. Tapping **Install / Update** downloads the APK from the app's `apkUrl` (a GitHub Release asset) with resumable HTTP Range requests, then hands the file to the system installer through a `FileProvider`.
-4. The owner signs in (⋮ → *Owner sign-in*), opens the **Developer console**, edits an app, and taps **Publish** — the app writes the updated `catalog.json` back to the repo through the GitHub Contents API. Every user's store picks the change up on its next refresh.
+4. The owner signs in (tap the version number in the drawer header 5 times), opens the **Developer console**, edits an app, and taps **Publish** — the app writes the updated `catalog.json` back to the repo through the GitHub Contents API. Every user's store picks the change up on its next refresh.
 
 **Update detection** — the Updates tab compares the installed app's `versionCode` (from `PackageManager`) against the catalogue's `versionCode`. An update is offered only when the catalogue's code is higher.
 
@@ -98,7 +100,7 @@ flowchart LR
 |---|---|
 | Language | Kotlin |
 | UI | Classic Views + Material 3 (`material:1.12.0`, `appcompat:1.7.1`, `core-ktx:1.19.1`) |
-| Build | Android Gradle Plugin 9.1.0 · Gradle 9.3.1 · JDK 17 |
+| Build | Android Gradle Plugin 9.1.0 · Gradle 9.3.1 · JDK 21 |
 | SDK | `compileSdk 36` · `targetSdk 36` · `minSdk 26` (Android 8.0+) |
 | Networking | `HttpURLConnection` — no networking libraries, no tracking SDKs |
 | Downloads | Custom `AppDownloader`: HTTP `Range`, `.part` files, persisted state |
@@ -172,7 +174,7 @@ The two copies — repo-root `catalog.json` and `android/app/src/main/assets/cat
 
 ## Build from source
 
-**Requirements:** JDK 17, Android SDK with API 36, Gradle 9.3.1, Android Gradle Plugin 9.1.0. There is no Gradle wrapper in this repo; invoke Gradle directly.
+**Requirements:** JDK 21, Android SDK with API 36, Gradle 9.3.1, Android Gradle Plugin 9.1.0. There is no Gradle wrapper in this repo; invoke Gradle directly.
 
 ```bash
 cd android
@@ -206,23 +208,24 @@ zipalign -c -v 4 app/build/outputs/apk/release/app-release.apk
 sha256sum app/build/outputs/apk/release/app-release.apk
 ```
 
-**v1.3.9 reference values**
+**v1.4.0 reference values**
 
 | Check | Value |
 |---|---|
-| Version | 1.3.9 (code 13), package `com.gohar.store` |
-| Size | 15,142,081 bytes |
-| SHA-256 | `954238f51e630b3258aea2f65b0d934d9b1fb6ef9827f409134e14cc359b0cba` |
+| Version | 1.4.0 (code 19), package `com.gohar.store` |
+| Size | 17,242,656 bytes |
+| SHA-256 | `a13bcc3d74b0d9233ac4627bfc105d6799bedeb61ef2968106c356b7e8a4f9e3` |
 | Signature | `apksigner verify` PASS, 1 signer, CN=Talha Gohar |
 | Certificate SHA-256 | `C0:C6:C3:F2:C8:B1:6B:9D:B8:6C:4A:47:4C:4B:D8:57:11:52:1C:BA:A2:4F:CC:C5:98:5F:B4:0B:53:FE:9B:D8` |
 | Alignment | `zipalign` verified |
+| Dex | `MainActivity` present in `classes.dex` |
 
 ---
 
 ## Publishing an app
 
 1. Upload the APK to a GitHub Release in that app's own repo.
-2. Edit `catalog.json` — **the `versionCode` must rise** — or use the developer console inside the app (⋮ → *Developer console*), which validates the entry and writes the file for you.
+2. Edit `catalog.json` — **the `versionCode` must rise** — or use the developer console inside the app (tap the version number in the drawer header 5 times, then *Developer console*), which validates the entry and writes the file for you.
 3. Push. Users get the new version on their next refresh.
 
 Full steps, including the console's token setup, are in [PUBLISH-GUIDE.md](PUBLISH-GUIDE.md). Build and verification notes live in [android/README.md](android/README.md).
@@ -275,7 +278,7 @@ Full steps, including the console's token setup, are in [PUBLISH-GUIDE.md](PUBLI
 ## Security & privacy
 
 - **Signing key** — release APKs are signed with the owner's keystore, which never leaves the owner's machine and is never committed. The certificate fingerprint above is the public check that an APK is a genuine update.
-- **Owner gate** — the developer console is hidden unless the owner is signed in (device-local salted SHA-256 password). The gate is enforced **on-device**; the GitHub personal access token is what actually authorises publishing, and it lives only in the app's private `SharedPreferences` (last 4 characters shown, clear-token option in the console).
+- **Owner gate** — the developer console is hidden unless the owner is signed in (device-local salted SHA-256 password). There is no visible entry point: the owner opens it by **tapping the version number in the drawer header 5 times**. The gate is enforced **on-device**; the GitHub personal access token is what actually authorises publishing, and it lives only in the app's private `SharedPreferences` (last 4 characters shown, clear-token option in the console). Forgotten password: if a Google account was linked at setup, the sign-in screen's *Forgot password?* lets the owner set a new password; otherwise the owner sign-in must be erased and set up again.
 - **No data collection** — the app sends nothing anywhere except: fetching `catalog.json`, icons and screenshots from GitHub, and downloading APKs from GitHub Releases. No analytics, no ads, no accounts.
 - **No server to attack** — there is no backend. The worst case for a compromised catalogue is a wrong listing, and the catalogue is versioned in git.
 
@@ -298,6 +301,12 @@ Full steps, including the console's token setup, are in [PUBLISH-GUIDE.md](PUBLI
 | 1.3.7 | 11 | App-bar title back on one side (EN/UR), measured to fit at 360dp |
 | 1.3.8 | 12 | UI polish + responsive (2-column grid ≥600dp); About the Author page; Talha Gohar Writings added (R2) |
 | **1.3.9** | **13** | **Author's own bio on the About page; store-style home (search pill, counts, sticky install bar); Urdu font fix for category chips** |
+| 1.3.10 | 14 | App-bar banner enlarged to 48dp |
+| 1.3.11 | 15 | Hamburger side drawer replaces the ⋮ menu; developer console refresh (status card, icon actions) |
+| 1.3.12 | 16 | Compact one-row app bar (hamburger + title + full banner); console card alignment fix |
+| 1.3.13 | 17 | Full uncropped banner in one row; own 40dp hamburger button |
+| 1.3.14 | 18 | Manifest `<queries>` fix — the 4 catalogue apps can show Open/Update on Android 11+ |
+| **1.4.0** | **19** | **Full redesign (Material 3, dark + light themes, drawer theme switch, skeleton loaders, FAB console, viewer zoom/pan + thumbnails, editor category dropdown + unsaved-changes warning, custom toasts, full Urdu strings, hidden version-tap owner entry, forgot-password).** The earlier planned 1.4.0 scope (email rating/feedback + analytics) is deferred to a later version. |
 
 ---
 

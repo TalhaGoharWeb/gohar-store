@@ -1,5 +1,7 @@
 package com.gohar.store
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
@@ -11,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -49,6 +50,9 @@ class AdminActivity : AppCompatActivity() {
     private var dirty = false
     private var readOnly = false
     private var publishing = false
+    /** Skeleton pulse animator (C-52): created when the console
+     * skeleton shows, cancelled when it hides / on destroy. */
+    private var skeletonAnimator: ObjectAnimator? = null
 
     /** Null while an "add" edit is in flight, otherwise the id being edited. */
     private var pendingEditId: String? = null
@@ -101,7 +105,7 @@ class AdminActivity : AppCompatActivity() {
         // Owner-only gate: the console must never open for anyone
         // who is not signed in as the owner.
         if (!AuthManager.isOwnerSignedIn(this)) {
-            Toast.makeText(this, R.string.owner_sign_in_required, Toast.LENGTH_SHORT).show()
+            ToastHelper.show(this, ToastHelper.Type.ERROR, R.string.owner_sign_in_required)
             finish()
             return
         }
@@ -140,6 +144,12 @@ class AdminActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        skeletonAnimator?.cancel()
+        skeletonAnimator = null
+        super.onDestroy()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.admin_menu, menu)
         return true
@@ -157,7 +167,7 @@ class AdminActivity : AppCompatActivity() {
             R.id.action_discard -> confirmDiscard { loadRemote() }
             R.id.action_clear_token -> {
                 GitHubCatalog.clearToken(this)
-                Toast.makeText(this, R.string.admin_token_cleared, Toast.LENGTH_SHORT).show()
+                ToastHelper.show(this, ToastHelper.Type.SUCCESS, R.string.admin_token_cleared)
                 finish()
             }
         }
@@ -177,19 +187,30 @@ class AdminActivity : AppCompatActivity() {
             return
         }
         readOnly = false
-        binding.loading.visibility = View.VISIBLE
+        showLoadingSkeleton()
         binding.errorView.visibility = View.GONE
         binding.recycler.visibility = View.GONE
         binding.emptyState.visibility = View.GONE
-        GitHubCatalog.load(t) { result ->
-            binding.loading.visibility = View.GONE
+        binding.emptyStateMark.visibility = View.GONE
+        GitHubCatalog.load(this, t) { result ->
+            hideLoadingSkeleton()
             result.onSuccess { remote ->
                 catalog = remote.catalog
                 sha = remote.sha
                 apps = remote.catalog.apps.toMutableList()
                 dirty = false
                 binding.recycler.visibility = View.VISIBLE
-                binding.emptyState.visibility = if (apps.isEmpty()) View.VISIBLE else View.GONE
+                // Empty catalogue: the console's own empty text (C-19),
+                // not the search "no apps match" text from the layout.
+                // The mark (C-16) rides with the empty-state text.
+                if (apps.isEmpty()) {
+                    binding.emptyState.text = getString(R.string.admin_empty_catalogue)
+                    binding.emptyState.visibility = View.VISIBLE
+                    binding.emptyStateMark.visibility = View.VISIBLE
+                } else {
+                    binding.emptyState.visibility = View.GONE
+                    binding.emptyStateMark.visibility = View.GONE
+                }
                 adapter.notifyDataSetChanged()
                 updateStatus()
                 invalidateOptionsMenu()
@@ -206,20 +227,53 @@ class AdminActivity : AppCompatActivity() {
      * right now. Edits stay disabled until the API load succeeds. */
     private fun loadFallback() {
         binding.errorView.visibility = View.GONE
-        binding.loading.visibility = View.VISIBLE
+        showLoadingSkeleton()
         CatalogLoader.load(this) { loaded ->
-            binding.loading.visibility = View.GONE
+            hideLoadingSkeleton()
             catalog = loaded
             apps = loaded.apps.toMutableList()
             sha = null
             dirty = false
             readOnly = true
             binding.recycler.visibility = View.VISIBLE
-            binding.emptyState.visibility = if (apps.isEmpty()) View.VISIBLE else View.GONE
+            // Same empty-catalogue text as the remote load (C-19);
+            // the mark (C-16) rides with the empty-state text.
+            if (apps.isEmpty()) {
+                binding.emptyState.text = getString(R.string.admin_empty_catalogue)
+                binding.emptyState.visibility = View.VISIBLE
+                binding.emptyStateMark.visibility = View.VISIBLE
+            } else {
+                binding.emptyState.visibility = View.GONE
+                binding.emptyStateMark.visibility = View.GONE
+            }
             adapter.notifyDataSetChanged()
             updateStatus()
             invalidateOptionsMenu()
         }
+    }
+
+    /** Console skeleton (C-52, Phase 5 §G1): same framework-only
+     * gentle alpha pulse as the home screen (0.55 ↔ 1.0, 1 s,
+     * reverse-repeat). Hidden on success, on error, and on empty —
+     * both load paths hide it first thing in their callback. */
+    private fun showLoadingSkeleton() {
+        binding.loading.visibility = View.VISIBLE
+        skeletonAnimator?.cancel()
+        skeletonAnimator = ObjectAnimator.ofFloat(
+            binding.loading, View.ALPHA, 0.55f, 1f,
+        ).apply {
+            duration = 1000
+            repeatMode = ValueAnimator.REVERSE
+            repeatCount = ValueAnimator.INFINITE
+            start()
+        }
+    }
+
+    private fun hideLoadingSkeleton() {
+        skeletonAnimator?.cancel()
+        skeletonAnimator = null
+        binding.loading.alpha = 1f
+        binding.loading.visibility = View.GONE
     }
 
     private fun updateStatus() {
@@ -271,6 +325,7 @@ class AdminActivity : AppCompatActivity() {
             .setCancelable(!firstTime)
             .create()
         dialog.show()
+        styleDialogButtons(dialog, destructive = false)
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
             val value = input.text?.toString()?.trim().orEmpty()
             if (value.isEmpty()) {
@@ -279,7 +334,7 @@ class AdminActivity : AppCompatActivity() {
             }
             GitHubCatalog.saveToken(context, value)
             token = value
-            Toast.makeText(context, R.string.admin_token_saved, Toast.LENGTH_SHORT).show()
+            ToastHelper.show(context, ToastHelper.Type.SUCCESS, R.string.admin_token_saved)
             dialog.dismiss()
             loadRemote()
         }
@@ -398,6 +453,7 @@ class AdminActivity : AppCompatActivity() {
             .setNegativeButton(R.string.admin_cancel, null)
             .create()
         dialog.show()
+        styleDialogButtons(dialog, destructive = false)
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
             val updated = collectManualUpdate(
                 app,
@@ -427,6 +483,7 @@ class AdminActivity : AppCompatActivity() {
                     }
                     .setNegativeButton(R.string.admin_go_back, null)
                     .show()
+                    .also { styleDialogButtons(it, destructive = false) }
                 return@setOnClickListener
             }
             applyManualUpdate(app, updated)
@@ -488,7 +545,7 @@ class AdminActivity : AppCompatActivity() {
             sizeMb.first.error = getString(R.string.error_number); ok = false
         }
         if (!ok) {
-            Toast.makeText(this, R.string.admin_fix_errors, Toast.LENGTH_SHORT).show()
+            ToastHelper.show(this, ToastHelper.Type.ERROR, R.string.admin_fix_errors)
             return null
         }
         return app.copy(
@@ -511,7 +568,7 @@ class AdminActivity : AppCompatActivity() {
         updateStatus()
         adapter.notifyDataSetChanged()
         invalidateOptionsMenu()
-        Toast.makeText(this, R.string.admin_manual_update_ready, Toast.LENGTH_LONG).show()
+        ToastHelper.show(this, ToastHelper.Type.SUCCESS, R.string.admin_manual_update_ready, long = true)
     }
 
     private fun launchEditor(app: StoreApp?) {
@@ -545,6 +602,7 @@ class AdminActivity : AppCompatActivity() {
             }
             .setNegativeButton(R.string.admin_cancel, null)
             .show()
+            .also { styleDialogButtons(it, destructive = true) }
     }
 
     private fun confirmDiscard(onDiscard: () -> Unit) {
@@ -554,6 +612,7 @@ class AdminActivity : AppCompatActivity() {
             .setPositiveButton(R.string.admin_discard) { _, _ -> onDiscard() }
             .setNegativeButton(R.string.admin_cancel, null)
             .show()
+            .also { styleDialogButtons(it, destructive = false) }
     }
 
     // ---- publish -----------------------------------------------------------
@@ -564,15 +623,15 @@ class AdminActivity : AppCompatActivity() {
         val currentCatalog = catalog
         if (t == null || currentSha == null || currentCatalog == null) return
         if (!dirty) {
-            Toast.makeText(this, R.string.admin_no_changes, Toast.LENGTH_SHORT).show()
+            ToastHelper.show(this, ToastHelper.Type.INFO, R.string.admin_no_changes)
             return
         }
         publishing = true
         invalidateOptionsMenu()
-        Toast.makeText(this, R.string.admin_publishing, Toast.LENGTH_SHORT).show()
+        ToastHelper.show(this, ToastHelper.Type.INFO, R.string.admin_publishing)
         val today = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
         val toPublish = currentCatalog.copy(apps = apps.toList(), updated = today)
-        GitHubCatalog.publish(t, toPublish, currentSha) { result ->
+        GitHubCatalog.publish(this, t, toPublish, currentSha) { result ->
             publishing = false
             result.onSuccess { published ->
                 sha = published.newSha
@@ -582,11 +641,10 @@ class AdminActivity : AppCompatActivity() {
                 adapter.notifyDataSetChanged()
                 invalidateOptionsMenu()
                 val short = published.commitSha.take(7)
-                Toast.makeText(
-                    this,
-                    getString(R.string.admin_published, short),
-                    Toast.LENGTH_LONG,
-                ).show()
+                ToastHelper.show(
+                    this, ToastHelper.Type.SUCCESS,
+                    getString(R.string.admin_published, short), long = true,
+                )
                 // Warm the store's own catalogue so the home screen
                 // picks the change up on its next refresh.
                 CatalogLoader.load(this) { }
@@ -600,12 +658,13 @@ class AdminActivity : AppCompatActivity() {
                         .setPositiveButton(R.string.admin_retry) { _, _ -> loadRemote() }
                         .setNegativeButton(R.string.admin_cancel, null)
                         .show()
+                        .also { styleDialogButtons(it, destructive = false) }
                 } else {
-                    Toast.makeText(
-                        this,
+                    ToastHelper.show(
+                        this, ToastHelper.Type.ERROR,
                         "${getString(R.string.admin_publish_failed)}: $message",
-                        Toast.LENGTH_LONG,
-                    ).show()
+                        long = true,
+                    )
                 }
             }
         }

@@ -3,7 +3,6 @@ package com.gohar.store
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -136,11 +135,10 @@ object AppDownloader {
         val appContext = context.applicationContext
         val url = app.downloadUrl()
         if (url.isNullOrBlank()) {
-            Toast.makeText(
-                appContext,
+            ToastHelper.show(
+                appContext, ToastHelper.Type.ERROR,
                 appContext.getString(R.string.no_download_link, app.name),
-                Toast.LENGTH_SHORT,
-            ).show()
+            )
             return
         }
         if (state(appContext, app.id) == DownloadState.DOWNLOADING) return

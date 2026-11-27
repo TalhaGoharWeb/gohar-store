@@ -1,18 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.GoharStore" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/gohar_navy</item>
+        <!-- Material 3 roles — light theme (Phase 2 §2.6, C-02). -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorPrimaryContainer">@color/colorPrimaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/colorOnPrimaryContainer</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <item name="colorSecondaryContainer">@color/colorSecondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/colorOnSecondaryContainer</item>
+        <item name="colorTertiary">@color/colorTertiary</item>
+        <item name="colorOnTertiary">@color/colorOnTertiary</item>
+        <item name="colorTertiaryContainer">@color/colorTertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/colorOnTertiaryContainer</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="colorSurfaceVariant">@color/colorSurfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/colorOnSurfaceVariant</item>
+        <item name="colorSurfaceContainerLowest">@color/colorSurfaceContainerLowest</item>
+        <item name="colorSurfaceContainerLow">@color/colorSurfaceContainerLow</item>
+        <item name="colorSurfaceContainer">@color/colorSurfaceContainer</item>
+        <item name="colorSurfaceContainerHigh">@color/colorSurfaceContainerHigh</item>
+        <item name="colorSurfaceContainerHighest">@color/colorSurfaceContainerHighest</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+        <item name="colorOutline">@color/colorOutline</item>
+        <item name="colorOutlineVariant">@color/colorOutlineVariant</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@color/colorOnError</item>
+        <item name="colorErrorContainer">@color/colorErrorContainer</item>
+        <item name="colorOnErrorContainer">@color/colorOnErrorContainer</item>
         <item name="colorPrimaryDark">@color/gohar_navy_dark</item>
-        <item name="colorOnPrimary">@android:color/white</item>
-        <item name="colorSecondary">@color/gohar_teal</item>
-        <item name="colorSecondaryContainer">#D6F2F1</item>
-        <item name="colorOnSecondary">@android:color/white</item>
         <item name="toolbarStyle">@style/Widget.GoharStore.Toolbar</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.GoharStore.Dialog</item>
         <!-- The app bar sits below the status bar (fitsSystemWindows);
              paint the status-bar strip navy too, with light icons, so
-             the header reads as one seamless navy bar. -->
+             the header reads as one seamless navy bar. The status bar
+             is always navy with light icons, both themes (Phase 2 D4). -->
         <item name="android:statusBarColor">@color/gohar_navy</item>
         <item name="android:windowLightStatusBar">false</item>
+        <!-- Nav bar matches the theme background; dark nav icons in light. -->
+        <item name="android:navigationBarColor">@color/colorBackground</item>
+        <item name="android:windowLightNavigationBar">@bool/window_light_navigation_bar</item>
     </style>
 
     <!-- Launch splash for MainActivity (see AndroidManifest). The splash
@@ -29,17 +59,90 @@
     </style>
 
     <style name="Widget.GoharStore.Toolbar" parent="Widget.Material3.Toolbar">
-        <item name="android:background">@color/gohar_navy</item>
-        <item name="titleTextColor">@android:color/white</item>
-        <item name="subtitleTextColor">#C7D6E8</item>
+        <item name="android:background">@color/toolbar_background</item>
+        <item name="titleTextColor">@color/toolbar_title</item>
+        <item name="subtitleTextColor">@color/toolbar_subtitle</item>
     </style>
 
     <!-- Default TextView style (plain). The Urdu locale overrides
-         this same style with the Noto Nastaliq Urdu font; it must exist
+         this same style with the Jameel Noori Nastaleeq font; it must exist
          here or AAPT fails the ur-only reference. -->
     <style name="Widget.GoharStore.TextView" parent="android:Widget.TextView" />
 
     <!-- Default toolbar title appearance (plain). The Urdu locale
          overrides this same style with a smaller title size. -->
     <style name="Widget.GoharStore.Toolbar.TitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title" />
+
+    <!-- Type scale — English (Roboto, system), Phase 2 §3.3.
+         Line heights use android:lineSpacingExtra (never android:lineHeight,
+         minSdk 26 — Phase 2 D18). Medium weight is sans-serif-medium;
+         there is no "medium" android:textStyle value. -->
+    <style name="TextAppearance.GoharStore.Display" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="android:textSize">28sp</item>
+        <item name="android:lineSpacingExtra">3dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.GoharStore.Headline" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:textSize">24sp</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.GoharStore.TitleL" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineSpacingExtra">3dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.GoharStore.TitleM" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingExtra">3dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.GoharStore.TitleS" parent="TextAppearance.Material3.TitleSmall">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">3dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="TextAppearance.GoharStore.BodyL" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">5dp</item>
+    </style>
+    <style name="TextAppearance.GoharStore.BodyM" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+    </style>
+    <style name="TextAppearance.GoharStore.BodyS" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+    </style>
+    <style name="TextAppearance.GoharStore.LabelL" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+    <style name="TextAppearance.GoharStore.LabelM" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineSpacingExtra">3dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0.12</item>
+    </style>
+    <style name="TextAppearance.GoharStore.Caption" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">2dp</item>
+    </style>
+
+    <!-- AlertDialog theme (C-31): titles, messages and buttons render in
+         the app type scale. Per-role button colours are applied in code
+         via the dialog helper (I-4.0.12). -->
+    <style name="ThemeOverlay.GoharStore.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="materialAlertDialogTitleTextStyle">@style/TextAppearance.GoharStore.TitleL</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/TextAppearance.GoharStore.BodyM</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.GoharStore.DialogButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.GoharStore.DialogButton</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.GoharStore.DialogButton</item>
+    </style>
+
+    <style name="Widget.GoharStore.DialogButton" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textAppearance">@style/TextAppearance.GoharStore.LabelL</item>
+    </style>
 </resources>

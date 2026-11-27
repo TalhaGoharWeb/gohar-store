@@ -6,14 +6,12 @@
      divider, and carry no icon — they are secondary. -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:id="@+id/group_main">
-        <item
-            android:id="@+id/developer_console"
-            android:icon="@drawable/ic_dashboard"
-            android:title="@string/developer_console" />
-        <item
-            android:id="@+id/owner_sign_in"
-            android:icon="@drawable/ic_person"
-            android:title="@string/owner_sign_in" />
+        <!-- No owner entry points here (owner decision 28 Nov ~03:17
+             PKT): "Developer Console" and "Owner sign-in" were
+             removed from this menu. The owner reaches sign-in /
+             console only via 5 taps on the version in the drawer
+             header (MainActivity.onVersionTap). "Sign out" stays,
+             visible only while signed in (MainActivity). -->
         <item
             android:id="@+id/owner_sign_out"
             android:icon="@drawable/ic_logout"
@@ -26,6 +24,18 @@
             android:id="@+id/about_author"
             android:icon="@drawable/ic_info"
             android:title="@string/about_author" />
+    </group>
+    <group android:id="@+id/group_theme"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/theme_dark"
+            android:title="@string/theme_dark" />
+        <item
+            android:id="@+id/theme_light"
+            android:title="@string/theme_light" />
+        <item
+            android:id="@+id/theme_system"
+            android:title="@string/theme_system" />
     </group>
     <group android:id="@+id/group_language">
         <item

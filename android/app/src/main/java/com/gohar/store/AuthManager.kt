@@ -104,6 +104,27 @@ object AuthManager {
         return true
     }
 
+    /**
+     * Forgot-password change: replaces the password hash with a
+     * fresh 16-byte salt + new SHA-256 hash. The owner email, the
+     * linked Google account and the session are all KEPT — nothing
+     * is wiped, unlike [resetOwner]. Signs the owner in. False when
+     * no setup exists yet or the new password is too short, in
+     * which case nothing is stored.
+     */
+    fun changePassword(context: Context, newPassword: String): Boolean {
+        if (!isSetup(context)) return false
+        if (newPassword.length < MIN_PASSWORD_LENGTH) return false
+        val salt = ByteArray(16).also { SecureRandom().nextBytes(it) }
+        val hash = sha256(salt, newPassword)
+        prefs(context).edit()
+            .putString(KEY_SALT, Base64.encodeToString(salt, Base64.NO_WRAP))
+            .putString(KEY_HASH, Base64.encodeToString(hash, Base64.NO_WRAP))
+            .putBoolean(KEY_SESSION, true)
+            .apply()
+        return true
+    }
+
     fun isOwnerSignedIn(context: Context): Boolean =
         prefs(context).getBoolean(KEY_SESSION, false)
 

@@ -126,12 +126,16 @@ class DetailActivity : AppCompatActivity() {
         }
         binding.detailDescription.text = app.displayDescription()
         binding.detailMeta.text = buildString {
-            append("Version ${app.versionName} (code ${app.versionCode})")
-            if (app.sizeLabel().isNotEmpty()) append("\nSize ${app.sizeLabel()}")
-            append("\nDeveloper ${app.developer}")
-            append("\nCategory ${app.category}")
-            append("\nPackage ${app.packageName}")
-            append("\nNeeds Android ${app.minSdk}+")
+            // Labels are string resources (C-28); the values stay
+            // Latin (Phase 2 D16).
+            append(getString(R.string.detail_meta_version, app.versionName, app.versionCode.toString()))
+            if (app.sizeLabel().isNotEmpty()) {
+                append("\n" + getString(R.string.detail_meta_size, app.sizeLabel()))
+            }
+            append("\n" + getString(R.string.detail_meta_developer, app.developer))
+            append("\n" + getString(R.string.detail_meta_category, app.category))
+            append("\n" + getString(R.string.detail_meta_package, app.packageName))
+            append("\n" + getString(R.string.detail_meta_minsdk, app.minSdk.toString()))
         }
         if (app.displayWhatsNew().isEmpty()) {
             binding.whatsNewCard.visibility = View.GONE
@@ -219,6 +223,7 @@ class DetailActivity : AppCompatActivity() {
             }
             .setNegativeButton(R.string.dialog_cancel, null)
             .show()
+            .also { styleDialogButtons(it, destructive = true) }
     }
 
     private fun refreshState() {

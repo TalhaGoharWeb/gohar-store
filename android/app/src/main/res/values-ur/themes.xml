@@ -1,27 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Urdu locale theme: identical to res/values/themes.xml (a
-     locale-qualified style replaces the base one entirely, so every
-     item is repeated), plus Jameel Noori Nastaleeq as the app font.
-     Nastaleeq's line height is ~1.4x the font size, so the TextView
-     lineSpacingMultiplier stays 1.0. The toolbar title shrinks to 15sp
-     so it fits the taller Urdu toolbar. The default (values/) theme
-     is untouched, so Latin UI is unchanged. -->
+<!-- Urdu locale theme: a locale-qualified style replaces the base one
+     entirely, so every item is repeated — but ALL colours are
+     night-qualified @color references (never hardcoded hexes), so the
+     dark theme still applies in the Urdu locale (G1 / I-4.0.4). The only
+     things this file owns are the font (Jameel Noori Nastaleeq) and the
+     Urdu type scale. Nastaleeq's line height is ~1.4x the font size, so
+     the TextView lineSpacingMultiplier stays 1.0. The toolbar title
+     shrinks to 15sp so it fits the taller Urdu toolbar. -->
 <resources>
     <style name="Theme.GoharStore" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/gohar_navy</item>
+        <!-- Material 3 roles (Phase 2 §2.6) — night-qualified @color
+             references only; light/dark values resolve per theme. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorPrimaryContainer">@color/colorPrimaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/colorOnPrimaryContainer</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <item name="colorSecondaryContainer">@color/colorSecondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/colorOnSecondaryContainer</item>
+        <item name="colorTertiary">@color/colorTertiary</item>
+        <item name="colorOnTertiary">@color/colorOnTertiary</item>
+        <item name="colorTertiaryContainer">@color/colorTertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/colorOnTertiaryContainer</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="colorSurfaceVariant">@color/colorSurfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/colorOnSurfaceVariant</item>
+        <item name="colorSurfaceContainerLowest">@color/colorSurfaceContainerLowest</item>
+        <item name="colorSurfaceContainerLow">@color/colorSurfaceContainerLow</item>
+        <item name="colorSurfaceContainer">@color/colorSurfaceContainer</item>
+        <item name="colorSurfaceContainerHigh">@color/colorSurfaceContainerHigh</item>
+        <item name="colorSurfaceContainerHighest">@color/colorSurfaceContainerHighest</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+        <item name="colorOutline">@color/colorOutline</item>
+        <item name="colorOutlineVariant">@color/colorOutlineVariant</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@color/colorOnError</item>
+        <item name="colorErrorContainer">@color/colorErrorContainer</item>
+        <item name="colorOnErrorContainer">@color/colorOnErrorContainer</item>
         <item name="colorPrimaryDark">@color/gohar_navy_dark</item>
-        <item name="colorOnPrimary">@android:color/white</item>
-        <item name="colorSecondary">@color/gohar_teal</item>
-        <item name="colorSecondaryContainer">#D6F2F1</item>
-        <item name="colorOnSecondary">@android:color/white</item>
         <item name="toolbarStyle">@style/Widget.GoharStore.Toolbar</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.GoharStore.Dialog</item>
         <item name="android:fontFamily">@font/urdu</item>
         <item name="android:textViewStyle">@style/Widget.GoharStore.TextView</item>
-        <!-- A locale-qualified style replaces the base one entirely, so
-             these two items must be repeated here or the Urdu status
-             bar falls back to the system default instead of navy. -->
+        <!-- Status bar is always navy with light icons, both themes
+             (Phase 2 D4). -->
         <item name="android:statusBarColor">@color/gohar_navy</item>
         <item name="android:windowLightStatusBar">false</item>
+        <!-- Nav bar matches the theme background. The light-icon flag is
+             a night-qualified bool (@bool/window_light_navigation_bar:
+             true in light, false in dark) because this single file serves
+             both themes in the Urdu locale. -->
+        <item name="android:navigationBarColor">@color/colorBackground</item>
+        <item name="android:windowLightNavigationBar">@bool/window_light_navigation_bar</item>
     </style>
 
     <style name="Widget.GoharStore.TextView" parent="android:Widget.TextView">
@@ -30,13 +63,104 @@
     </style>
 
     <style name="Widget.GoharStore.Toolbar" parent="Widget.Material3.Toolbar">
-        <item name="android:background">@color/gohar_navy</item>
-        <item name="titleTextColor">@android:color/white</item>
-        <item name="subtitleTextColor">#C7D6E8</item>
+        <item name="android:background">@color/toolbar_background</item>
+        <item name="titleTextColor">@color/toolbar_title</item>
+        <item name="subtitleTextColor">@color/toolbar_subtitle</item>
         <item name="titleTextAppearance">@style/Widget.GoharStore.Toolbar.TitleText</item>
     </style>
 
     <style name="Widget.GoharStore.Toolbar.TitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textSize">15sp</item>
+    </style>
+
+    <!-- Type scale — Urdu (Jameel Noori Nastaleeq), Phase 2 §3.4.
+         Line heights use android:lineSpacingExtra (never android:lineHeight,
+         minSdk 26 — Phase 2 D18). Letter spacing is always 0 for Urdu
+         (tracking breaks Nastaleeq ligatures — Phase 2 D9). Bold is
+         synthesised by Android, allowed only for Title L and Label L
+         (Phase 2 §3.2). The font is set explicitly on each style so the
+         scale renders in Nastaleeq wherever it is applied. -->
+    <style name="TextAppearance.GoharStore.Display" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="android:textSize">26sp</item>
+        <item name="android:lineSpacingExtra">10dp</item>
+        <item name="android:fontFamily">@font/urdu</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.GoharStore.Headline" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:textSize">22sp</item>
+        <item name="android:lineSpacingExtra">9dp</item>
+        <item name="android:fontFamily">@font/urdu</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.GoharStore.TitleL" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingExtra">7dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/urdu</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.GoharStore.TitleM" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">6dp</item>
+        <item name="android:fontFamily">@font/urdu</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.GoharStore.TitleS" parent="TextAppearance.Material3.TitleSmall">
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingExtra">6dp</item>
+        <item name="android:fontFamily">@font/urdu</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.GoharStore.BodyL" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingExtra">7dp</item>
+        <item name="android:fontFamily">@font/urdu</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.GoharStore.BodyM" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">6dp</item>
+        <item name="android:fontFamily">@font/urdu</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.GoharStore.BodyS" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineSpacingExtra">6dp</item>
+        <item name="android:fontFamily">@font/urdu</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.GoharStore.LabelL" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">6dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/urdu</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.GoharStore.LabelM" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">5dp</item>
+        <item name="android:fontFamily">@font/urdu</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.GoharStore.Caption" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textSize">11sp</item>
+        <item name="android:lineSpacingExtra">5dp</item>
+        <item name="android:fontFamily">@font/urdu</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- AlertDialog theme (C-31, Urdu): titles, messages and buttons use
+         the Urdu text appearances, so dialogs render in Jameel Noori
+         Nastaleeq in the Urdu locale. -->
+    <style name="ThemeOverlay.GoharStore.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="materialAlertDialogTitleTextStyle">@style/TextAppearance.GoharStore.TitleL</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/TextAppearance.GoharStore.BodyM</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.GoharStore.DialogButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.GoharStore.DialogButton</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.GoharStore.DialogButton</item>
+    </style>
+
+    <style name="Widget.GoharStore.DialogButton" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textAppearance">@style/TextAppearance.GoharStore.LabelL</item>
     </style>
 </resources>

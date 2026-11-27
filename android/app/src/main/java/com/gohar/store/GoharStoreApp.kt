@@ -1,8 +1,10 @@
 package com.gohar.store
 
 import android.app.Application
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
 import java.io.File
 import java.io.PrintWriter
 import java.io.StringWriter
@@ -24,10 +26,38 @@ class GoharStoreApp : Application() {
 
     companion object {
         const val CRASH_REPORT_FILE = "crash-report.txt"
+
+        /** Drawer theme switch (I-4.0.8): the choice lives in the "ui"
+         * prefs, key "theme_mode"; default "system" keeps the current
+         * DayNight-follows-system behaviour. */
+        const val PREFS_UI = "ui"
+        const val KEY_THEME_MODE = "theme_mode"
+        const val THEME_SYSTEM = "system"
+        const val THEME_LIGHT = "light"
+        const val THEME_DARK = "dark"
+
+        /** Reads the saved theme choice and applies it via
+         * AppCompatDelegate. Called from onCreate (before any
+         * Activity starts) and from MainActivity when the drawer
+         * choice changes. */
+        fun applySavedThemeMode(context: Context) {
+            val mode = context.getSharedPreferences(PREFS_UI, Context.MODE_PRIVATE)
+                .getString(KEY_THEME_MODE, THEME_SYSTEM) ?: THEME_SYSTEM
+            AppCompatDelegate.setDefaultNightMode(
+                when (mode) {
+                    THEME_DARK -> AppCompatDelegate.MODE_NIGHT_YES
+                    THEME_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+                    else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                },
+            )
+        }
     }
 
     override fun onCreate() {
         super.onCreate()
+        // Apply the saved drawer theme choice before any Activity
+        // starts, so the first screen already uses it (I-4.0.8).
+        applySavedThemeMode(this)
         val previousHandler = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
             try {

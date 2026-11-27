@@ -11,7 +11,7 @@
     android:layout_marginStart="@dimen/app_card_margin"
     android:layout_marginTop="@dimen/app_card_margin_top"
     android:layout_marginEnd="@dimen/app_card_margin"
-    app:cardCornerRadius="20dp"
+    app:cardCornerRadius="@dimen/radius_l"
     app:cardElevation="2dp"
     app:strokeColor="?attr/colorOutlineVariant"
     app:strokeWidth="1dp">
@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:cardBackgroundColor="@android:color/transparent"
-                    app:cardCornerRadius="18dp"
+                    app:cardCornerRadius="@dimen/radius_l"
                     app:cardElevation="0dp">
 
                     <ImageView
@@ -72,22 +72,23 @@
                     android:id="@+id/appName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.TitleS" />
 
                 <TextView
                     android:id="@+id/appDeveloper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:textSize="13sp" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.BodyS"
+                    />
 
                 <TextView
                     android:id="@+id/appMeta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:textSize="12sp" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.BodyS"
+                    />
 
             </LinearLayout>
 
@@ -106,8 +107,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/install"
-                app:backgroundTint="@color/gohar_teal"
-                app:cornerRadius="20dp" />
+                android:textAppearance="@style/TextAppearance.GoharStore.LabelL"
+                android:textColor="@color/btn_primary_text"
+                app:backgroundTint="@color/btn_primary_fill"
+                app:cornerRadius="@dimen/radius_full" />
 
             <TextView
                 android:id="@+id/updateBadge"
@@ -121,7 +124,7 @@
                 android:paddingEnd="10dp"
                 android:paddingBottom="3dp"
                 android:text="@string/update_badge"
-                android:textColor="@android:color/white"
+                android:textColor="@color/badge_text"
                 android:textSize="10sp"
                 android:textStyle="bold"
                 android:visibility="gone" />
@@ -161,7 +164,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/hero_button_height"
                 android:text="@string/pause_download"
-                android:textSize="13sp" />
+                android:textAppearance="@style/TextAppearance.GoharStore.LabelL" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/downloadCancelButton"
@@ -169,7 +172,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/hero_button_height"
                 android:text="@string/cancel_download"
-                android:textSize="13sp" />
+                android:textAppearance="@style/TextAppearance.GoharStore.LabelL" />
 
         </LinearLayout>
 

@@ -4,7 +4,7 @@
 <resources>
     <dimen name="toolbar_height">56dp</dimen>
     <dimen name="toolbar_title_size">16sp</dimen>
-    <dimen name="hero_button_height">36dp</dimen>
+    <dimen name="hero_button_height">48dp</dimen>
     <dimen name="app_row_icon_size">72dp</dimen>
     <dimen name="chip_min_height">32dp</dimen>
 
@@ -18,4 +18,32 @@
     <dimen name="app_card_margin">16dp</dimen>
     <dimen name="app_card_margin_top">10dp</dimen>
     <dimen name="chip_row_padding">12dp</dimen>
+
+    <!-- Spacing scale (Phase 2 §4.1, 4dp base — no arbitrary values). -->
+    <dimen name="space_1">4dp</dimen>
+    <dimen name="space_2">8dp</dimen>
+    <dimen name="space_3">12dp</dimen>
+    <dimen name="space_4">16dp</dimen>
+    <dimen name="space_5">20dp</dimen>
+    <dimen name="space_6">24dp</dimen>
+    <dimen name="space_8">32dp</dimen>
+    <dimen name="space_10">40dp</dimen>
+    <dimen name="space_12">48dp</dimen>
+
+    <!-- Corner radii (Phase 2 §4.2). Buttons are pill-shaped (radius_full). -->
+    <dimen name="radius_xs">4dp</dimen>
+    <dimen name="radius_s">8dp</dimen>
+    <dimen name="radius_m">12dp</dimen>
+    <dimen name="radius_l">16dp</dimen>
+    <dimen name="radius_xl">24dp</dimen>
+    <dimen name="radius_dialog">28dp</dimen>
+    <dimen name="radius_full">999dp</dimen>
+
+    <!-- Elevation levels (Phase 2 §4.3). -->
+    <dimen name="elevation_l0">0dp</dimen>
+    <dimen name="elevation_l1">1dp</dimen>
+    <dimen name="elevation_l2">3dp</dimen>
+    <dimen name="elevation_l3">6dp</dimen>
+    <dimen name="elevation_l4">8dp</dimen>
+    <dimen name="elevation_l5">12dp</dimen>
 </resources>

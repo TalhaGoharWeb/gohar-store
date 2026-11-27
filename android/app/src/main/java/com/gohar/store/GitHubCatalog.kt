@@ -62,13 +62,13 @@ object GitHubCatalog {
 
     /** Reads the live catalog.json from the repo. Runs off the main
      * thread; the callback always runs on the main thread. */
-    fun load(token: String, onResult: (Result<RemoteCatalog>) -> Unit) {
+    fun load(context: Context, token: String, onResult: (Result<RemoteCatalog>) -> Unit) {
         Thread {
             val result = runCatching {
                 val conn = openConnection(token, "GET")
                 val code = conn.responseCode
                 if (code != HttpURLConnection.HTTP_OK) {
-                    throw Exception(githubError(conn, code))
+                    throw Exception(githubError(context, conn, code))
                 }
                 val text = readAll(conn)
                 conn.disconnect()
@@ -92,6 +92,7 @@ object GitHubCatalog {
      * the matching GET — pass the new sha from the previous publish
      * when publishing twice in a row. */
     fun publish(
+        context: Context,
         token: String,
         catalog: Catalog,
         sha: String,
@@ -116,7 +117,7 @@ object GitHubCatalog {
                 conn.outputStream.use { it.write(body.toString().toByteArray(Charsets.UTF_8)) }
                 val code = conn.responseCode
                 if (code != HttpURLConnection.HTTP_OK && code != HttpURLConnection.HTTP_CREATED) {
-                    throw Exception(githubError(conn, code))
+                    throw Exception(githubError(context, conn, code))
                 }
                 val text = readAll(conn)
                 conn.disconnect()
@@ -144,8 +145,13 @@ object GitHubCatalog {
     private fun readAll(conn: HttpURLConnection): String =
         BufferedReader(InputStreamReader(conn.inputStream)).use { it.readText() }
 
-    /** Turns an HTTP failure into a plain-language message. */
-    private fun githubError(conn: HttpURLConnection, code: Int): String {
+    /** Turns an HTTP failure into a plain-language message (C-27).
+     * The HTTP codes, catalog.json and the repo name stay Latin
+     * (Phase 2 D16); they are inside the string resources. The 422
+     * and generic messages carry the live API message in %1$s /
+     * %2$s — when GitHub sent none, the slot is empty and the
+     * resource wording must still read acceptably. */
+    private fun githubError(context: Context, conn: HttpURLConnection, code: Int): String {
         val detail = try {
             conn.errorStream?.let {
                 BufferedReader(InputStreamReader(it)).use { r -> r.readText() }
@@ -159,12 +165,19 @@ object GitHubCatalog {
             ""
         }
         return when (code) {
-            401 -> "GitHub rejected the token (401). Check the token or generate a new one."
-            403 -> "GitHub refused the request (403). The token may lack the repo/Contents permission, or the rate limit was hit."
-            404 -> "catalog.json was not found in TalhaGoharWeb/talha-gohar-apps (404)."
-            409 -> "Someone changed the catalogue on GitHub — reload first, then publish again."
-            422 -> "GitHub rejected the update (422). ${apiMessage.ifBlank { "Check the catalogue content." }}"
-            else -> "GitHub request failed (HTTP $code). ${apiMessage.ifBlank { "Check the connection and try again." }}"
+            401 -> context.getString(R.string.github_error_401)
+            403 -> context.getString(R.string.github_error_403)
+            404 -> context.getString(R.string.github_error_404)
+            409 -> context.getString(R.string.github_error_409)
+            422 -> context.getString(
+                R.string.github_error_422,
+                apiMessage.ifBlank { "Check the catalogue content." },
+            )
+            else -> context.getString(
+                R.string.github_error_generic,
+                code.toString(),
+                apiMessage.ifBlank { "Check the connection and try again." },
+            )
         }
     }
 }

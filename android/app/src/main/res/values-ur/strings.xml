@@ -62,6 +62,13 @@
     <string name="details">تفصیلات</string>
     <string name="installed_older">انسٹال شدہ ورژن پرانا ہے — اپڈیٹ دستیاب ہے۔</string>
     <string name="installed_uptodate">انسٹال شدہ اور تازہ ترین ہے۔</string>
+    <string name="row_installed_suffix">· انسٹال شدہ</string>
+    <string name="detail_meta_version">ورژن %1$s (کوڈ %2$s)</string>
+    <string name="detail_meta_size">سائز %1$s</string>
+    <string name="detail_meta_developer">ڈیولپر %1$s</string>
+    <string name="detail_meta_category">زمرہ %1$s</string>
+    <string name="detail_meta_package">پیکیج %1$s</string>
+    <string name="detail_meta_minsdk">Android %1$s+ درکار ہے</string>
     <string name="downloading_progress">ڈاؤن لوڈ ہو رہا ہے… %1$d%%</string>
     <string name="could_not_open">%1$s کھولنا ممکن نہیں</string>
     <string name="no_download_link">%1$s کے لیے ابھی ڈاؤن لوڈ لنک نہیں ہے</string>
@@ -72,9 +79,13 @@
     <string name="download_in_progress">ڈاؤن لوڈ جاری ہے…</string>
     <string name="no_apps_search">کوئی ایپ اس تلاش سے مطابق نہیں۔</string>
     <string name="no_apps_installed">ابھی کوئی ایپ انسٹال نہیں۔\nدریافت کریں سے ایک انسٹال کریں، اپڈیٹس یہاں نظر آئیں گی۔</string>
+    <string name="no_updates_available">آپ کی تمام ایپس اپ ٹو ڈیٹ ہیں۔</string>
     <string name="store_footer">ڈاؤن لوڈ براہ راست طلحہ کے GitHub Releases سے آتے ہیں۔ پہلی بار اینڈرائیڈ طلحہ گوہر ایپس سے انسٹال کی اجازت مانگے گا — گوگل پلے سے باہر اسٹورز کے لیے یہ معمول ہے۔</string>
     <string name="language_urdu">اردو</string>
     <string name="language_english">English</string>
+    <string name="theme_dark">تاریک</string>
+    <string name="theme_light">روشن</string>
+    <string name="theme_system">سسٹم</string>
     <string name="size_unknown">سائز —</string>
 
     <!-- باہر نکلنے اور ان انسٹال کی تصدیق -->
@@ -85,6 +96,14 @@
     <string name="uninstall">ان انسٹال کریں</string>
     <string name="uninstall_title">%1$s ان انسٹال کریں؟</string>
     <string name="uninstall_message">اس سے %1$s اور اس کا ڈیٹا آپ کے فون سے ہٹ جائے گا۔</string>
+
+    <!-- کریش رپورٹ ڈائیلاگ -->
+    <string name="crash_title">پچھلی بار ایپ کریش ہو گئی تھی</string>
+    <string name="crash_instruction">براہ کرم یہ رپورٹ کاپی کر کے ہمیں بھیجیں تاکہ کریش ٹھیک کیا جا سکے۔</string>
+    <string name="crash_copy">رپورٹ کاپی کریں</string>
+    <string name="crash_dismiss">نظر انداز کریں</string>
+    <string name="crash_copied">کریش رپورٹ کاپی ہو گئی</string>
+    <string name="crash_copy_failed">رپورٹ کاپی نہیں ہو سکی</string>
 
     <!-- ڈیولپر کنسول -->
     <string name="developer_console">ڈیولپر کنسول</string>
@@ -99,9 +118,21 @@
     <string name="admin_status_dirty">%1$d ایپس · آخری اشاعت %2$s · غیر محفوظ شدہ تبدیلیاں</string>
     <string name="admin_status_readonly">صرف دیکھنے کے لیے — اسٹور کی موجودہ فہرست دکھائی جا رہی ہے۔ ترمیم کے لیے ٹوکن شامل کریں۔</string>
     <string name="admin_load_error">GitHub سے فہرست لوڈ نہیں ہو سکی</string>
+    <string name="github_error_401">GitHub نے ٹوکن مسترد کر دیا (401)۔ ٹوکن چیک کریں یا نیا ٹوکن بنائیں۔</string>
+    <string name="github_error_403">GitHub نے درخواست مسترد کر دی (403)۔ ہو سکتا ہے ٹوکن کے پاس repo/Contents کی اجازت نہ ہو، یا ریٹ لمٹ ختم ہو گئی ہو۔</string>
+    <string name="github_error_404">catalog.json TalhaGoharWeb/talha-gohar-apps میں نہیں ملا (404)۔</string>
+    <string name="github_error_409">کسی نے GitHub پر فہرست تبدیل کر دی — پہلے دوبارہ لوڈ کریں، پھر دوبارہ شائع کریں۔</string>
+    <string name="github_error_422">GitHub نے اپڈیٹ مسترد کر دی (422)۔ %1$s</string>
+    <string name="github_error_generic">GitHub درخواست ناکام ہو گئی (HTTP %1$s)۔ %2$s</string>
     <string name="admin_retry">دوبارہ کوشش کریں</string>
     <string name="admin_use_current">اسٹور کی موجودہ فہرست استعمال کریں (صرف دیکھنے کے لیے)</string>
+    <string name="admin_empty_catalogue">فہرست میں ابھی کوئی ایپ نہیں۔</string>
     <string name="admin_add_app">ایپ شامل کریں</string>
+    <string name="admin_update">اپڈیٹ کریں</string>
+    <string name="admin_manual_update_title">%1$s اپڈیٹ کریں</string>
+    <string name="admin_manual_update_ready">اپڈیٹ تیار ہے — لائیو کرنے کے لیے “تبدیلیاں شائع کریں” دبائیں</string>
+    <string name="admin_field_size_mb">سائز (MB میں، مثلاً 71.9)</string>
+    <string name="admin_error_apk_required">کم از کم ایک APK کا URL شامل کریں</string>
     <string name="admin_edit">ترمیم</string>
     <string name="admin_delete">حذف کریں</string>
     <string name="admin_delete_title">%1$s حذف کریں؟</string>
@@ -192,8 +223,22 @@
     <string name="no_google_linked">کوئی Google اکاؤنٹ لنک نہیں ہوا — ای میل سے سائن ان کریں، یا سیٹ اپ ری سیٹ کریں</string>
     <string name="google_sign_in_failed">Google سائن ان ناکام — یہ اکاؤنٹ لنک نہیں ہے</string>
     <string name="choose_google_account">Google اکاؤنٹ منتخب کریں</string>
+    <!-- پاس ورڈ بھول گئے (مالک کا حکم، 28 نومبر 2026): لنک شدہ Google
+         اکاؤنٹ ڈیوائس چنندہ سے تصدیق کر کے نیا پاس ورڈ سیٹ کرتا ہے؛
+         لنک شدہ اکاؤنٹ نہ ہو تو واحد طریقہ ری سیٹ ہے۔ -->
+    <string name="forgot_password">پاس ورڈ بھول گئے؟</string>
+    <string name="set_new_password">نیا پاس ورڈ سیٹ کریں</string>
+    <string name="set_new_password_intro">آپ نے اپنا لنک شدہ Google اکاؤنٹ تصدیق کر لیا ہے۔ نیا پاس ورڈ منتخب کریں — کم از کم 8 حروف۔ آپ کا ای میل اور لنک شدہ Google اکاؤنٹ ویسے ہی رہیں گے۔</string>
+    <string name="new_password">نیا پاس ورڈ</string>
+    <string name="save_new_password">نیا پاس ورڈ محفوظ کریں</string>
+    <string name="password_changed">پاس ورڈ تبدیل ہو گیا — سائن ان ہو گئے</string>
+    <string name="password_change_failed">پاس ورڈ تبدیل نہیں ہو سکا — دوبارہ کوشش کریں</string>
+    <string name="forgot_password_no_google_title">کوئی Google اکاؤنٹ لنک نہیں ہے</string>
+    <string name="forgot_password_no_google_message">ای میل سے پاس ورڈ ری سیٹ کرنے کا کوئی طریقہ نہیں — اس ایپ کا کوئی سرور نہیں ہے اور کوئی ری سیٹ لنک نہیں بھیجا جاتا۔ واحد طریقہ یہ ہے کہ اس فون پر مالک سائن ان مٹا کر دوبارہ سیٹ اپ کریں۔</string>
     <string name="drawer_open">مینیو کھولیں</string>
     <string name="drawer_close">مینیو بند کریں</string>
+    <!-- Viewer close button (C-13). PROPOSED wording — unconfirmed by the owner. -->
+    <string name="close">بند کریں</string>
     <string name="drawer_subtitle">محمد طلحہ بن فرید کی مفت ایپس</string>
     <string name="nav_version">ورژن %1$s</string>
 </resources>

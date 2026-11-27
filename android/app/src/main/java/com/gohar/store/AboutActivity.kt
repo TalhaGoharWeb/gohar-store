@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.gohar.store.databinding.ActivityAboutBinding
 
@@ -40,7 +39,7 @@ class AboutActivity : AppCompatActivity() {
         try {
             startActivity(intent)
         } catch (_: ActivityNotFoundException) {
-            Toast.makeText(this, R.string.author_no_browser, Toast.LENGTH_SHORT).show()
+            ToastHelper.show(this, ToastHelper.Type.ERROR, R.string.author_no_browser)
         }
     }
 
@@ -52,7 +51,7 @@ class AboutActivity : AppCompatActivity() {
         try {
             startActivity(intent)
         } catch (_: ActivityNotFoundException) {
-            Toast.makeText(this, R.string.author_no_email_app, Toast.LENGTH_SHORT).show()
+            ToastHelper.show(this, ToastHelper.Type.ERROR, R.string.author_no_email_app)
         }
     }
 

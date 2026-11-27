@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Drawer item text: navy when selected, dark slate otherwise. -->
+<!-- Drawer item text (light): navy when selected, slate otherwise
+     (I-4.0.3). The dark values live in res/color-night/drawer_item_text.xml. -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:color="@color/gohar_navy" android:state_checked="true" />
-    <item android:color="@color/gohar_text" />
+    <item android:color="@color/gohar_text_secondary" />
 </selector>

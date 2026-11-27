@@ -14,9 +14,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
-            android:background="@color/gohar_navy"
+            android:background="@color/toolbar_background"
             app:title="@string/admin_new_app"
-            app:titleTextColor="@android:color/white" />
+            app:titleTextColor="@color/toolbar_title" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/field_id_locked"
-                android:textSize="12sp"
+                android:textAppearance="@style/TextAppearance.GoharStore.Caption"
                 android:visibility="gone" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -203,14 +203,15 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/categoryLayout"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:layout_weight="1"
-                    android:hint="@string/field_category">
+                    android:hint="@string/field_category"
+                    app:endIconMode="dropdown_menu">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/editCategory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -219,15 +220,16 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/categoryUrLayout"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="12dp"
                     android:layout_weight="1"
-                    android:hint="@string/field_category_ur">
+                    android:hint="@string/field_category_ur"
+                    app:endIconMode="dropdown_menu">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/editCategoryUr"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -536,6 +538,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/admin_save_app"
+            android:textAppearance="@style/TextAppearance.GoharStore.LabelL"
             app:backgroundTint="@color/gohar_teal"
             app:cornerRadius="24dp" />
 

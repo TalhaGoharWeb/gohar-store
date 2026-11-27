@@ -1,28 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/viewerRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black">
+    android:background="?android:attr/colorBackground">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/viewerList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/viewerCounter"
+    <!-- Thumbnail strip (C-58): horizontal, same screenshot list.
+         Bottom bar only — it never reaches the top, so it cannot cover
+         the counter chip or the ✕ button. Background is the Phase 2
+         surface token; each thumb is a 48x72dp card built in code
+         (ThumbAdapter) — no new layout file. GONE until the catalogue
+         loads, so no empty bar shows while the app is resolving.
+         Horizontal swipes on the strip scroll the strip; swipes that
+         start on the main image above it still page the viewer. -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/thumbStrip"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:background="@color/colorSurface"
+        android:clipToPadding="false"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="8dp"
+        android:visibility="gone" />
+
+    <!-- Counter chip (C-08): solid surface, toolbar_title text,
+         toolbar_subtitle outline. A card carries the outline — no new
+         drawable. updateCounter() still sets viewerCounter text. -->
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
         android:layout_marginTop="40dp"
-        android:background="@drawable/chip_translucent"
-        android:paddingStart="14dp"
-        android:paddingTop="6dp"
-        android:paddingEnd="14dp"
-        android:paddingBottom="6dp"
-        android:textColor="@android:color/white"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        app:cardBackgroundColor="?attr/colorSurface"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/toolbar_subtitle"
+        app:strokeWidth="1dp">
+
+        <TextView
+            android:id="@+id/viewerCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="14dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="14dp"
+            android:paddingBottom="6dp"
+            android:textAppearance="@style/TextAppearance.GoharStore.Caption"
+            android:textColor="@color/toolbar_title"
+            android:textStyle="bold" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Discreet 48dp close button, top-end (C-13). Borderless by design
+         (D-3.3 "discreet"); the counter chip carries the outline treatment.
+         The Kotlin worker wires viewerClose to finish(). -->
+    <ImageButton
+        android:id="@+id/viewerClose"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/close"
+        android:scaleType="center"
+        android:src="@drawable/ic_close"
+        android:tint="@color/toolbar_title" />
 
 </FrameLayout>

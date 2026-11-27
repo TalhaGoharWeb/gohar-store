@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
-import android.widget.Toast
 import androidx.core.content.FileProvider
 import java.io.File
 
@@ -51,7 +50,10 @@ object StoreActions {
     fun openApp(context: Context, app: StoreApp) {
         val intent = context.packageManager.getLaunchIntentForPackage(app.packageName)
         if (intent != null) context.startActivity(intent)
-        else Toast.makeText(context, context.getString(R.string.could_not_open, app.name), Toast.LENGTH_SHORT).show()
+        else ToastHelper.show(
+            context, ToastHelper.Type.ERROR,
+            context.getString(R.string.could_not_open, app.name),
+        )
     }
 
     /** The finished APK. (Downloads live in cacheDir/downloads/ so
@@ -80,15 +82,17 @@ object StoreActions {
     fun startDownload(context: Context, app: StoreApp) {
         val url = app.downloadUrl()
         if (url.isNullOrBlank()) {
-            Toast.makeText(context, context.getString(R.string.no_download_link, app.name), Toast.LENGTH_SHORT).show()
+            ToastHelper.show(
+                context, ToastHelper.Type.ERROR,
+                context.getString(R.string.no_download_link, app.name),
+            )
             return
         }
         if (!canInstallFromUnknownSources(context)) {
-            Toast.makeText(
-                context,
-                "Allow installs from Talha Gohar Apps first — opening settings",
-                Toast.LENGTH_LONG,
-            ).show()
+            ToastHelper.show(
+                context, ToastHelper.Type.ERROR,
+                R.string.allow_install_first, long = true,
+            )
             val intent = Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply {
                 data = Uri.parse("package:${context.packageName}")
             }
@@ -99,7 +103,10 @@ object StoreActions {
         // resume=true: a failed or paused attempt continues its .part;
         // a fresh download has no .part, so this is also a clean start.
         AppDownloader.start(context, app, resume = true)
-        Toast.makeText(context, context.getString(R.string.downloading_app, app.name), Toast.LENGTH_SHORT).show()
+        ToastHelper.show(
+            context, ToastHelper.Type.INFO,
+            context.getString(R.string.downloading_app, app.name),
+        )
     }
 
     /** Resume a paused download (same as starting — the .part is kept). */
@@ -129,16 +136,15 @@ object StoreActions {
                 data = Uri.parse("package:${context.packageName}")
             }
             context.startActivity(intent)
-            Toast.makeText(
-                context,
-                "Allow installs from Talha Gohar Apps, then tap Install again",
-                Toast.LENGTH_LONG,
-            ).show()
+            ToastHelper.show(
+                context, ToastHelper.Type.ERROR,
+                R.string.allow_install_again, long = true,
+            )
             return
         }
         val file = apkFile(context, app)
         if (!file.exists()) {
-            Toast.makeText(context, context.getString(R.string.download_apk_first), Toast.LENGTH_SHORT).show()
+            ToastHelper.show(context, ToastHelper.Type.ERROR, R.string.download_apk_first)
             return
         }
         val uri = FileProvider.getUriForFile(
@@ -172,14 +178,14 @@ object StoreActions {
             AppState.READY_TO_INSTALL -> installDownloaded(context, app)
             AppState.INSTALLED -> openApp(context, app)
             AppState.PAUSED -> resumeDownload(context, app)
-            AppState.DOWNLOADING -> Toast.makeText(
-                context, context.getString(R.string.download_in_progress), Toast.LENGTH_SHORT,
-            ).show()
-            AppState.COMING_SOON -> Toast.makeText(
-                context,
+            AppState.DOWNLOADING -> ToastHelper.show(
+                context, ToastHelper.Type.ERROR, R.string.download_in_progress,
+            )
+            AppState.COMING_SOON -> ToastHelper.show(
+                context, ToastHelper.Type.INFO,
                 app.displayComingSoon() ?: context.getString(R.string.coming_soon),
-                Toast.LENGTH_LONG,
-            ).show()
+                long = true,
+            )
         }
     }
 

@@ -14,9 +14,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
-            android:background="@color/gohar_navy"
+            android:background="@color/toolbar_background"
             app:title="@string/about_author"
-            app:titleTextColor="@android:color/white" />
+            app:titleTextColor="@color/toolbar_title" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -58,9 +58,8 @@
                     android:layout_marginTop="18dp"
                     android:gravity="center"
                     android:text="@string/author_name"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.Display"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -68,28 +67,26 @@
                     android:layout_marginTop="4dp"
                     android:gravity="center"
                     android:text="@string/author_roles"
-                    android:textColor="@color/gohar_gold"
-                    android:textSize="13sp" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.BodyS"
+                    android:textColor="@color/gohar_gold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:gravity="center"
-                    android:lineSpacingMultiplier="1.25"
                     android:text="@string/author_intro"
-                    android:textColor="#DCE8F5"
-                    android:textSize="15sp" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.BodyL"
+                    android:textColor="#DCE8F5" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:lineSpacingMultiplier="1.25"
                     android:text="@string/author_intro_2"
-                    android:textColor="#DCE8F5"
-                    android:textSize="15sp" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.BodyL"
+                    android:textColor="#DCE8F5" />
 
             </LinearLayout>
 
@@ -106,73 +103,61 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:letterSpacing="0.12"
                     android:text="@string/author_fiqh_title"
-                    android:textColor="@color/gohar_teal"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.LabelM"
+                    android:textColor="@color/gohar_teal" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:lineSpacingMultiplier="1.25"
                     android:text="@string/author_fiqh"
-                    android:textSize="15sp" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.BodyL" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:letterSpacing="0.12"
                     android:text="@string/author_literary_title"
-                    android:textColor="@color/gohar_teal"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.LabelM"
+                    android:textColor="@color/gohar_teal" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:lineSpacingMultiplier="1.25"
                     android:text="@string/author_literary"
-                    android:textSize="15sp" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.BodyL" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:letterSpacing="0.12"
                     android:text="@string/author_dev_title"
-                    android:textColor="@color/gohar_teal"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.LabelM"
+                    android:textColor="@color/gohar_teal" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:lineSpacingMultiplier="1.25"
                     android:text="@string/author_dev"
-                    android:textSize="15sp" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.BodyL" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:letterSpacing="0.12"
                     android:text="@string/author_malikimadhab_title"
-                    android:textColor="@color/gohar_teal"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.LabelM"
+                    android:textColor="@color/gohar_teal" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:lineSpacingMultiplier="1.25"
                     android:text="@string/author_malikimadhab"
-                    android:textSize="15sp" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.BodyL" />
 
                 <!-- Tapping opens the Malikimadhab.org site in the
                      browser (verified live). -->
@@ -183,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="@string/author_malikimadhab_visit"
-                    android:textSize="14sp"
+                    android:textAppearance="@style/TextAppearance.GoharStore.LabelL"
                     app:cornerRadius="24dp"
                     app:strokeColor="@color/gohar_teal"
                     android:textColor="@color/gohar_teal" />
@@ -192,19 +177,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:letterSpacing="0.12"
                     android:text="@string/author_vision_title"
-                    android:textColor="@color/gohar_teal"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.LabelM"
+                    android:textColor="@color/gohar_teal" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:lineSpacingMultiplier="1.25"
                     android:text="@string/author_vision"
-                    android:textSize="15sp" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.BodyL" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -220,11 +202,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:letterSpacing="0.12"
                     android:text="@string/author_contact_title"
-                    android:textColor="@color/gohar_teal"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
+                    android:textAppearance="@style/TextAppearance.GoharStore.LabelM"
+                    android:textColor="@color/gohar_teal" />
 
                 <!-- Tapping the card opens the email app. The address
                      stays in a Latin font even in the Urdu locale, so
@@ -252,7 +232,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/author_contact_note"
-                            android:textSize="14sp" />
+                            android:textAppearance="@style/TextAppearance.GoharStore.BodyS" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -275,7 +255,7 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="16dp"
                     android:text="@string/author_view_apps"
-                    android:textSize="15sp"
+                    android:textAppearance="@style/TextAppearance.GoharStore.LabelL"
                     app:backgroundTint="@color/gohar_navy"
                     app:cornerRadius="24dp"
                     android:textColor="@android:color/white" />

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Skeleton home row (C-52, Phase 5 §G1): tile + two lines + pill,
+     mirroring item_app.xml. Fills use Phase 2 surface/container
+     tokens only — card ?attr/colorSurface, bars
+     ?attr/colorSurfaceContainerHighest (dark #24487A / light #DCD9D1).
+     No text, no icon: the gentle alpha pulse is applied to the
+     loading container in MainActivity, not here. -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/app_card_margin"
+    android:layout_marginTop="@dimen/app_card_margin_top"
+    android:layout_marginEnd="@dimen/app_card_margin"
+    app:cardBackgroundColor="?attr/colorSurface"
+    app:cardCornerRadius="@dimen/radius_l"
+    app:cardElevation="2dp"
+    app:strokeColor="?attr/colorOutlineVariant"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <View
+            android:layout_width="@dimen/app_row_icon_size"
+            android:layout_height="@dimen/app_row_icon_size"
+            android:background="?attr/colorSurfaceContainerHighest" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="14dp"
+                android:layout_marginEnd="80dp"
+                android:background="?attr/colorSurfaceContainerHighest" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="40dp"
+                android:background="?attr/colorSurfaceContainerHighest" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="88dp"
+            android:layout_height="36dp"
+            android:background="?attr/colorSurfaceContainerHighest" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

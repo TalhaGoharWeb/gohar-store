@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bottom navigation icon tint (light, I-4.0.11): checked teal-dark
+     lt_success_text #0A6E6D, unchecked Slate #5A6B84. BottomNavigationView
+     drives the checked state for the selected item. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/gohar_teal_dark" android:state_checked="true" />
+    <item android:color="@color/gohar_text_secondary" />
+</selector>

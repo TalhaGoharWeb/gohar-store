@@ -12,7 +12,7 @@ works as the alternative.
 
 ## The developer console (recommended)
 
-Open the store app → ⋮ menu → **Developer console**.
+Open the store app → open the navigation drawer → **Developer console**.
 
 - **First time:** paste a GitHub Personal Access Token. Create one
   at GitHub → Settings → Developer settings → Personal access
@@ -29,7 +29,7 @@ Open the store app → ⋮ menu → **Developer console**.
   **Delete** asks for confirmation. A ticked **Featured** box moves
   the home-screen hero to that app.
 - **Publish changes:** edits are held on the phone until you tap
-  **Publish changes** (⋮ menu). That writes the new `catalog.json`
+  **Publish changes** (drawer menu). That writes the new `catalog.json`
   straight to the `talha-gohar-apps` repo on GitHub, and within seconds
   every installed Talha Gohar Apps refreshes from it — pull down on
   the home screen, or tap **Check for updates**. No new store APK is
@@ -61,25 +61,25 @@ text…) stays exactly as it is — use full **Edit** for those.
   asks first ("Save anyway?") — users only see an update when the
   code rises.
 - Saving only **stages** the change on the phone. Tap **Publish
-  changes** (⋮ menu) to make it live, exactly like any other console
+  changes** (drawer menu) to make it live, exactly like any other console
   edit.
 
 ## Owner sign-in (who sees the developer console)
 
-The console is owner-only. In the ⋮ menu, **Developer console**
+The console is owner-only. In the drawer, **Developer console**
 only appears while you are signed in as the owner; everyone else
 just sees **Owner sign-in**.
 
-- **First time:** open ⋮ → **Owner sign-in**. There is no owner yet,
+- **First time:** open the drawer → **Owner sign-in**. There is no owner yet,
   so it asks you to set one up: an email and a password (8+
   characters) that only you know. You can also tap **Link Google
   account** and pick one of your Google accounts — after that,
   **Continue with Google** signs you in with that account. Only the
   salted hash of the password is stored on the phone, never the
   password itself.
-- **Later:** ⋮ → **Owner sign-in** → email + password, or Continue
+- **Later:** drawer → **Owner sign-in** → email + password, or Continue
   with Google. The console item appears right away; **Sign out** in
-  the ⋮ menu hides it again.
+  the drawer hides it again.
 - **Forgot the password, or a new phone:** on the sign-in screen,
   **Reset owner sign-in** erases the owner setup on that phone
   (after a confirmation) and you set it up again from scratch.

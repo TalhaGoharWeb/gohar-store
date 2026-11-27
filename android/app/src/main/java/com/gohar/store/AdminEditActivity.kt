@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.gohar.store.databinding.ActivityAdminEditBinding
@@ -34,7 +37,52 @@ class AdminEditActivity : AppCompatActivity() {
             Regex("^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$")
         private val COLOR_REGEX =
             Regex("^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$")
+
+        /** C-56: the five catalogue categories, English paired with
+         * Urdu — the exact pairs in catalog.json. The dropdown only
+         * suggests these; free text is still allowed. */
+        private val CATEGORY_PAIRS = listOf(
+            "Agriculture" to "زراعت",
+            "Books & Reference" to "کتب و حوالہ",
+            "Education" to "تعلیم",
+            "Finance" to "مالیات",
+            "Lifestyle" to "طرزِ زندگی",
+        )
     }
+
+    /** C-57: the form exactly as it opened (after bind + the C-56
+     * pairing pre-fill), normalised the same way [collect] reads it —
+     * trimmed text, blank lines dropped from multi-line lists — so a
+     * trailing space or blank line never counts as a change. */
+    private data class FormState(
+        val id: String,
+        val name: String,
+        val nameUr: String,
+        val developer: String,
+        val packageName: String,
+        val versionName: String,
+        val versionCode: String,
+        val sizeBytes: String,
+        val minSdk: String,
+        val category: String,
+        val categoryUr: String,
+        val tagline: String,
+        val taglineUr: String,
+        val description: String,
+        val descriptionUr: String,
+        val whatsNew: String,
+        val whatsNewUr: String,
+        val iconUrl: String,
+        val iconColor: String,
+        val iconColor2: String,
+        val apkUrl: String,
+        val apkUrlArm64: String,
+        val apkUrlArmv7: String,
+        val screenshots: String,
+        val comingSoon: String,
+        val comingSoonUr: String,
+        val featured: Boolean,
+    )
 
     private lateinit var binding: ActivityAdminEditBinding
     private var isNew = true
@@ -42,6 +90,7 @@ class AdminEditActivity : AppCompatActivity() {
     private var originalApp: StoreApp? = null
     private var existingIds: List<String> = emptyList()
     private var existingPackages: List<String> = emptyList()
+    private var openedForm: FormState? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,13 +114,118 @@ class AdminEditActivity : AppCompatActivity() {
 
         supportActionBar?.title =
             getString(if (isNew) R.string.admin_new_app else R.string.admin_edit_app)
+        setupCategoryDropdowns()
         bind(app)
         binding.saveButton.setOnClickListener { attemptSave() }
+
+        // C-57: toolbar back and system back share this path —
+        // onSupportNavigateUp routes through the dispatcher below.
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (hasUnsavedChanges()) confirmDiscardEdit() else finish()
+            }
+        })
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        finish()
+        onBackPressedDispatcher.onBackPressed()
         return true
+    }
+
+    /** C-56: exposed dropdowns on both category fields. Picking an
+     * entry fills the paired field with its counterpart; typing is
+     * untouched — a custom value in either field never overwrites
+     * the other, and any text (not just a listed pair) still saves.
+     * Pairing happens only on a dropdown pick, never on keystrokes,
+     * so typing an exact pair value by hand leaves the other field
+     * alone. Look-up is by the picked string, not the list position,
+     * so it stays correct when the list is filtered by typing. */
+    private fun setupCategoryDropdowns() {
+        binding.editCategory.setAdapter(
+            categoryAdapter(CATEGORY_PAIRS.map { it.first }, urdu = false),
+        )
+        binding.editCategoryUr.setAdapter(
+            categoryAdapter(CATEGORY_PAIRS.map { it.second }, urdu = true),
+        )
+        binding.editCategory.setOnItemClickListener { parent, _, position, _ ->
+            val selected = parent.getItemAtPosition(position) as? String
+                ?: return@setOnItemClickListener
+            CATEGORY_PAIRS.firstOrNull { it.first == selected }?.let { pair ->
+                binding.editCategoryUr.setText(pair.second, false)
+            }
+        }
+        binding.editCategoryUr.setOnItemClickListener { parent, _, position, _ ->
+            val selected = parent.getItemAtPosition(position) as? String
+                ?: return@setOnItemClickListener
+            CATEGORY_PAIRS.firstOrNull { it.second == selected }?.let { pair ->
+                binding.editCategory.setText(pair.first, false)
+            }
+        }
+    }
+
+    private fun categoryAdapter(items: List<String>, urdu: Boolean) =
+        object : ArrayAdapter<String>(
+            this, android.R.layout.simple_list_item_1, items,
+        ) {
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view = super.getView(position, convertView, parent)
+                // Dropdown rows are created in code, so the Urdu list
+                // needs the Nastaleeq font applied explicitly — the
+                // same rule as applyUrduFontIfNeeded's callers.
+                if (urdu) (view as? TextView)?.let { applyUrduFontIfNeeded(it) }
+                return view
+            }
+        }
+
+    /** C-57: mirrors the console's D-08 discard confirmation
+     * (AdminActivity.confirmDiscard) — same strings, same button
+     * styling, destructive = false. Discard finishes without saving;
+     * Cancel dismisses and keeps editing. */
+    private fun confirmDiscardEdit() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.admin_discard_title)
+            .setMessage(R.string.admin_discard_message)
+            .setPositiveButton(R.string.admin_discard) { _, _ -> finish() }
+            .setNegativeButton(R.string.admin_cancel, null)
+            .show()
+            .also { styleDialogButtons(it, destructive = false) }
+    }
+
+    private fun hasUnsavedChanges(): Boolean {
+        val opened = openedForm ?: return false
+        return snapshotForm() != opened
+    }
+
+    private fun snapshotForm(): FormState = with(binding) {
+        FormState(
+            id = text(editId),
+            name = text(editName),
+            nameUr = text(editNameUr),
+            developer = text(editDeveloper),
+            packageName = text(editPackageName),
+            versionName = text(editVersionName),
+            versionCode = text(editVersionCode),
+            sizeBytes = text(editSizeBytes),
+            minSdk = text(editMinSdk),
+            category = text(editCategory),
+            categoryUr = text(editCategoryUr),
+            tagline = text(editTagline),
+            taglineUr = text(editTaglineUr),
+            description = text(editDescription),
+            descriptionUr = text(editDescriptionUr),
+            whatsNew = lines(editWhatsNew).joinToString("\n"),
+            whatsNewUr = lines(editWhatsNewUr).joinToString("\n"),
+            iconUrl = text(editIconUrl),
+            iconColor = text(editIconColor),
+            iconColor2 = text(editIconColor2),
+            apkUrl = text(editApkUrl),
+            apkUrlArm64 = text(editApkUrlArm64),
+            apkUrlArmv7 = text(editApkUrlArmv7),
+            screenshots = lines(editScreenshots).joinToString("\n"),
+            comingSoon = text(editComingSoon),
+            comingSoonUr = text(editComingSoonUr),
+            featured = featuredCheck.isChecked,
+        )
     }
 
     private fun blankApp(): StoreApp = StoreApp(
@@ -116,8 +270,22 @@ class AdminEditActivity : AppCompatActivity() {
             editVersionName.setText(app.versionName)
             editVersionCode.setText(if (app.versionCode > 0) app.versionCode.toString() else "")
             editSizeBytes.setText(if (app.sizeBytes > 0) app.sizeBytes.toString() else "")
-            editCategory.setText(app.category)
-            editCategoryUr.setText(app.categoryUr ?: "")
+            editCategory.setText(app.category, false)
+            editCategoryUr.setText(app.categoryUr ?: "", false)
+            // C-56 Edit pre-fill: a stored category shows as-is; when
+            // its counterpart was never stored, fill the paired label
+            // (e.g. Agriculture -> زراعت). A stored counterpart — even
+            // one that is not the pair — is never overwritten.
+            if (app.categoryUr.isNullOrBlank()) {
+                CATEGORY_PAIRS.firstOrNull { it.first == app.category }?.let { pair ->
+                    editCategoryUr.setText(pair.second, false)
+                }
+            }
+            if (app.category.isBlank()) {
+                CATEGORY_PAIRS.firstOrNull { it.second == app.categoryUr }?.let { pair ->
+                    editCategory.setText(pair.first, false)
+                }
+            }
             editTagline.setText(app.tagline)
             editTaglineUr.setText(app.taglineUr ?: "")
             editDescription.setText(app.description)
@@ -151,6 +319,9 @@ class AdminEditActivity : AppCompatActivity() {
         }
         refreshLetter()
         refreshIconImage()
+        // C-57: snapshot AFTER the pairing pre-fill above, so a
+        // paired label filled in on open is not itself a "change".
+        openedForm = snapshotForm()
     }
 
     private fun gradientFor(color1: String, color2: String): GradientDrawable {
@@ -285,7 +456,7 @@ class AdminEditActivity : AppCompatActivity() {
             b.screenshotsLayout.error = getString(R.string.error_url); ok = false
         }
         if (!ok) {
-            Toast.makeText(this, R.string.admin_fix_errors, Toast.LENGTH_SHORT).show()
+            ToastHelper.show(this, ToastHelper.Type.ERROR, R.string.admin_fix_errors)
             return null
         }
         return StoreApp(
@@ -334,6 +505,7 @@ class AdminEditActivity : AppCompatActivity() {
                 .setPositiveButton(R.string.admin_save_anyway) { _, _ -> finishWith(app) }
                 .setNegativeButton(R.string.admin_go_back, null)
                 .show()
+                .also { styleDialogButtons(it, destructive = false) }
             return
         }
         finishWith(app)

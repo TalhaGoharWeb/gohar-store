@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bottom navigation label text (dark, I-4.0.11): checked Turquoise
+     md_secondary #17D6B5, unchecked Slate #8291AA. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/gohar_teal" android:state_checked="true" />
+    <item android:color="@color/gohar_text_secondary" />
+</selector>

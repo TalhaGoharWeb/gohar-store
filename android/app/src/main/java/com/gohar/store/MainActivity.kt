@@ -1,5 +1,7 @@
 package com.gohar.store
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -9,6 +11,7 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
@@ -20,7 +23,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -44,6 +46,14 @@ class MainActivity : AppCompatActivity() {
     private var query: String = ""
     private var category: String = ""
     private var tab: Tab = Tab.DISCOVER
+    /** Skeleton pulse animator (C-52): created when the first-load
+     * skeleton shows, cancelled when it hides / on destroy. */
+    private var skeletonAnimator: ObjectAnimator? = null
+    /** Hidden owner entry (owner decision 28 Nov ~03:17 PKT): taps
+     * on the drawer-header version, with the time of the last tap.
+     * The count resets if >2 s passes between taps. */
+    private var versionTapCount = 0
+    private var lastVersionTapTime = 0L
     private val refreshHandler = Handler(Looper.getMainLooper())
     private val refreshRunnable = object : Runnable {
         override fun run() {
@@ -123,9 +133,15 @@ class MainActivity : AppCompatActivity() {
             handleDrawerItem(item)
             true
         }
-        binding.navView.getHeaderView(0)
+        // Hidden owner entry (owner decision 28 Nov ~03:17 PKT):
+        // the version label stays visible and unstyled; 5 taps on
+        // it within ~2 s of each other open the owner sign-in (or
+        // the console when already signed in). Silent until it
+        // triggers — no toast, no feedback.
+        val navVersion = binding.navView.getHeaderView(0)
             .findViewById<TextView>(R.id.navVersion)
-            .text = getString(R.string.nav_version, BuildConfig.VERSION_NAME)
+        navVersion.text = getString(R.string.nav_version, BuildConfig.VERSION_NAME)
+        navVersion.setOnClickListener { onVersionTap() }
         updateDrawerMenu()
 
         // Start as a plain list; setupResponsive() swaps in a grid on
@@ -144,7 +160,16 @@ class MainActivity : AppCompatActivity() {
         })
 
         binding.swipe.setOnRefreshListener { reload() }
-        binding.swipe.setColorSchemeColors(Color.parseColor("#0E9594"))
+        // Pull-to-refresh spinner in the theme secondary colour
+        // (C-40): Turquoise in dark, theme secondary in light.
+        val spinnerColor = TypedValue()
+        if (theme.resolveAttribute(
+                com.google.android.material.R.attr.colorSecondary,
+                spinnerColor, true,
+            )
+        ) {
+            binding.swipe.setColorSchemeColors(spinnerColor.data)
+        }
         binding.refreshButton.setOnClickListener { reload() }
         AppDownloader.addListener(downloadListener)
 
@@ -187,8 +212,11 @@ class MainActivity : AppCompatActivity() {
         }
         try {
             val instruction = TextView(this).apply {
-                text = "Please copy this report and send it to us so the crash can be fixed."
+                text = getString(R.string.crash_instruction)
                 setPadding(48, 32, 48, 16)
+                // Created in code, so the theme's fontFamily does not
+                // apply — Urdu needs Nastaleeq explicitly (C-47).
+                applyUrduFontIfNeeded(this)
             }
             val traceView = TextView(this).apply {
                 text = report
@@ -202,22 +230,23 @@ class MainActivity : AppCompatActivity() {
                 addView(scroll)
             }
             AlertDialog.Builder(this)
-                .setTitle("The app crashed last time")
+                .setTitle(R.string.crash_title)
                 .setView(content)
-                .setPositiveButton("Copy report") { _, _ ->
+                .setPositiveButton(R.string.crash_copy) { _, _ ->
                     try {
                         val clipboard =
                             getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                         clipboard.setPrimaryClip(
                             ClipData.newPlainText("crash report", report),
                         )
-                        Toast.makeText(this, "Crash report copied", Toast.LENGTH_SHORT).show()
+                        ToastHelper.show(this, ToastHelper.Type.SUCCESS, R.string.crash_copied)
                     } catch (_: Exception) {
-                        Toast.makeText(this, "Could not copy the report", Toast.LENGTH_SHORT).show()
+                        ToastHelper.show(this, ToastHelper.Type.ERROR, R.string.crash_copy_failed)
                     }
                 }
-                .setNegativeButton("Dismiss") { _, _ -> file.delete() }
+                .setNegativeButton(R.string.crash_dismiss) { _, _ -> file.delete() }
                 .show()
+                .also { styleDialogButtons(it, destructive = false) }
         } catch (_: Exception) {
             // Showing the report must never crash the app itself.
         }
@@ -231,19 +260,61 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton(R.string.exit_confirm) { _, _ -> finish() }
             .setNegativeButton(R.string.dialog_cancel, null)
             .show()
+            .also { styleDialogButtons(it, destructive = false) }
     }
 
-    /** Drawer item visibility, same rules the old overflow menu had:
-     * the developer console is owner-only (it only shows while the
-     * owner is signed in; everyone else just sees "Owner sign-in"),
-     * and "Show featured app" only shows while the hero is dismissed. */
+    /** Drawer item visibility: "Sign out" shows only while the
+     * owner is signed in; there is no visible owner entry point —
+     * sign-in / console are reached only via the hidden version-tap
+     * (onVersionTap). "Show featured app" only shows while the hero
+     * is dismissed. */
     private fun updateDrawerMenu() {
         val signedIn = AuthManager.isOwnerSignedIn(this)
         val menu = binding.navView.menu
-        menu.findItem(R.id.developer_console)?.isVisible = signedIn
-        menu.findItem(R.id.owner_sign_in)?.isVisible = !signedIn
         menu.findItem(R.id.owner_sign_out)?.isVisible = signedIn
         menu.findItem(R.id.show_featured)?.isVisible = isHeroDismissed()
+        // Mark the active language (C-14) and the active theme
+        // (I-4.0.8) with the selected-item background, so the user can
+        // see which locale / theme is active.
+        val urdu = StoreApp.useUrdu()
+        menu.findItem(R.id.language_urdu)?.isChecked = urdu
+        menu.findItem(R.id.language_english)?.isChecked = !urdu
+        val themeMode = getSharedPreferences(GoharStoreApp.PREFS_UI, MODE_PRIVATE)
+            .getString(GoharStoreApp.KEY_THEME_MODE, GoharStoreApp.THEME_SYSTEM)
+            ?: GoharStoreApp.THEME_SYSTEM
+        menu.findItem(R.id.theme_dark)?.isChecked = themeMode == GoharStoreApp.THEME_DARK
+        menu.findItem(R.id.theme_light)?.isChecked = themeMode == GoharStoreApp.THEME_LIGHT
+        menu.findItem(R.id.theme_system)?.isChecked = themeMode == GoharStoreApp.THEME_SYSTEM
+    }
+
+    /** Drawer theme choice (I-4.0.8): save it, apply it, and recreate
+     * so the new theme takes effect immediately. */
+    private fun setThemeMode(mode: String) {
+        getSharedPreferences(GoharStoreApp.PREFS_UI, MODE_PRIVATE).edit()
+            .putString(GoharStoreApp.KEY_THEME_MODE, mode).apply()
+        GoharStoreApp.applySavedThemeMode(this)
+        updateDrawerMenu()
+        recreate()
+    }
+
+    /** Hidden owner entry (owner decision 28 Nov ~03:17 PKT):
+     * 5 taps on the drawer-header version, each within ~2 s of the
+     * previous one, open the owner sign-in when signed out, or the
+     * Developer Console when already signed in. The drawer closes
+     * first; the gesture is silent until it triggers. */
+    private fun onVersionTap() {
+        val now = SystemClock.uptimeMillis()
+        if (now - lastVersionTapTime > 2000) versionTapCount = 0
+        lastVersionTapTime = now
+        versionTapCount++
+        if (versionTapCount < 5) return
+        versionTapCount = 0
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
+        if (AuthManager.isOwnerSignedIn(this)) {
+            startActivity(Intent(this, AdminActivity::class.java))
+        } else {
+            startActivity(Intent(this, AuthActivity::class.java))
+        }
     }
 
     /** One tap in the drawer = one action, then the drawer closes.
@@ -252,21 +323,16 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.show_featured -> setHeroDismissed(false)
             R.id.about_author -> startActivity(Intent(this, AboutActivity::class.java))
-            R.id.developer_console -> {
-                if (AuthManager.isOwnerSignedIn(this)) {
-                    startActivity(Intent(this, AdminActivity::class.java))
-                } else {
-                    startActivity(Intent(this, AuthActivity::class.java))
-                }
-            }
-            R.id.owner_sign_in -> startActivity(Intent(this, AuthActivity::class.java))
             R.id.owner_sign_out -> {
                 AuthManager.signOut(this)
-                Toast.makeText(this, R.string.signed_out, Toast.LENGTH_SHORT).show()
+                ToastHelper.show(this, ToastHelper.Type.INFO, R.string.signed_out)
                 updateDrawerMenu()
             }
             R.id.language_urdu -> AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ur"))
             R.id.language_english -> AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
+            R.id.theme_dark -> setThemeMode(GoharStoreApp.THEME_DARK)
+            R.id.theme_light -> setThemeMode(GoharStoreApp.THEME_LIGHT)
+            R.id.theme_system -> setThemeMode(GoharStoreApp.THEME_SYSTEM)
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
@@ -285,6 +351,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        skeletonAnimator?.cancel()
+        skeletonAnimator = null
         AppDownloader.removeListener(downloadListener)
         super.onDestroy()
     }
@@ -316,15 +384,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun reload() {
-        // First load only: show the real loading state while the list
+        // First load only: show the skeleton rows while the list
         // is still empty. Pull-to-refresh with data keeps the list and
         // just spins the swipe indicator.
-        if (catalog.apps.isEmpty()) binding.loadingState.visibility = View.VISIBLE
+        if (catalog.apps.isEmpty()) showSkeleton()
         binding.swipe.isRefreshing = true
         CatalogLoader.load(this) { loaded ->
             catalog = loaded
             binding.swipe.isRefreshing = false
-            binding.loadingState.visibility = View.GONE
+            hideSkeleton()
             binding.sourceNote.text = if (loaded.fromRemote) {
                 getString(R.string.online_catalogue, loaded.updated)
             } else {
@@ -333,6 +401,32 @@ class MainActivity : AppCompatActivity() {
             buildChips()
             refreshList()
         }
+    }
+
+    /** First-load skeleton (C-52, Phase 5 §G1): framework-only
+     * gentle alpha pulse (0.55 ↔ 1.0, 1 s, reverse-repeat) — no new
+     * dependency, no shimmer library. The load callback always runs
+     * (CatalogLoader falls back to the bundled copy, then to an empty
+     * catalogue), so hideSkeleton() runs on success, on error, and
+     * on empty — the skeleton never sticks. */
+    private fun showSkeleton() {
+        binding.loadingState.visibility = View.VISIBLE
+        skeletonAnimator?.cancel()
+        skeletonAnimator = ObjectAnimator.ofFloat(
+            binding.loadingState, View.ALPHA, 0.55f, 1f,
+        ).apply {
+            duration = 1000
+            repeatMode = ValueAnimator.REVERSE
+            repeatCount = ValueAnimator.INFINITE
+            start()
+        }
+    }
+
+    private fun hideSkeleton() {
+        skeletonAnimator?.cancel()
+        skeletonAnimator = null
+        binding.loadingState.alpha = 1f
+        binding.loadingState.visibility = View.GONE
     }
 
     private fun buildChips() {
@@ -364,8 +458,9 @@ class MainActivity : AppCompatActivity() {
     private fun visibleApps(): List<StoreApp> {
         var list = catalog.apps
         if (tab == Tab.UPDATES) {
-            list = list.filter { StoreActions.installedVersionCode(this, it.packageName) != null }
-                .sortedByDescending { StoreActions.stateFor(this, it) == AppState.UPDATE_AVAILABLE }
+            // Updates tab lists UPDATE_AVAILABLE apps ONLY (C-12):
+            // up-to-date installed apps no longer appear here.
+            list = list.filter { StoreActions.stateFor(this, it) == AppState.UPDATE_AVAILABLE }
         }
         if (category.isNotEmpty() && category != getString(R.string.all_apps)) {
             list = list.filter { it.displayCategory() == category }
@@ -397,8 +492,20 @@ class MainActivity : AppCompatActivity() {
             else -> getString(R.string.all_apps_count, list.size)
         }
         binding.emptyState.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+        // The empty-state mark (C-16) rides with the empty-state text.
+        binding.emptyStateMark.visibility = binding.emptyState.visibility
         binding.emptyState.text = when {
-            tab == Tab.UPDATES -> getString(R.string.no_apps_installed)
+            // Updates empty state has two cases (C-12 / C-18): nothing
+            // installed at all, or apps installed but none with an
+            // update. The list is empty in both, so tell them apart by
+            // whether any catalogue app is installed.
+            tab == Tab.UPDATES -> {
+                val anyInstalled = catalog.apps.any {
+                    StoreActions.installedVersionCode(this, it.packageName) != null
+                }
+                if (anyInstalled) getString(R.string.no_updates_available)
+                else getString(R.string.no_apps_installed)
+            }
             else -> getString(R.string.no_apps_search)
         }
         adapter.notifyDataSetChanged()
@@ -459,7 +566,7 @@ class MainActivity : AppCompatActivity() {
         b.appMeta.text = buildString {
             append("v${app.versionName}")
             if (app.sizeLabel().isNotEmpty()) append("  ·  ${app.sizeLabel()}")
-            if (installed != null) append("  ·  Installed")
+            if (installed != null) append("  " + getString(R.string.row_installed_suffix))
         }
         b.appAction.text = StoreActions.actionLabel(this, app)
         b.appAction.isEnabled = state != AppState.DOWNLOADING && state != AppState.COMING_SOON
