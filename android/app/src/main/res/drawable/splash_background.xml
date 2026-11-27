@@ -6,9 +6,12 @@
      square edge shows against the background. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/gohar_icon_bg" />
+    <!-- Full lockup (badge + "Talha Gohar APPS" text) on a transparent
+         background; the navy window colour shows through, so there is
+         no rectangle edge. PNG is 1080x800. -->
     <item
-        android:width="192dp"
-        android:height="192dp"
+        android:width="300dp"
+        android:height="222dp"
         android:gravity="center">
         <bitmap
             android:src="@drawable/splash_logo"

@@ -8,6 +8,11 @@
         <item name="colorSecondaryContainer">#D6F2F1</item>
         <item name="colorOnSecondary">@android:color/white</item>
         <item name="toolbarStyle">@style/Widget.GoharStore.Toolbar</item>
+        <!-- The app bar sits below the status bar (fitsSystemWindows);
+             paint the status-bar strip navy too, with light icons, so
+             the header reads as one seamless navy bar. -->
+        <item name="android:statusBarColor">@color/gohar_navy</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <!-- Launch splash for MainActivity (see AndroidManifest). The splash
