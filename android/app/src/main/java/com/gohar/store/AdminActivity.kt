@@ -253,6 +253,9 @@ class AdminActivity : AppCompatActivity() {
             text = getString(R.string.admin_token_message)
             textSize = 14f
             setPadding(0, 0, 0, 24)
+            // Created in code — the Urdu theme's fontFamily does not
+            // apply, so set Nastaleeq explicitly in the Urdu locale.
+            applyUrduFontIfNeeded(this)
         }
         val layout = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL

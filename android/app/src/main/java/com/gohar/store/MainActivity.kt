@@ -12,6 +12,7 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Menu
@@ -26,11 +27,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.gohar.store.databinding.ActivityMainBinding
 import com.gohar.store.databinding.ItemAppBinding
+import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
 
@@ -109,8 +112,11 @@ class MainActivity : AppCompatActivity() {
         // as the toolbar title too, so the name appears twice.
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        // Start as a plain list; setupResponsive() swaps in a grid on
+        // wide screens once the real width is known, after first layout.
         binding.recycler.layoutManager = LinearLayoutManager(this)
         binding.recycler.adapter = adapter
+        setupResponsive()
 
         binding.search.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) {}
@@ -227,6 +233,10 @@ class MainActivity : AppCompatActivity() {
                 setHeroDismissed(false)
                 return true
             }
+            R.id.about_author -> {
+                startActivity(Intent(this, AboutActivity::class.java))
+                return true
+            }
             R.id.developer_console -> {
                 if (AuthManager.isOwnerSignedIn(this)) {
                     startActivity(Intent(this, AdminActivity::class.java))
@@ -274,11 +284,42 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    /** Responsive layout: on screens wider than the content cap the
+     * column is centred at @dimen/content_max_width, and the list
+     * becomes a grid — one column per ~360dp of content width, so a
+     * 360dp phone stays one column and a >=600dp screen gets two.
+     * Runs after first layout (the parent width is 0 before that);
+     * onCreate runs again on rotation, so it recomputes there too. */
+    private fun setupResponsive() {
+        binding.contentColumn.post {
+            val parentWidth = (binding.contentColumn.parent as View).width
+            if (parentWidth <= 0) return@post
+            val maxPx = resources.getDimensionPixelSize(R.dimen.content_max_width)
+            val contentWidthPx = if (parentWidth > maxPx) {
+                val lp = binding.contentColumn.layoutParams as LinearLayout.LayoutParams
+                lp.width = maxPx
+                lp.gravity = Gravity.CENTER_HORIZONTAL
+                binding.contentColumn.layoutParams = lp
+                maxPx
+            } else {
+                parentWidth
+            }
+            val contentWidthDp = contentWidthPx / resources.displayMetrics.density
+            val span = (contentWidthDp / 360f).roundToInt().coerceAtLeast(1)
+            if (span > 1) binding.recycler.layoutManager = GridLayoutManager(this, span)
+        }
+    }
+
     private fun reload() {
+        // First load only: show the real loading state while the list
+        // is still empty. Pull-to-refresh with data keeps the list and
+        // just spins the swipe indicator.
+        if (catalog.apps.isEmpty()) binding.loadingState.visibility = View.VISIBLE
         binding.swipe.isRefreshing = true
         CatalogLoader.load(this) { loaded ->
             catalog = loaded
             binding.swipe.isRefreshing = false
+            binding.loadingState.visibility = View.GONE
             binding.sourceNote.text = if (loaded.fromRemote) {
                 getString(R.string.online_catalogue, loaded.updated)
             } else {
@@ -301,6 +342,10 @@ class MainActivity : AppCompatActivity() {
                 // Nastaliq needs a taller chip in the Urdu locale;
                 // the height comes from dimens (32dp / 40dp in ur).
                 minimumHeight = resources.getDimensionPixelSize(R.dimen.chip_min_height)
+                // A Chip created in code does NOT inherit the theme's
+                // fontFamily — without this, Urdu labels render in the
+                // default Latin font instead of Nastaleeq.
+                applyUrduFontIfNeeded(this)
                 setOnClickListener {
                     category = name
                     refreshList()
@@ -336,13 +381,16 @@ class MainActivity : AppCompatActivity() {
         binding.featuredCard.visibility =
             if (isDiscover && query.isEmpty() && !isHeroDismissed()) View.VISIBLE else View.GONE
         binding.chipsScroll.visibility = if (isDiscover) View.VISIBLE else View.GONE
-        binding.sectionTitle.text = when {
-            tab == Tab.UPDATES -> getString(R.string.your_apps)
-            category.isNotEmpty() && category != getString(R.string.all_apps) -> category
-            query.isNotEmpty() -> getString(R.string.results)
-            else -> getString(R.string.all_apps)
-        }
         val list = visibleApps()
+        // The section title carries the real count from the catalogue —
+        // no invented numbers, just how many apps match right now.
+        binding.sectionTitle.text = when {
+            tab == Tab.UPDATES -> getString(R.string.your_apps_count, list.size)
+            category.isNotEmpty() && category != getString(R.string.all_apps) ->
+                getString(R.string.category_count, category, list.size)
+            query.isNotEmpty() -> getString(R.string.results_count, list.size)
+            else -> getString(R.string.all_apps_count, list.size)
+        }
         binding.emptyState.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
         binding.emptyState.text = when {
             tab == Tab.UPDATES -> getString(R.string.no_apps_installed)

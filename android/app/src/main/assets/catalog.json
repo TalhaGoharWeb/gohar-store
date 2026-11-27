@@ -96,6 +96,42 @@
       ]
     },
     {
+      "apkUrl": "https://pub-6805c49e45824ab392e7e1b3665dc9ca.r2.dev/talha-gohar-poetry-1.5.0-6.apk",
+      "category": "Books & Reference",
+      "categoryUr": "کتب و حوالہ",
+      "description": "Talha Gohar Writings is Talha's poetry and books app. Books are arranged in a hierarchy of sections, chapters and articles, with a table of contents to jump to any chapter. Urdu markdown renders Quran and hadith callout cards, poetry blocks with couplets, tables and footnotes, and Islamic honorifics expand automatically. Reading themes (paper, sepia, dark and light) and adjustable type size make reading comfortable, and books you have opened stay readable offline.",
+      "descriptionUr": "طلحہ گوہر تحریریں طلحہ کی شاعری اور کتب کی ایپ ہے۔ کتب حصوں، ابواب اور مضامین کی ترتیب میں رکھی گئی ہیں، اور فہرست سے کسی بھی باب پر جایا جا سکتا ہے۔ اردو مارک ڈاؤن قرآن و حدیث کے کارڈز، اشعار کے بلاکس، جدول اور حاشیے دکھاتا ہے، اور اسلامی اعزازی کلمات خود بخود مکمل ہو جاتے ہیں۔ مطالعے کے انداز (کاغذ، بھورا، تاریک اور روشن) اور خط کا قابلِ تبدیل سائز پڑھنا آرام دہ بناتے ہیں، اور کھولی گئی کتب آف لائن بھی پڑھی جا سکتی ہیں۔",
+      "developer": "Muhammad Talha Bin Fareed",
+      "featured": false,
+      "iconColor": "#3B2F6B",
+      "iconColor2": "#C5A46D",
+      "iconLetter": "T",
+      "iconUrl": null,
+      "id": "talha-gohar-poetry",
+      "minSdk": 21,
+      "name": "Talha Gohar Writings",
+      "nameUr": "طلحہ گوہر تحریریں",
+      "packageName": "com.talhagohar.poetry",
+      "screenshots": [],
+      "sizeBytes": 50244404,
+      "tagline": "Talha's poetry and books — read in Urdu.",
+      "taglineUr": "طلحہ گوہر کی شاعری اور کتب — اردو میں پڑھیں۔",
+      "versionCode": 6,
+      "versionName": "1.5.0",
+      "whatsNew": [
+        "Hierarchical books — sections, chapters and articles, with a table of contents",
+        "Urdu markdown — Quran and hadith callout cards, poetry blocks, tables and footnotes",
+        "Reading themes — paper, sepia, dark and light, with adjustable type size",
+        "Books you have opened stay readable offline"
+      ],
+      "whatsNewUr": [
+        "مرتب کتب — حصے، ابواب اور مضامین، فہرست کے ساتھ",
+        "اردو مارک ڈاؤن — قرآن و حدیث کے کارڈز، اشعار کے بلاکس، جدول اور حاشیے",
+        "مطالعے کے انداز — کاغذ، بھورا، تاریک اور روشن، خط کا قابلِ تبدیل سائز",
+        "کھولی گئی کتب آف لائن بھی پڑھی جا سکتی ہیں"
+      ]
+    },
+    {
       "apkUrl": "https://pub-3ff3b8ab882d499aacd31ce326d647f9.r2.dev/kisan-dost-v1.0.15.apk",
       "category": "Agriculture",
       "categoryUr": "زراعت",

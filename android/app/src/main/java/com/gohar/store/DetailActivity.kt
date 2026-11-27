@@ -120,6 +120,10 @@ class DetailActivity : AppCompatActivity() {
         binding.chipVersion.text = "v${app.versionName}"
         binding.chipSize.text = app.sizeLabel().ifEmpty { getString(R.string.size_unknown) }
         binding.chipCategory.text = app.displayCategory()
+        binding.bottomBarMeta.text = buildString {
+            append("v${app.versionName}")
+            if (app.sizeLabel().isNotEmpty()) append("  ·  ${app.sizeLabel()}")
+        }
         binding.detailDescription.text = app.displayDescription()
         binding.detailMeta.text = buildString {
             append("Version ${app.versionName} (code ${app.versionCode})")
@@ -139,6 +143,9 @@ class DetailActivity : AppCompatActivity() {
                     text = "•  $line"
                     textSize = 15f
                     setPadding(0, 6, 0, 6)
+                    // Created in code, so the theme's fontFamily does
+                    // not apply — Urdu lines need Nastaleeq explicitly.
+                    applyUrduFontIfNeeded(this)
                 }
                 binding.whatsNewList.addView(tv)
             }

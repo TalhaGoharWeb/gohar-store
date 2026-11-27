@@ -11,6 +11,7 @@
         <package android:name="app.privatex.browser" />
         <package android:name="app.privacyx.privacy_x" />
         <package android:name="com.talhagohar.nigaarish" />
+        <package android:name="com.talhagohar.poetry" />
         <package android:name="com.hijaziapps.maliki_fiqh_user" />
     </queries>
 
@@ -39,6 +40,12 @@
             android:name=".DetailActivity"
             android:exported="false"
             android:label="App details"
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".AboutActivity"
+            android:exported="false"
+            android:label="@string/about_author"
             android:parentActivityName=".MainActivity" />
 
         <activity

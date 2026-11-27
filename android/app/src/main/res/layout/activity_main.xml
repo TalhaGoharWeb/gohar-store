@@ -77,13 +77,26 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!-- Content column: everything between the app bar and the bottom
+         nav. On wide screens MainActivity caps this column at
+         @dimen/content_max_width (720dp) and centres it, so the list
+         does not stretch uselessly on tablets; on phones it stays
+         full width. -->
+    <LinearLayout
+        android:id="@+id/contentColumn"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/content_margin"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        app:boxBackgroundMode="outline"
+        android:layout_marginEnd="@dimen/content_margin"
+        app:boxBackgroundMode="filled"
+        app:boxBackgroundColor="?attr/colorSurfaceVariant"
         app:boxCornerRadiusTopStart="28dp"
         app:boxCornerRadiusTopEnd="28dp"
         app:boxCornerRadiusBottomStart="28dp"
@@ -108,12 +121,14 @@
         android:id="@+id/featuredCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/content_margin"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/content_margin"
         android:visibility="gone"
         app:cardCornerRadius="24dp"
-        app:cardElevation="6dp">
+        app:cardElevation="6dp"
+        app:strokeColor="?attr/colorOutlineVariant"
+        app:strokeWidth="1dp">
 
         <LinearLayout
             android:id="@+id/featuredBackground"
@@ -265,8 +280,8 @@
             android:id="@+id/chipGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
+            android:paddingStart="@dimen/chip_row_padding"
+            android:paddingEnd="@dimen/chip_row_padding"
             app:singleSelection="true"
             app:selectionRequired="true" />
     </HorizontalScrollView>
@@ -275,10 +290,10 @@
         android:id="@+id/sectionTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="@dimen/content_margin"
         android:layout_marginTop="16dp"
         android:text="@string/all_apps"
-        android:textSize="18sp"
+        android:textSize="@dimen/section_title_size"
         android:textStyle="bold" />
 
     <FrameLayout
@@ -300,6 +315,33 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+        <!-- Real loading state: a spinner + text while the catalogue
+             first loads, instead of a blank list. The swipe spinner
+             alone used to be the only sign anything was happening. -->
+        <LinearLayout
+            android:id="@+id/loadingState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
+                android:indeterminateTint="@color/gohar_teal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/loading_catalogue"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/emptyState"
             android:layout_width="wrap_content"
@@ -318,7 +360,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingStart="16dp"
+        android:paddingStart="@dimen/content_margin"
         android:paddingTop="4dp"
         android:paddingEnd="8dp"
         android:paddingBottom="4dp">
@@ -337,6 +379,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/check_for_updates" />
+
+    </LinearLayout>
 
     </LinearLayout>
 

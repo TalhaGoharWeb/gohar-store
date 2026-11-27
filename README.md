@@ -6,14 +6,14 @@
 
 **One store for all of Talha's Android apps — browse, download and update, like a small Play Store.**
 
-[![Latest release](https://img.shields.io/badge/release-v1.3.3-0B2545)](https://github.com/TalhaGoharWeb/talha-gohar-apps/releases/tag/v1.3.3)
+[![Latest release](https://img.shields.io/badge/release-v1.3.9-0B2545)](https://github.com/TalhaGoharWeb/talha-gohar-apps)
 [![Android](https://img.shields.io/badge/Android-8.0%2B_API_26-brightgreen)](https://developer.android.com/about/versions/oreo)
 [![Kotlin](https://img.shields.io/badge/Kotlin-AGP_9.1-7F52FF)](https://kotlinlang.org/)
 [![Material 3](https://img.shields.io/badge/Material_3-1.12.0-6750A4)](https://m3.material.io/)
 [![Target SDK](https://img.shields.io/badge/targetSdk-36-blue)](https://developer.android.com/about/versions/16)
 [![Urdu](https://img.shields.io/badge/Urdu-Jameel_Noori_Nastaleeq-gold)](#features)
 
-**Latest release:** [v1.3.3](https://github.com/TalhaGoharWeb/talha-gohar-apps/releases/download/v1.3.3/Talha-Gohar-Apps-v1.3.3.apk) · Package `com.gohar.store` · Android 8.0+ · ~14 MB · Urdu name: **طلحہ گوہر ایپس**
+**Latest release:** v1.3.9 (code 13) · Package `com.gohar.store` · Android 8.0+ · ~15 MB · Urdu name: **طلحہ گوہر ایپس**
 
 </div>
 
@@ -29,6 +29,7 @@
 |-----|---------|--------|
 | Maliki Fiqh Hub | 2.0.0 | Coming soon — no public release APK yet |
 | Nigaarish | 1.5.71 | Download |
+| Talha Gohar Writings | 1.5.0 | Download |
 | Kisan Dost | 1.0.15 | Download |
 | Maliki Prayer Times | 1.3.9 | Download |
 | Mera Roznamcha | 1.1.4 | Coming soon |
@@ -52,6 +53,9 @@
 - **Install / Update / Open** — APKs download straight from GitHub Releases, then the system installer takes over (Android asks once to allow installs from this store).
 - **Resumable downloads** — downloads are fetched with HTTP `Range` requests into `.part` files, so they can be **paused, resumed and cancelled** and survive an interrupted connection. Download state is persisted, so a resume works even after the app restarts.
 - **Search, categories, pull-to-refresh** — filter by name or category; swipe down to re-fetch the live catalogue.
+- **About the Author** — the author's own bio (Urdu verbatim, faithful English translation), with his Malikimadhab.org project and contact, from the ⋮ menu.
+- **Responsive** — one column on phones, two-column grid on tablets (≥600dp), content capped at 720dp; section titles carry real catalogue counts, e.g. "All apps (6)".
+- **Sticky install bar** — the app page keeps version + size and the Install / Open / Update button visible while scrolling.
 - **Urdu + English** — a full Urdu version in the same APK (اردو / English switch in the ⋮ menu, or follows the phone language and Android 13 per-app language settings). Urdu text is set in **Jameel Noori Nastaleeq**, with per-locale dimensions so the tall Nastaliq script never clips.
 - **Featured hero** — the featured app gets a compact hero card that can be dismissed (⋮ → *Show featured app* brings it back).
 - **Developer console** — the owner manages the whole catalogue from inside the app: add, edit or remove apps, then publish. The change goes live for every user within seconds. See [PUBLISH-GUIDE.md](PUBLISH-GUIDE.md).
@@ -100,7 +104,7 @@ flowchart LR
 | Downloads | Custom `AppDownloader`: HTTP `Range`, `.part` files, persisted state |
 | Images | Custom `ImageLoader`: disk + memory cache, downsampling, no new dependencies |
 | Urdu type | **Jameel Noori Nastaleeq** (freeware), bundled in `res/font/` |
-| Signing | Release keystore `gohar-store.jks` (owner-held, git-ignored) |
+| Signing | Release keystore `talha-gohar-apps.keystore` (owner-held, git-ignored) |
 | Distribution | GitHub Releases · catalogue at `raw.githubusercontent.com` |
 
 **No dependencies beyond AndroidX.** The app deliberately avoids third-party SDKs: no analytics, no ads, no crash reporting, no accounts.
@@ -179,9 +183,9 @@ gradle assembleRelease    # release APK — needs the owner's key (below)
 **Release signing** — `android/key.properties` (git-ignored) points at the owner's keystore:
 
 ```properties
-storeFile=gohar-store.jks
+storeFile=talha-gohar-apps.keystore
 storePassword=<owner only>
-keyAlias=gohar-store
+keyAlias=talhagoharapps
 keyPassword=<owner only>
 ```
 
@@ -192,27 +196,25 @@ The keystore is **not** in this repo. A release build without it cannot be signe
 Every release is verified before publishing — signature, alignment, content and the served file:
 
 ```bash
-# Signature (v2 + v3) and the signing certificate
+# Signature and the signing certificate
 apksigner verify --verbose --print-certs app/build/outputs/apk/release/app-release.apk
 
 # 16 KB alignment
 zipalign -c -v 4 app/build/outputs/apk/release/app-release.apk
 
-# The file GitHub serves must be byte-identical to the file that was built
+# The built file — compare against the distributed link's file
 sha256sum app/build/outputs/apk/release/app-release.apk
-curl -sL -o /tmp/served.apk https://github.com/TalhaGoharWeb/talha-gohar-apps/releases/download/v1.3.3/Talha-Gohar-Apps-v1.3.3.apk
-sha256sum /tmp/served.apk
 ```
 
-**v1.3.3 reference values**
+**v1.3.9 reference values**
 
 | Check | Value |
 |---|---|
-| Version | 1.3.3 (code 7), package `com.gohar.store` |
-| Size | 14,575,598 bytes |
-| SHA-256 | `c34fccd32d8e5c4f7303f76162ef0747f440bbca80a3387f85f74ba807f4a8e0` |
-| Signature | APK Signature Scheme v2 + v3, 1 signer, CN=Talha Gohar |
-| Certificate SHA-256 | `b5ac0d1812458dd006ecfde3f462fc71b7319b9d5df3c54bc0bad190c10addf8` |
+| Version | 1.3.9 (code 13), package `com.gohar.store` |
+| Size | 15,142,081 bytes |
+| SHA-256 | `954238f51e630b3258aea2f65b0d934d9b1fb6ef9827f409134e14cc359b0cba` |
+| Signature | `apksigner verify` PASS, 1 signer, CN=Talha Gohar |
+| Certificate SHA-256 | `C0:C6:C3:F2:C8:B1:6B:9D:B8:6C:4A:47:4C:4B:D8:57:11:52:1C:BA:A2:4F:CC:C5:98:5F:B4:0B:53:FE:9B:D8` |
 | Alignment | `zipalign` verified |
 
 ---
@@ -232,6 +234,7 @@ Full steps, including the console's token setup, are in [PUBLISH-GUIDE.md](PUBLI
 ```
 .
 ├── catalog.json                  # The store itself — live catalogue (source of truth)
+├── about-author-bio.md           # Source text of the About page (author's own bio, verbatim)
 ├── README.md                     # This file
 ├── PUBLISH-GUIDE.md              # Publishing flow, console token setup
 ├── brand/                        # Logo assets
@@ -248,12 +251,13 @@ Full steps, including the console's token setup, are in [PUBLISH-GUIDE.md](PUBLI
 │   │   ├── AndroidManifest.xml
 │   │   ├── java/com/gohar/store/
 │   │   │   ├── MainActivity.kt          # Tabs, search, chips, featured hero
+│   │   │   ├── AboutActivity.kt         # About the Author page (author's own bio)
 │   │   │   ├── DetailActivity.kt        # App page: gallery, About, downloads
 │   │   │   ├── Catalog.kt               # Catalogue model + live/bundled loading
 │   │   │   ├── GitHubCatalog.kt         # Contents API: read/write catalog.json
 │   │   │   ├── AppDownloader.kt         # Resumable HTTP Range downloads
 │   │   │   ├── ImageLoader.kt           # Disk + memory image cache
-│   │   │   ├── AuthManager.kt / AuthActivity.kt   # Owner sign-in (email/password, Google)
+│   │   │   ├── AuthManager.kt / AuthActivity.kt   # Owner sign-in (device-local password)
 │   │   │   ├── AdminActivity.kt / AdminEditActivity.kt  # Developer console
 │   │   │   ├── ScreenshotViewerActivity.kt
 │   │   │   └── StoreActions.kt          # Install / update / open intents
@@ -271,7 +275,7 @@ Full steps, including the console's token setup, are in [PUBLISH-GUIDE.md](PUBLI
 ## Security & privacy
 
 - **Signing key** — release APKs are signed with the owner's keystore, which never leaves the owner's machine and is never committed. The certificate fingerprint above is the public check that an APK is a genuine update.
-- **Owner gate** — the developer console is hidden unless the owner is signed in (email + salted SHA-256 password, or a linked Google account). The gate is enforced **on-device**; the GitHub personal access token is what actually authorises publishing, and it lives only in the app's private `SharedPreferences` (last 4 characters shown, clear-token option in the console).
+- **Owner gate** — the developer console is hidden unless the owner is signed in (device-local salted SHA-256 password). The gate is enforced **on-device**; the GitHub personal access token is what actually authorises publishing, and it lives only in the app's private `SharedPreferences` (last 4 characters shown, clear-token option in the console).
 - **No data collection** — the app sends nothing anywhere except: fetching `catalog.json`, icons and screenshots from GitHub, and downloading APKs from GitHub Releases. No analytics, no ads, no accounts.
 - **No server to attack** — there is no backend. The worst case for a compromised catalogue is a wrong listing, and the catalogue is versioned in git.
 
@@ -287,7 +291,13 @@ Full steps, including the console's token setup, are in [PUBLISH-GUIDE.md](PUBLI
 | 1.3.0 | 4 | Owner-only sign-in gating the developer console |
 | 1.3.1 | 5 | Compact dismissible hero; pause / resume / cancel downloads; cream avatar logo |
 | 1.3.2 | 6 | **Jameel Noori Nastaleeq** Urdu font; new dark brand icon + appbar avatar; toolbar title fix; taller buttons; repo renamed to `talha-gohar-apps` |
-| **1.3.3** | **7** | **New full-bleed app icon** from the latest brand mark (adaptive foreground = central emblem, no text) |
+| 1.3.3 | 7 | **New full-bleed app icon** from the latest brand mark (adaptive foreground = central emblem, no text) |
+| 1.3.4 | 8 | Splash screen, exit confirmation, uninstall button |
+| 1.3.5 | 9 | Crash catcher + crash-report dialog; fixed the empty-APK build (forced AGP 8.11.1 skipped Kotlin) |
+| 1.3.6 | 10 | Status-bar overlap fix; centred banner logo; full-lockup icon + splash |
+| 1.3.7 | 11 | App-bar title back on one side (EN/UR), measured to fit at 360dp |
+| 1.3.8 | 12 | UI polish + responsive (2-column grid ≥600dp); About the Author page; Talha Gohar Writings added (R2) |
+| **1.3.9** | **13** | **Author's own bio on the About page; store-style home (search pill, counts, sticky install bar); Urdu font fix for category chips** |
 
 ---
 

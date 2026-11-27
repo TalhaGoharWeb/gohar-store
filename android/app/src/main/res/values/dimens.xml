@@ -7,4 +7,15 @@
     <dimen name="hero_button_height">36dp</dimen>
     <dimen name="app_row_icon_size">72dp</dimen>
     <dimen name="chip_min_height">32dp</dimen>
+
+    <!-- Content rhythm (values-sw600dp widens these). content_margin is
+         the outer side margin of the home screen; app_card_margin is
+         the app row's own margin, tightened on wide screens so the
+         two-column grid keeps a 16dp gutter. -->
+    <dimen name="content_margin">16dp</dimen>
+    <dimen name="content_max_width">720dp</dimen>
+    <dimen name="section_title_size">18sp</dimen>
+    <dimen name="app_card_margin">16dp</dimen>
+    <dimen name="app_card_margin_top">10dp</dimen>
+    <dimen name="chip_row_padding">12dp</dimen>
 </resources>

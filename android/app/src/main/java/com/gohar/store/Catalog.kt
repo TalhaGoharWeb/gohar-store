@@ -4,12 +4,29 @@ import android.content.Context
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+
+/**
+ * Programmatically-created text views do NOT inherit the theme's
+ * fontFamily: Material widgets resolve their own text appearance
+ * (Chip uses its chip text appearance, a plain TextView created in
+ * code gets the default), so Urdu text would render in the Latin
+ * font. Call this on every view created in code that shows localized
+ * text — category chips, "What's new" lines, dialog messages. Views
+ * inflated from XML already get Nastaleeq from the Urdu theme.
+ */
+fun applyUrduFontIfNeeded(view: TextView) {
+    if (StoreApp.useUrdu()) {
+        ResourcesCompat.getFont(view.context, R.font.urdu)?.let { view.typeface = it }
+    }
+}
 
 /**
  * One app in the store. Everything the store needs to show, download

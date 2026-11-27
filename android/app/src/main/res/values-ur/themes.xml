@@ -17,6 +17,11 @@
         <item name="toolbarStyle">@style/Widget.GoharStore.Toolbar</item>
         <item name="android:fontFamily">@font/urdu</item>
         <item name="android:textViewStyle">@style/Widget.GoharStore.TextView</item>
+        <!-- A locale-qualified style replaces the base one entirely, so
+             these two items must be repeated here or the Urdu status
+             bar falls back to the system default instead of navy. -->
+        <item name="android:statusBarColor">@color/gohar_navy</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <style name="Widget.GoharStore.TextView" parent="android:Widget.TextView">

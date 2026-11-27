@@ -13,6 +13,9 @@
         android:id="@+id/show_featured"
         android:title="@string/show_featured" />
     <item
+        android:id="@+id/about_author"
+        android:title="@string/about_author" />
+    <item
         android:id="@+id/language_urdu"
         android:title="@string/language_urdu" />
     <item
