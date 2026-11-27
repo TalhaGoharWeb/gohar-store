@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="gohar_navy">#0B2545</color>
+    <color name="gohar_navy_dark">#071A33</color>
+    <color name="gohar_teal">#0E9594</color>
+    <color name="gohar_teal_dark">#0A6E6D</color>
+    <color name="gohar_gold">#E9B44C</color>
+    <color name="gohar_cream">#F5F1E6</color>
+    <color name="gohar_background">#F4F6F8</color>
+    <color name="gohar_card">#FFFFFF</color>
+    <color name="gohar_text">#14213D</color>
+    <color name="gohar_text_secondary">#5A6B84</color>
+</resources>

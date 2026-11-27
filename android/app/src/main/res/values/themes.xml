@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.GoharStore" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/gohar_navy</item>
+        <item name="colorPrimaryDark">@color/gohar_navy_dark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">@color/gohar_teal</item>
+        <item name="colorSecondaryContainer">#D6F2F1</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="toolbarStyle">@style/Widget.GoharStore.Toolbar</item>
+    </style>
+
+    <style name="Widget.GoharStore.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/gohar_navy</item>
+        <item name="titleTextColor">@android:color/white</item>
+        <item name="subtitleTextColor">#C7D6E8</item>
+    </style>
+
+    <!-- Default TextView style (plain). The Urdu locale overrides
+         this same style with the Noto Naskh Arabic font + extra line
+         spacing; it must exist here or AAPT fails the ur-only
+         reference. -->
+    <style name="Widget.GoharStore.TextView" parent="android:Widget.TextView" />
+</resources>

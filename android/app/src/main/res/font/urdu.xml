@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Noto Naskh Arabic variable font (SIL Open Font License 1.1).
+     One file carries the whole 400–700 weight axis; the two entries
+     below let bold text pick the 700 end of the axis. -->
+<font-family xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <font
+        android:font="@font/noto_naskh_arabic"
+        android:fontWeight="400"
+        app:font="@font/noto_naskh_arabic"
+        app:fontWeight="400" />
+    <font
+        android:font="@font/noto_naskh_arabic"
+        android:fontWeight="700"
+        app:font="@font/noto_naskh_arabic"
+        app:fontWeight="700" />
+</font-family>

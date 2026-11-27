@@ -1,0 +1,8 @@
+release/
+build/
+.gradle/
+local.properties
+*.jks
+key.properties
+backend/vendor/
+backend/node_modules/

@@ -1,0 +1,85 @@
+{
+  "apps": [
+    {
+      "apkUrl": null,
+      "category": "Books & Reference",
+      "comingSoon": "v1.5.70 is the latest code on GitHub, but no release APK is published yet. Publish a release and paste its link here to enable downloads.",
+      "description": "Nigaarish is an Urdu diary app for poetry and prose — write ghazals and nazms, style them with beautiful fonts and layouts, keep a daily diary, and export your work as images.",
+      "developer": "Talha Gohar",
+      "featured": false,
+      "iconColor": "#7C3AED",
+      "iconLetter": "N",
+      "iconUrl": "https://raw.githubusercontent.com/TalhaGoharWeb/gohar-store/main/icons/nigaarish.png",
+      "id": "nigaarish",
+      "minSdk": 21,
+      "name": "Nigaarish",
+      "nameUr": "نگارش",
+      "packageName": "com.talhagohar.nigaarish",
+      "sizeBytes": 0,
+      "screenshots": [],
+      "tagline": "Your Urdu poetry and prose diary.",
+      "versionCode": 79,
+      "versionName": "1.5.70",
+      "whatsNew": [
+        "Andaaz named styles and Manzar in-editor preview",
+        "Long and curved kashida, 6 character styles, Aref Ruqaa font",
+        "4 original divider designs"
+      ],
+      "iconColor2": "#DB2777",
+      "taglineUr": "آپ کی اردو شاعری اور نثر کی ڈائری۔",
+      "descriptionUr": "نِگارش اردو شاعری اور نثر کے لیے ایک ڈائری ایپ ہے — غزلیں اور نظمیں لکھیں، خوبصورت فونٹس اور انداز سے سجائیں، روزانہ ڈائری رکھیں اور اپنا کام تصاویر کی صورت میں محفوظ کریں۔",
+      "categoryUr": "کتب و حوالہ",
+      "whatsNewUr": [
+        "انداز نام والے اسٹائل اور منظر ان ایڈیٹر پیش نظارہ",
+        "لمبی اور خم دار کشیدہ، 6 کریکٹر اسٹائل، عارف رقعہ فونٹ",
+        "4 اصل ڈیوائیڈر ڈیزائن"
+      ],
+      "comingSoonUr": "v1.5.70 GitHub پر تازہ ترین کوڈ ہے، لیکن ابھی کوئی ریلیز APK شائع نہیں ہوا۔ ریلیز شائع کریں اور لنک یہاں لگائیں تاکہ ڈاؤن لوڈ شروع ہو۔"
+    },
+    {
+      "apkUrl": "https://github.com/TalhaGoharWeb/releases/releases/download/v1.0.0/Maliki.Fiqh.Hub.apk",
+      "category": "Education",
+      "description": "Maliki Fiqh Hub brings the bilingual Maliki fiqh articles and quiz database together in one app — English plus simple scholarly Urdu, with self-explanatory questions.",
+      "developer": "Talha Gohar",
+      "featured": true,
+      "iconColor": "#B45309",
+      "iconLetter": "M",
+      "iconUrl": "https://raw.githubusercontent.com/TalhaGoharWeb/gohar-store/main/icons/maliki-fiqh-hub.png",
+      "id": "maliki-fiqh-hub",
+      "minSdk": 21,
+      "name": "Maliki Fiqh Hub",
+      "nameUr": "مالکی فقہ ہب",
+      "packageName": "com.hijaziapps.maliki_fiqh_user",
+      "sizeBytes": 47091736,
+      "screenshots": [
+        "https://raw.githubusercontent.com/TalhaGoharWeb/gohar-store/main/screenshots/maliki-fiqh-hub/01-home-urdu.jpg",
+        "https://raw.githubusercontent.com/TalhaGoharWeb/gohar-store/main/screenshots/maliki-fiqh-hub/02-splash.jpg",
+        "https://raw.githubusercontent.com/TalhaGoharWeb/gohar-store/main/screenshots/maliki-fiqh-hub/03-fiqh-categories.jpg",
+        "https://raw.githubusercontent.com/TalhaGoharWeb/gohar-store/main/screenshots/maliki-fiqh-hub/04-quiz-modes.jpg",
+        "https://raw.githubusercontent.com/TalhaGoharWeb/gohar-store/main/screenshots/maliki-fiqh-hub/05-progress.jpg",
+        "https://raw.githubusercontent.com/TalhaGoharWeb/gohar-store/main/screenshots/maliki-fiqh-hub/06-ask-question.jpg",
+        "https://raw.githubusercontent.com/TalhaGoharWeb/gohar-store/main/screenshots/maliki-fiqh-hub/07-profile.jpg",
+        "https://raw.githubusercontent.com/TalhaGoharWeb/gohar-store/main/screenshots/maliki-fiqh-hub/08-settings.jpg",
+        "https://raw.githubusercontent.com/TalhaGoharWeb/gohar-store/main/screenshots/maliki-fiqh-hub/09-article-english.jpg",
+        "https://raw.githubusercontent.com/TalhaGoharWeb/gohar-store/main/screenshots/maliki-fiqh-hub/10-quiz-english.jpg"
+      ],
+      "tagline": "Maliki fiqh, articles and quizzes.",
+      "versionCode": 1,
+      "versionName": "1.0",
+      "whatsNew": [
+        "First public release"
+      ],
+      "iconColor2": "#D97706",
+      "taglineUr": "مالکی فقہ، مضامین اور کوئز۔",
+      "descriptionUr": "مالکی فقہ ہب میں دو لسانی مالکی فقہ مضامین اور کوئز ڈیٹا بیس یکجا ہیں — انگریزی اور سادہ علمی اردو، خود واضح سوالات کے ساتھ۔",
+      "categoryUr": "تعلیم",
+      "whatsNewUr": [
+        "پہلی عوامی ریلیز"
+      ]
+    }
+  ],
+  "catalogVersion": 1,
+  "storeName": "Talha Gohar Apps",
+  "tagline": "All my apps, in one place.",
+  "updated": "2026-11-27"
+}
