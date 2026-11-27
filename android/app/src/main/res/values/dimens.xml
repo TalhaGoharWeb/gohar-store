@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Sizes that grow in the Urdu locale: Nastaliq is ~2.5x tall, so
+     fixed-height containers need room or the text clips. -->
+<resources>
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="toolbar_title_size">18sp</dimen>
+    <dimen name="hero_button_height">36dp</dimen>
+    <dimen name="app_row_icon_size">72dp</dimen>
+    <dimen name="chip_min_height">32dp</dimen>
+</resources>
