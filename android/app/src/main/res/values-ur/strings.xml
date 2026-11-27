@@ -192,4 +192,8 @@
     <string name="no_google_linked">کوئی Google اکاؤنٹ لنک نہیں ہوا — ای میل سے سائن ان کریں، یا سیٹ اپ ری سیٹ کریں</string>
     <string name="google_sign_in_failed">Google سائن ان ناکام — یہ اکاؤنٹ لنک نہیں ہے</string>
     <string name="choose_google_account">Google اکاؤنٹ منتخب کریں</string>
+    <string name="drawer_open">مینیو کھولیں</string>
+    <string name="drawer_close">مینیو بند کریں</string>
+    <string name="drawer_subtitle">محمد طلحہ بن فرید کی مفت ایپس</string>
+    <string name="nav_version">ورژن %1$s</string>
 </resources>

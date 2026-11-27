@@ -19,8 +19,8 @@ android {
         applicationId = "com.gohar.store"
         minSdk = 26
         targetSdk = 36
-        versionCode = 14
-        versionName = "1.3.10"
+        versionCode = 15
+        versionName = "1.3.11"
     }
 
     signingConfigs {
@@ -52,6 +52,9 @@ android {
 
     buildFeatures {
         viewBinding = true
+        // v1.3.11: the drawer header shows the store version from
+        // BuildConfig.VERSION_NAME (off by default in AGP 8+).
+        buildConfig = true
     }
 
     packaging {

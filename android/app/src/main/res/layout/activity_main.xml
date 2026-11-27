@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Root is a DrawerLayout (v1.3.11): the hamburger opens the side
+     drawer (NavigationView at the end of this file); the old
+     three-dot overflow menu is gone. -->
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -13,39 +22,35 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height"
+            android:layout_height="116dp"
             android:background="@color/gohar_navy"
             app:contentInsetEnd="0dp"
             app:contentInsetStart="0dp"
             app:title="">
 
-            <!-- Title on the start side + centred banner. One row, so the
-                 sizes are measured, not guessed (360dp screen):
-                 - EN title 16sp bold: 158dp worst case (DejaVu Bold is
-                   wider than Roboto), ~136dp realistically.
-                 - UR title 15sp Jameel Nastaleeq: ~49dp.
-                 - Banner 48dp tall = 128dp wide (935x351, aspect kept).
-                 The row is a LinearLayout ending 48dp before the end
-                 (the overflow menu's space), title first, then two
-                 weight-1 spacers centring the banner in what is left:
-                 worst case 12 + 158 + 128 = 298dp of 312dp, so the full
-                 title is always visible and the banner is never cropped
-                 or squashed. In RTL (Urdu) the row mirrors: title on
-                 the right, menu on the left, banner still centred.
-                 (v1.3.10: banner was 40dp; the avatar looked too small.)
+            <!-- Title on top, banner big at the bottom centre (v1.3.11).
+                 The toolbar is 116dp tall on this screen only (other
+                 screens keep @dimen/toolbar_height): title row on top,
+                 banner 64dp tall (= 170dp wide, 935x351, aspect kept)
+                 centred horizontally and flush with the bottom edge.
+                 Measured at 360dp: UR title 15sp Nastaleeq ~37dp tall
+                 + 10dp top margin + 64dp banner = ~111dp of 116dp, so
+                 nothing clips; EN title is shorter, the weight-1 Space
+                 absorbs the slack. The title keeps a 48dp end margin
+                 so it never runs under the overflow menu.
                  No subtitle — title only, as asked. -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="48dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/toolbarTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="48dp"
                     android:ellipsize="none"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -55,22 +60,18 @@
                     android:textStyle="bold" />
 
                 <Space
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
                     android:layout_weight="1" />
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center_horizontal"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/app_name"
                     android:scaleType="fitCenter"
                     android:src="@drawable/toolbar_banner" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -393,3 +394,20 @@
         app:menu="@menu/bottom_nav" />
 
 </LinearLayout>
+
+    <!-- Side drawer: navy header (banner + name + version), teal
+         icons, navy text; opens from the start side (left in English,
+         right in Urdu). -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/gohar_card"
+        app:headerLayout="@layout/nav_header_main"
+        app:itemBackground="@drawable/drawer_item_background"
+        app:itemIconTint="@color/gohar_teal"
+        app:itemTextColor="@color/drawer_item_text"
+        app:menu="@menu/drawer_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

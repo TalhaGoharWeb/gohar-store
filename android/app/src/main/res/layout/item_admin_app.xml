@@ -78,30 +78,46 @@
 
         </LinearLayout>
 
+        <!-- v1.3.11: Update is a filled teal pill; Edit and Delete are
+             compact icon buttons — the three text buttons crowded the
+             row. Same ids, same actions. -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/updateButton"
-            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="0dp"
-            android:text="@string/admin_update" />
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:text="@string/admin_update"
+            android:textColor="@android:color/white"
+            app:backgroundTint="@color/gohar_teal"
+            app:cornerRadius="16dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/editButton"
             style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/admin_edit"
             android:minWidth="0dp"
-            android:text="@string/admin_edit" />
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            app:icon="@drawable/ic_edit"
+            app:iconPadding="0dp"
+            app:iconTint="@color/gohar_teal" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/deleteButton"
             style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/admin_delete"
             android:minWidth="0dp"
-            android:text="@string/admin_delete"
-            android:textColor="@color/design_default_color_error" />
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            app:icon="@drawable/ic_delete"
+            app:iconPadding="0dp"
+            app:iconTint="@color/design_default_color_error" />
 
     </LinearLayout>
 

@@ -197,4 +197,8 @@
     <string name="no_google_linked">No Google account was linked — sign in with email, or reset the setup</string>
     <string name="google_sign_in_failed">Google sign-in failed — that account is not linked</string>
     <string name="choose_google_account">Choose a Google account</string>
+    <string name="drawer_open">Open menu</string>
+    <string name="drawer_close">Close menu</string>
+    <string name="drawer_subtitle">Free apps by Muhammad Talha Bin Fareed</string>
+    <string name="nav_version">Version %1$s</string>
 </resources>

@@ -11,4 +11,6 @@
     <color name="gohar_card">#FFFFFF</color>
     <color name="gohar_text">#14213D</color>
     <color name="gohar_text_secondary">#5A6B84</color>
+    <!-- Soft teal tint for a selected drawer item (v1.3.11). -->
+    <color name="drawer_item_selected">#D6F2F1</color>
 </resources>

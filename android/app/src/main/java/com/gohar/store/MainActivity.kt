@@ -15,7 +15,6 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -23,10 +22,12 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
+import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     private enum class Tab { DISCOVER, UPDATES }
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var drawerToggle: ActionBarDrawerToggle
     private var catalog: Catalog = Catalog(emptyList(), "", false)
     private var query: String = ""
     private var category: String = ""
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity() {
     private fun setHeroDismissed(dismissed: Boolean) {
         getSharedPreferences("ui", MODE_PRIVATE).edit()
             .putBoolean("hero_dismissed", dismissed).apply()
-        invalidateOptionsMenu()
+        updateDrawerMenu()
         refreshList()
     }
 
@@ -112,6 +114,24 @@ class MainActivity : AppCompatActivity() {
         // as the toolbar title too, so the name appears twice.
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        // Hamburger + side drawer (v1.3.11): the toggle draws the
+        // hamburger on the toolbar and opens the drawer; the old
+        // three-dot overflow menu is gone.
+        drawerToggle = ActionBarDrawerToggle(
+            this, binding.drawerLayout, binding.toolbar,
+            R.string.drawer_open, R.string.drawer_close,
+        )
+        binding.drawerLayout.addDrawerListener(drawerToggle)
+        drawerToggle.syncState()
+        binding.navView.setNavigationItemSelectedListener { item ->
+            handleDrawerItem(item)
+            true
+        }
+        binding.navView.getHeaderView(0)
+            .findViewById<TextView>(R.id.navVersion)
+            .text = getString(R.string.nav_version, BuildConfig.VERSION_NAME)
+        updateDrawerMenu()
+
         // Start as a plain list; setupResponsive() swaps in a grid on
         // wide screens once the real width is known, after first layout.
         binding.recycler.layoutManager = LinearLayoutManager(this)
@@ -138,7 +158,13 @@ class MainActivity : AppCompatActivity() {
         // Activity, so there is nothing to go back to.
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                showExitConfirmation()
+                // An open drawer closes first; only then the exit
+                // confirmation. (The drawer is on the start side.)
+                if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                } else {
+                    showExitConfirmation()
+                }
             }
         })
 
@@ -211,65 +237,48 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return true
-    }
-
-    /** The developer console is owner-only: it only shows while the
-     * owner is signed in. Everyone else just sees "Owner sign-in". */
-    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+    /** Drawer item visibility, same rules the old overflow menu had:
+     * the developer console is owner-only (it only shows while the
+     * owner is signed in; everyone else just sees "Owner sign-in"),
+     * and "Show featured app" only shows while the hero is dismissed. */
+    private fun updateDrawerMenu() {
         val signedIn = AuthManager.isOwnerSignedIn(this)
+        val menu = binding.navView.menu
         menu.findItem(R.id.developer_console)?.isVisible = signedIn
         menu.findItem(R.id.owner_sign_in)?.isVisible = !signedIn
         menu.findItem(R.id.owner_sign_out)?.isVisible = signedIn
         menu.findItem(R.id.show_featured)?.isVisible = isHeroDismissed()
-        return super.onPrepareOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    /** One tap in the drawer = one action, then the drawer closes.
+     * Same actions the overflow menu used to run. */
+    private fun handleDrawerItem(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.show_featured -> {
-                setHeroDismissed(false)
-                return true
-            }
-            R.id.about_author -> {
-                startActivity(Intent(this, AboutActivity::class.java))
-                return true
-            }
+            R.id.show_featured -> setHeroDismissed(false)
+            R.id.about_author -> startActivity(Intent(this, AboutActivity::class.java))
             R.id.developer_console -> {
                 if (AuthManager.isOwnerSignedIn(this)) {
                     startActivity(Intent(this, AdminActivity::class.java))
                 } else {
                     startActivity(Intent(this, AuthActivity::class.java))
                 }
-                return true
             }
-            R.id.owner_sign_in -> {
-                startActivity(Intent(this, AuthActivity::class.java))
-                return true
-            }
+            R.id.owner_sign_in -> startActivity(Intent(this, AuthActivity::class.java))
             R.id.owner_sign_out -> {
                 AuthManager.signOut(this)
                 Toast.makeText(this, R.string.signed_out, Toast.LENGTH_SHORT).show()
-                invalidateOptionsMenu()
-                return true
+                updateDrawerMenu()
             }
-            R.id.language_urdu -> {
-                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ur"))
-                return true
-            }
-            R.id.language_english -> {
-                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
-                return true
-            }
+            R.id.language_urdu -> AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ur"))
+            R.id.language_english -> AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
         }
-        return super.onOptionsItemSelected(item)
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
+        return true
     }
 
     override fun onResume() {
         super.onResume()
-        invalidateOptionsMenu()
+        updateDrawerMenu()
         refreshList()
         refreshHandler.postDelayed(refreshRunnable, 2000)
     }

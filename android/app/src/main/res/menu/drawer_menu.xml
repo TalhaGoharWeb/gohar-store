@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Side-drawer menu (v1.3.11): the same actions the three-dot
+     overflow menu used to hold, now in the hamburger drawer.
+     Item ids are unchanged, so MainActivity's handling moved over
+     as-is. Language items sit in their own group, separated by a
+     divider, and carry no icon — they are secondary. -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/group_main">
+        <item
+            android:id="@+id/developer_console"
+            android:icon="@drawable/ic_dashboard"
+            android:title="@string/developer_console" />
+        <item
+            android:id="@+id/owner_sign_in"
+            android:icon="@drawable/ic_person"
+            android:title="@string/owner_sign_in" />
+        <item
+            android:id="@+id/owner_sign_out"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/sign_out" />
+        <item
+            android:id="@+id/show_featured"
+            android:icon="@drawable/ic_star"
+            android:title="@string/show_featured" />
+        <item
+            android:id="@+id/about_author"
+            android:icon="@drawable/ic_info"
+            android:title="@string/about_author" />
+    </group>
+    <group android:id="@+id/group_language">
+        <item
+            android:id="@+id/language_urdu"
+            android:title="@string/language_urdu" />
+        <item
+            android:id="@+id/language_english"
+            android:title="@string/language_english" />
+    </group>
+</menu>

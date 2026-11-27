@@ -20,17 +20,44 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Which token is in use + catalogue status. -->
-    <TextView
-        android:id="@+id/statusLine"
+    <!-- Which token is in use + catalogue status (v1.3.11: a proper
+         status card — soft teal with a gold accent strip — instead of
+         the plain blue strip. Same TextView id and text. -->
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#EAF2F8"
-        android:paddingStart="16dp"
-        android:paddingTop="10dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="10dp"
-        android:textSize="13sp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        app:cardBackgroundColor="#D6F2F1"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="@color/gohar_gold" />
+
+            <TextView
+                android:id="@+id/statusLine"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="12dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/gohar_text"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -115,7 +142,9 @@
             android:layout_height="wrap_content"
             android:text="@string/admin_add_app"
             app:backgroundTint="@color/gohar_teal"
-            app:cornerRadius="24dp" />
+            app:cornerRadius="24dp"
+            app:icon="@drawable/ic_add"
+            app:iconGravity="textStart" />
 
     </LinearLayout>
 
