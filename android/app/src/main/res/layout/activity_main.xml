@@ -24,14 +24,15 @@
                  - EN title 16sp bold: 158dp worst case (DejaVu Bold is
                    wider than Roboto), ~136dp realistically.
                  - UR title 15sp Jameel Nastaleeq: ~49dp.
-                 - Banner 40dp tall = 107dp wide (935x351, aspect kept).
+                 - Banner 48dp tall = 128dp wide (935x351, aspect kept).
                  The row is a LinearLayout ending 48dp before the end
                  (the overflow menu's space), title first, then two
                  weight-1 spacers centring the banner in what is left:
-                 worst case 12 + 158 + 107 = 277dp of 312dp, so the full
+                 worst case 12 + 158 + 128 = 298dp of 312dp, so the full
                  title is always visible and the banner is never cropped
                  or squashed. In RTL (Urdu) the row mirrors: title on
                  the right, menu on the left, banner still centred.
+                 (v1.3.10: banner was 40dp; the avatar looked too small.)
                  No subtitle — title only, as asked. -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,7 +61,7 @@
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="48dp"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/app_name"
                     android:scaleType="fitCenter"
