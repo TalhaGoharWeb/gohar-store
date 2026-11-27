@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Jameel Noori Nastaleeq — the classic flowing Urdu script the user
+     asked for (freeware: "free of charge for Urdu lovers"). Static
+     single-weight font, so only one entry: Android synthesises bold.
+     Line height is ~1.4x the font size — far less extreme than Noto
+     Nastaliq's 2.5x, so the Urdu dimens are generous rather than
+     barely enough. -->
+<font-family xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <font
+        android:font="@font/jameel_noori_nastaleeq"
+        android:fontWeight="400"
+        app:font="@font/jameel_noori_nastaleeq"
+        app:fontWeight="400" />
+</font-family>

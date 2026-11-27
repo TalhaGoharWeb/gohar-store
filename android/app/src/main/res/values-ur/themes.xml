@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Urdu locale theme: identical to res/values/themes.xml (a
+     locale-qualified style replaces the base one entirely, so every
+     item is repeated), plus Jameel Noori Nastaleeq as the app font.
+     Nastaleeq's line height is ~1.4x the font size, so the TextView
+     lineSpacingMultiplier stays 1.0. The toolbar title shrinks to 15sp
+     so it fits the taller Urdu toolbar. The default (values/) theme
+     is untouched, so Latin UI is unchanged. -->
+<resources>
+    <style name="Theme.GoharStore" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/gohar_navy</item>
+        <item name="colorPrimaryDark">@color/gohar_navy_dark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">@color/gohar_teal</item>
+        <item name="colorSecondaryContainer">#D6F2F1</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="toolbarStyle">@style/Widget.GoharStore.Toolbar</item>
+        <item name="android:fontFamily">@font/urdu</item>
+        <item name="android:textViewStyle">@style/Widget.GoharStore.TextView</item>
+    </style>
+
+    <style name="Widget.GoharStore.TextView" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/urdu</item>
+        <item name="android:lineSpacingMultiplier">1.0</item>
+    </style>
+
+    <style name="Widget.GoharStore.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/gohar_navy</item>
+        <item name="titleTextColor">@android:color/white</item>
+        <item name="subtitleTextColor">#C7D6E8</item>
+        <item name="titleTextAppearance">@style/Widget.GoharStore.Toolbar.TitleText</item>
+    </style>
+
+    <style name="Widget.GoharStore.Toolbar.TitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">15sp</item>
+    </style>
+</resources>

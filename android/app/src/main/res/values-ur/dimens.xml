@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Urdu overrides: Nastaliq's line height is ~2.5x the font size, so
+     the toolbar, buttons and row icons grow; the toolbar title shrinks
+     so name + subtitle still fit in the taller bar. -->
+<resources>
+    <dimen name="toolbar_height">72dp</dimen>
+    <dimen name="toolbar_title_size">15sp</dimen>
+    <dimen name="hero_button_height">44dp</dimen>
+    <dimen name="app_row_icon_size">96dp</dimen>
+    <dimen name="chip_min_height">40dp</dimen>
+</resources>
