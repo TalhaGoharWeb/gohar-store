@@ -49,6 +49,15 @@
     <string name="language_english">English</string>
     <string name="size_unknown">سائز —</string>
 
+    <!-- باہر نکلنے اور ان انسٹال کی تصدیق -->
+    <string name="exit_title">طلحہ گوہر ایپس بند کریں؟</string>
+    <string name="exit_message">کیا آپ واقعی ایپ بند کرنا چاہتے ہیں؟</string>
+    <string name="exit_confirm">بند کریں</string>
+    <string name="dialog_cancel">منسوخ کریں</string>
+    <string name="uninstall">ان انسٹال کریں</string>
+    <string name="uninstall_title">%1$s ان انسٹال کریں؟</string>
+    <string name="uninstall_message">اس سے %1$s اور اس کا ڈیٹا آپ کے فون سے ہٹ جائے گا۔</string>
+
     <!-- ڈیولپر کنسول -->
     <string name="developer_console">ڈیولپر کنسول</string>
     <string name="admin_token_title">GitHub رسائی ٹوکن</string>

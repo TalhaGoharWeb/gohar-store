@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -77,6 +78,9 @@ class DetailActivity : AppCompatActivity() {
                 StoreActions.cancelDownload(this, it)
                 refreshState()
             }
+        }
+        binding.uninstallButton.setOnClickListener {
+            app?.let { showUninstallConfirmation(it) }
         }
     }
 
@@ -196,6 +200,20 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    /** Uninstall asks first, naming the app; only a confirm fires the
+     * system uninstall screen (Android asks once more itself). */
+    private fun showUninstallConfirmation(app: StoreApp) {
+        val name = app.displayName()
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.uninstall_title, name))
+            .setMessage(getString(R.string.uninstall_message, name))
+            .setPositiveButton(R.string.uninstall) { _, _ ->
+                StoreActions.uninstallApp(this, app)
+            }
+            .setNegativeButton(R.string.dialog_cancel, null)
+            .show()
+    }
+
     private fun refreshState() {
         val app = app ?: return
         val state = StoreActions.stateFor(this, app)
@@ -204,6 +222,10 @@ class DetailActivity : AppCompatActivity() {
             state != AppState.DOWNLOADING && state != AppState.COMING_SOON
         val installed = StoreActions.installedVersionCode(this, app.packageName)
         binding.installedNote.visibility =
+            if (installed != null) View.VISIBLE else View.GONE
+        // Uninstall only exists for installed apps; the button asks
+        // first, so a stray tap can never remove anything.
+        binding.uninstallButton.visibility =
             if (installed != null) View.VISIBLE else View.GONE
         if (installed != null) {
             binding.installedNote.text = if (installed < app.versionCode) {

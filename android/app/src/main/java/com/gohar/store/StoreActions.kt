@@ -152,6 +152,18 @@ object StoreActions {
         context.startActivity(intent)
     }
 
+    /** Fire Android's own uninstall screen for this app. The caller
+     * (detail screen) asks the user first — this never runs unconfirmed.
+     * Android itself shows a second system confirmation, and the store
+     * cannot uninstall silently (ACTION_DELETE always asks). */
+    fun uninstallApp(context: Context, app: StoreApp) {
+        val intent = Intent(Intent.ACTION_DELETE).apply {
+            data = Uri.parse("package:${app.packageName}")
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        context.startActivity(intent)
+    }
+
     /** The one-tap action for the current state. Returns the state the
      * button should show while the work happens. */
     fun primaryAction(context: Context, app: StoreApp) {

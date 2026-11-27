@@ -15,6 +15,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
@@ -84,6 +86,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // The launch splash theme (set on this Activity in the manifest)
+        // is swapped back to the real theme before anything inflates.
+        setTheme(R.style.Theme_GoharStore)
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -112,6 +117,14 @@ class MainActivity : AppCompatActivity() {
 
         binding.featuredDismiss.setOnClickListener { setHeroDismissed(true) }
 
+        // Back on the home screen asks first — this is the root
+        // Activity, so there is nothing to go back to.
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                showExitConfirmation()
+            }
+        })
+
         binding.bottomNav.setOnItemSelectedListener { item ->
             tab = if (item.itemId == R.id.nav_updates) Tab.UPDATES else Tab.DISCOVER
             refreshList()
@@ -119,6 +132,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         reload()
+    }
+
+    /** Back on the home screen: ask first, only exit on confirm. */
+    private fun showExitConfirmation() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.exit_title)
+            .setMessage(R.string.exit_message)
+            .setPositiveButton(R.string.exit_confirm) { _, _ -> finish() }
+            .setNegativeButton(R.string.dialog_cancel, null)
+            .show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

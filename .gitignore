@@ -6,3 +6,4 @@ local.properties
 key.properties
 backend/vendor/
 backend/node_modules/
+*.keystore

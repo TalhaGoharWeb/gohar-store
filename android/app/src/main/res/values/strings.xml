@@ -49,6 +49,15 @@
     <string name="language_english">English</string>
     <string name="size_unknown">Size —</string>
 
+    <!-- Exit + uninstall confirmations -->
+    <string name="exit_title">Exit Talha Gohar Apps?</string>
+    <string name="exit_message">Are you sure you want to exit?</string>
+    <string name="exit_confirm">Exit</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="uninstall">Uninstall</string>
+    <string name="uninstall_title">Uninstall %1$s?</string>
+    <string name="uninstall_message">This will remove %1$s and its data from your phone.</string>
+
     <!-- Developer console -->
     <string name="developer_console">Developer console</string>
     <string name="admin_token_title">GitHub access token</string>

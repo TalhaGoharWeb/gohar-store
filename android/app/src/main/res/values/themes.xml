@@ -10,6 +10,21 @@
         <item name="toolbarStyle">@style/Widget.GoharStore.Toolbar</item>
     </style>
 
+    <!-- Launch splash for MainActivity (see AndroidManifest). The splash
+         is only the window background, so it shows instantly while the
+         app starts and costs no extra time. MainActivity switches back
+         to Theme.GoharStore in onCreate, before super.onCreate().
+         The windowSplashScreen* items are API 31+; they are ignored on
+         older devices, where the windowBackground below does the job.
+         No core-splashscreen dependency: it is not in this machine's
+         Gradle cache and a new download is not worth the fragility. -->
+    <style name="Theme.GoharStore.Splash" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowSplashScreenBackground">@color/gohar_icon_bg</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+    </style>
+
     <style name="Widget.GoharStore.Toolbar" parent="Widget.Material3.Toolbar">
         <item name="android:background">@color/gohar_navy</item>
         <item name="titleTextColor">@android:color/white</item>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Launch splash: deep navy (same as the launcher background) with the
+     store's circular logo centred. Shown as the window background while
+     the app starts, so there is no extra wait and no extra Activity.
+     The logo is the launcher foreground cropped to a circle, so no
+     square edge shows against the background. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/gohar_icon_bg" />
+    <item
+        android:width="192dp"
+        android:height="192dp"
+        android:gravity="center">
+        <bitmap
+            android:src="@drawable/splash_logo"
+            android:gravity="fill" />
+    </item>
+</layer-list>
