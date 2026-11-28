@@ -1,14 +1,14 @@
-# Talha Gohar Apps — personal app store (v1.4.2)
+# Talha Gohar Apps — personal app store (v1.4.3)
 
-**Status:** v1.4.2 built, verified and **released 2026-11-28**:
-package `com.gohar.store` v1.4.2 (code 21), targetSdk 36, minSdk 26.
-Drawer tagline is now **All apps** / «تمام ایپس» (was "Free apps by
-Muhammad Talha Bin Fareed" / «محمد طلحہ بن فرید کی مفت ایپس»).
+**Status:** v1.4.3 built, verified and **released 2026-11-28**:
+package `com.gohar.store` v1.4.3 (code 22), targetSdk 36, minSdk 26.
+Author bio: Maliki asaneed line added — education in Maliki fiqh from
+authoritative teachers, asanid (chains of transmission) obtained.
 In-app self-update (checks `store-version.json` on launch / "Check for
 updates", downloads its own APK from R2, verifies SHA-256, installs
 from inside the app; all updates optional). Verified:
-17,257,526 B, apksigner PASS (same cert), MainActivity and SelfUpdate
-in classes.dex, zipalign OK, SHA-256 `d6cd13ea4b4a75288e596dc98a6f492ee7db71b4ccfadec6e6cac30030eb4118`.
+17,257,791 B, apksigner PASS (same cert), MainActivity and SelfUpdate
+in classes.dex, zipalign OK, SHA-256 `0e5ad31176f8c909f7e1104bde7765cd9d56794dcd4d4341e5bdc60ebf36996b`.
 Repo: `TalhaGoharWeb/talha-gohar-apps` (public, source + `catalog.json`).
 **Phone acceptance still pending** — install it on a real phone and
 confirm the tagline change (design docs are untracked; they live in
