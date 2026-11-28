@@ -240,5 +240,16 @@
     <!-- Viewer close button (C-13). PROPOSED wording — unconfirmed by the owner. -->
     <string name="close">Close</string>
     <string name="drawer_subtitle">Free apps by Muhammad Talha Bin Fareed</string>
+    <!-- In-app self-update (v1.4.1) -->
+    <string name="self_update_title">Update available — %1$s</string>
+    <string name="self_update_message">Version %1$s%2$s</string>
+    <string name="self_update_update">Update</string>
+    <string name="self_update_later">Later</string>
+    <string name="self_update_install">Install</string>
+    <string name="self_update_downloading">Downloading update…</string>
+    <string name="self_update_download_failed">Store update download failed — tap Update to try again</string>
+    <string name="self_update_verify_failed">Update file check failed — the download was deleted, please try again</string>
+    <string name="self_update_up_to_date">Talha Gohar Apps is up to date</string>
+    <string name="self_update_check_failed">Could not check for a store update — try again later</string>
     <string name="nav_version">Version %1$s</string>
 </resources>

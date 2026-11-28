@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {}
         })
 
-        binding.swipe.setOnRefreshListener { reload() }
+        binding.swipe.setOnRefreshListener { reload(manual = true) }
         // Pull-to-refresh spinner in the theme secondary colour
         // (C-40): Turquoise in dark, theme secondary in light.
         val spinnerColor = TypedValue()
@@ -170,7 +170,7 @@ class MainActivity : AppCompatActivity() {
         ) {
             binding.swipe.setColorSchemeColors(spinnerColor.data)
         }
-        binding.refreshButton.setOnClickListener { reload() }
+        binding.refreshButton.setOnClickListener { reload(manual = true) }
         AppDownloader.addListener(downloadListener)
 
         binding.featuredDismiss.setOnClickListener { setHeroDismissed(true) }
@@ -383,7 +383,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun reload() {
+    private fun reload(manual: Boolean = false) {
         // First load only: show the skeleton rows while the list
         // is still empty. Pull-to-refresh with data keeps the list and
         // just spins the swipe indicator.
@@ -400,6 +400,13 @@ class MainActivity : AppCompatActivity() {
             }
             buildChips()
             refreshList()
+        }
+        // In-app self-update (v1.4.1): the store checks its own
+        // version on every reload — cold start and manual "Check for
+        // updates" alike. Cold start stays silent; a manual check
+        // reports "up to date" / "check failed" (see SelfUpdate).
+        SelfUpdate.check(this) { result ->
+            SelfUpdate.handleCheckResult(this, result, manual)
         }
     }
 

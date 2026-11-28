@@ -6,14 +6,14 @@
 
 **One store for all of Talha's Android apps — browse, download and update, like a small Play Store.**
 
-[![Latest release](https://img.shields.io/badge/release-v1.4.0-0B2545)](https://github.com/TalhaGoharWeb/talha-gohar-apps)
+[![Latest release](https://img.shields.io/badge/release-v1.4.1-0B2545)](https://github.com/TalhaGoharWeb/talha-gohar-apps)
 [![Android](https://img.shields.io/badge/Android-8.0%2B_API_26-brightgreen)](https://developer.android.com/about/versions/oreo)
 [![Kotlin](https://img.shields.io/badge/Kotlin-AGP_9.1-7F52FF)](https://kotlinlang.org/)
 [![Material 3](https://img.shields.io/badge/Material_3-1.12.0-6750A4)](https://m3.material.io/)
 [![Target SDK](https://img.shields.io/badge/targetSdk-36-blue)](https://developer.android.com/about/versions/16)
 [![Urdu](https://img.shields.io/badge/Urdu-Jameel_Noori_Nastaleeq-gold)](#features)
 
-**Latest release:** v1.4.0 (code 19) · Package `com.gohar.store` · Android 8.0+ · ~17 MB · Urdu name: **طلحہ گوہر ایپس**
+**Latest release:** v1.4.1 (code 20) · Package `com.gohar.store` · Android 8.0+ · ~17 MB · Urdu name: **طلحہ گوہر ایپس**
 
 </div>
 
@@ -52,6 +52,7 @@
 - **Play Store-style app pages** — real icons, swipeable screenshot gallery with a full-screen viewer (pinch zoom, pan, thumbnail strip, ✕ to close), What's New, About, category and size.
 - **Dark / Light / System theme** — switch in the navigation drawer; the choice is saved and applies on launch. Dark is the designed default look; light is a genuine light theme, not an inversion. Status bar stays navy with light icons in both themes.
 - **Install / Update / Open** — APKs download straight from GitHub Releases, then the system installer takes over (Android asks once to allow installs from this store).
+- **In-app self-update** — the store checks its own version in `store-version.json` on launch (and on "Check for updates"), and when a newer build is published it downloads the APK from R2, verifies its SHA-256, and offers the install — no link needed. Every update is optional; the APK lives on R2 (`talha-gohar-apps` bucket) and the version file in this repo's root.
 - **Resumable downloads** — downloads are fetched with HTTP `Range` requests into `.part` files, so they can be **paused, resumed and cancelled** and survive an interrupted connection. Download state is persisted, so a resume works even after the app restarts.
 - **Search, categories, pull-to-refresh** — filter by name or category; swipe down to re-fetch the live catalogue. First load shows skeleton placeholders instead of a bare spinner.
 - **About the Author** — the author's own bio (Urdu verbatim, faithful English translation), with his Malikimadhab.org project and contact, from the drawer.
@@ -208,17 +209,17 @@ zipalign -c -v 4 app/build/outputs/apk/release/app-release.apk
 sha256sum app/build/outputs/apk/release/app-release.apk
 ```
 
-**v1.4.0 reference values**
+**v1.4.1 reference values**
 
 | Check | Value |
 |---|---|
-| Version | 1.4.0 (code 19), package `com.gohar.store` |
-| Size | 17,242,656 bytes |
-| SHA-256 | `a13bcc3d74b0d9233ac4627bfc105d6799bedeb61ef2968106c356b7e8a4f9e3` |
+| Version | 1.4.1 (code 20), package `com.gohar.store` |
+| Size | 17,257,637 bytes |
+| SHA-256 | `3f3e03f86440fa5f2a51b8fc6ed98aaa207da9aa2a602d01b4ffc00faa477702` |
 | Signature | `apksigner verify` PASS, 1 signer, CN=Talha Gohar |
 | Certificate SHA-256 | `C0:C6:C3:F2:C8:B1:6B:9D:B8:6C:4A:47:4C:4B:D8:57:11:52:1C:BA:A2:4F:CC:C5:98:5F:B4:0B:53:FE:9B:D8` |
 | Alignment | `zipalign` verified |
-| Dex | `MainActivity` present in `classes.dex` |
+| Dex | `MainActivity` and `SelfUpdate` present in `classes.dex` |
 
 ---
 
@@ -307,6 +308,7 @@ Full steps, including the console's token setup, are in [PUBLISH-GUIDE.md](PUBLI
 | 1.3.13 | 17 | Full uncropped banner in one row; own 40dp hamburger button |
 | 1.3.14 | 18 | Manifest `<queries>` fix — the 4 catalogue apps can show Open/Update on Android 11+ |
 | **1.4.0** | **19** | **Full redesign (Material 3, dark + light themes, drawer theme switch, skeleton loaders, FAB console, viewer zoom/pan + thumbnails, editor category dropdown + unsaved-changes warning, custom toasts, full Urdu strings, hidden version-tap owner entry, forgot-password).** The earlier planned 1.4.0 scope (email rating/feedback + analytics) is deferred to a later version. |
+| **1.4.1** | **20** | **In-app self-update: the store checks `store-version.json` on launch / "Check for updates", downloads its own APK from R2, verifies SHA-256, and installs from inside the app. All updates optional in this version (mandatory enforcement deferred).** |
 
 ---
 

@@ -1,17 +1,16 @@
-# Talha Gohar Apps — personal app store (v1.4.0)
+# Talha Gohar Apps — personal app store (v1.4.1)
 
-**Status:** v1.4.0 built, verified and **released 2026-11-28**:
-package `com.gohar.store` v1.4.0 (code 19), targetSdk 36, minSdk 26.
-Full Material 3 redesign (dark + light themes, drawer theme switch,
-skeleton loaders, FAB console, viewer zoom/pan + thumbnails, editor
-category dropdown + unsaved-changes warning, custom toasts, full Urdu
-strings, hidden version-tap owner entry, forgot-password). Verified:
-17,242,656 B, apksigner PASS (same cert), MainActivity in classes.dex,
-zipalign OK, SHA-256 `a13bcc3d74b0d9233ac4627bfc105d6799bedeb61ef2968106c356b7e8a4f9e3`.
+**Status:** v1.4.1 built, verified and **released 2026-11-28**:
+package `com.gohar.store` v1.4.1 (code 20), targetSdk 36, minSdk 26.
+In-app self-update (checks `store-version.json` on launch / "Check for
+updates", downloads its own APK from R2, verifies SHA-256, installs
+from inside the app; all updates optional). Verified:
+17,257,637 B, apksigner PASS (same cert), MainActivity and SelfUpdate
+in classes.dex, zipalign OK, SHA-256 `3f3e03f86440fa5f2a51b8fc6ed98aaa207da9aa2a602d01b4ffc00faa477702`.
 Repo: `TalhaGoharWeb/talha-gohar-apps` (public, source + `catalog.json`).
 **Phone acceptance still pending** — install it on a real phone and
-confirm the redesign, the theme switch, and the phone checks listed in
-`design/implementation-v1.4.0/SHIP-REPORT.md` (design docs are untracked;
+confirm the self-update flow and the phone checks listed in
+`design/implementation-v1.4.1/SHIP-REPORT.md` (design docs are untracked;
 they live in `design/`, not in git).
 
 v1.3.4 changes, over v1.3.3 (in progress, not released yet):
