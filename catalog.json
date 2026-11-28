@@ -52,7 +52,7 @@
     },
     {
       "apkUrl": null,
-      "apkUrlArm64": "https:\/\/pub-068c48d4151d4dd293c2f7554cca1a5b.r2.dev\/nigaarish-1.5.72-81-arm64.apk",
+      "apkUrlArm64": "https:\/\/pub-068c48d4151d4dd293c2f7554cca1a5b.r2.dev\/nigaarish-1.5.74-83-arm64.apk",
       "category": "Books & Reference",
       "description": "Nigaarish is a diary for Urdu poetry and prose. Write ghazals, nazms and articles, style them with beautiful fonts and layouts, keep a daily diary, and export your work as images and Diwan PDFs. Its scansion engine checks the behr of your sher, the rhyme finder suggests qafiya, and voice dictation lets you write by speaking. Your work stays on your phone.",
       "developer": "Muhammad Talha Bin Fareed",
@@ -68,21 +68,19 @@
       "screenshots": [],
       "sizeBytes": 75396480,
       "tagline": "Your Urdu poetry and prose diary.",
-      "versionCode": 81,
-      "versionName": "1.5.72",
+      "versionCode": 83,
+      "versionName": "1.5.74",
       "whatsNew": [
-        "Sarwaraq design facility — seven designs with live preview",
-        "Change the sarwaraq design anytime from the «کتاب» panel",
-        "Image-only title page — «صرف تصویر» shows only the image"
+        "Image-only title page now on the book screen too",
+        "More Talha Gohar Apps button in Settings"
       ],
       "iconColor2": "#DB2777",
       "taglineUr": "آپ کی اردو شاعری اور نثر کی ڈائری۔",
       "descriptionUr": "نگارش اردو شاعری اور نثر کی ڈائری ہے۔ غزلیں، نظمیں اور مضامین لکھیں، خوبصورت فونٹس اور انداز سے سجائیں، روزانہ ڈائری رکھیں، اور اپنا کام تصاویر اور دیوان PDF کی صورت میں محفوظ کریں۔ اس کا وزن جانچنے والا نظام آپ کے شعر کی بحر بتاتا ہے، قافیہ تلاش کرنے والا قافیہ تجویز کرتا ہے، اور آواز سے لکھنے کی سہولت سے آپ بول کر لکھ سکتے ہیں۔ آپ کا کام آپ کے فون پر رہتا ہے۔",
       "categoryUr": "کتب و حوالہ",
       "whatsNewUr": [
-        "سرورق ڈیزائن سہولت — سات انداز live preview کے ساتھ",
-        "«کتاب» پینل سے سرورق کا انداز کبھی بھی بدلیں",
-        "«صرف تصویر» — سرورق پر صرف تصویر"
+        "«صرف تصویر» اب کتاب کی اسکرین پر بھی",
+        "سیٹنگز میں «مزید طلحہ گوہر ایپس» کا بٹن"
       ],
       "comingSoonUr": null
     },
