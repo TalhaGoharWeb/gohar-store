@@ -239,7 +239,7 @@
     <string name="drawer_close">مینیو بند کریں</string>
     <!-- Viewer close button (C-13). PROPOSED wording — unconfirmed by the owner. -->
     <string name="close">بند کریں</string>
-    <string name="drawer_subtitle">محمد طلحہ بن فرید کی مفت ایپس</string>
+    <string name="drawer_subtitle">تمام ایپس</string>
     <!-- ایپ کے اندر خودکار اپڈیٹ (v1.4.1) -->
     <string name="self_update_title">اپڈیٹ دستیاب ہے — %1$s</string>
     <string name="self_update_message">ورژن %1$s%2$s</string>

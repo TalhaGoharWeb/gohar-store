@@ -239,7 +239,7 @@
     <string name="drawer_close">Close menu</string>
     <!-- Viewer close button (C-13). PROPOSED wording — unconfirmed by the owner. -->
     <string name="close">Close</string>
-    <string name="drawer_subtitle">Free apps by Muhammad Talha Bin Fareed</string>
+    <string name="drawer_subtitle">All apps</string>
     <!-- In-app self-update (v1.4.1) -->
     <string name="self_update_title">Update available — %1$s</string>
     <string name="self_update_message">Version %1$s%2$s</string>

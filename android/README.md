@@ -1,17 +1,18 @@
-# Talha Gohar Apps — personal app store (v1.4.1)
+# Talha Gohar Apps — personal app store (v1.4.2)
 
-**Status:** v1.4.1 built, verified and **released 2026-11-28**:
-package `com.gohar.store` v1.4.1 (code 20), targetSdk 36, minSdk 26.
+**Status:** v1.4.2 built, verified and **released 2026-11-28**:
+package `com.gohar.store` v1.4.2 (code 21), targetSdk 36, minSdk 26.
+Drawer tagline is now **All apps** / «تمام ایپس» (was "Free apps by
+Muhammad Talha Bin Fareed" / «محمد طلحہ بن فرید کی مفت ایپس»).
 In-app self-update (checks `store-version.json` on launch / "Check for
 updates", downloads its own APK from R2, verifies SHA-256, installs
 from inside the app; all updates optional). Verified:
-17,257,637 B, apksigner PASS (same cert), MainActivity and SelfUpdate
-in classes.dex, zipalign OK, SHA-256 `3f3e03f86440fa5f2a51b8fc6ed98aaa207da9aa2a602d01b4ffc00faa477702`.
+17,257,526 B, apksigner PASS (same cert), MainActivity and SelfUpdate
+in classes.dex, zipalign OK, SHA-256 `d6cd13ea4b4a75288e596dc98a6f492ee7db71b4ccfadec6e6cac30030eb4118`.
 Repo: `TalhaGoharWeb/talha-gohar-apps` (public, source + `catalog.json`).
 **Phone acceptance still pending** — install it on a real phone and
-confirm the self-update flow and the phone checks listed in
-`design/implementation-v1.4.1/SHIP-REPORT.md` (design docs are untracked;
-they live in `design/`, not in git).
+confirm the tagline change (design docs are untracked; they live in
+`design/`, not in git).
 
 v1.3.4 changes, over v1.3.3 (in progress, not released yet):
 **manual Update in the developer console** — each app row now has an

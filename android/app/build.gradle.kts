@@ -19,8 +19,8 @@ android {
         applicationId = "com.gohar.store"
         minSdk = 26
         targetSdk = 36
-        versionCode = 20
-        versionName = "1.4.1"
+        versionCode = 21
+        versionName = "1.4.2"
     }
 
     signingConfigs {

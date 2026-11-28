@@ -6,14 +6,14 @@
 
 **One store for all of Talha's Android apps — browse, download and update, like a small Play Store.**
 
-[![Latest release](https://img.shields.io/badge/release-v1.4.1-0B2545)](https://github.com/TalhaGoharWeb/talha-gohar-apps)
+[![Latest release](https://img.shields.io/badge/release-v1.4.2-0B2545)](https://github.com/TalhaGoharWeb/talha-gohar-apps)
 [![Android](https://img.shields.io/badge/Android-8.0%2B_API_26-brightgreen)](https://developer.android.com/about/versions/oreo)
 [![Kotlin](https://img.shields.io/badge/Kotlin-AGP_9.1-7F52FF)](https://kotlinlang.org/)
 [![Material 3](https://img.shields.io/badge/Material_3-1.12.0-6750A4)](https://m3.material.io/)
 [![Target SDK](https://img.shields.io/badge/targetSdk-36-blue)](https://developer.android.com/about/versions/16)
 [![Urdu](https://img.shields.io/badge/Urdu-Jameel_Noori_Nastaleeq-gold)](#features)
 
-**Latest release:** v1.4.1 (code 20) · Package `com.gohar.store` · Android 8.0+ · ~17 MB · Urdu name: **طلحہ گوہر ایپس**
+**Latest release:** v1.4.2 (code 21) · Package `com.gohar.store` · Android 8.0+ · ~17 MB · Urdu name: **طلحہ گوہر ایپس**
 
 </div>
 
@@ -209,13 +209,13 @@ zipalign -c -v 4 app/build/outputs/apk/release/app-release.apk
 sha256sum app/build/outputs/apk/release/app-release.apk
 ```
 
-**v1.4.1 reference values**
+**v1.4.2 reference values**
 
 | Check | Value |
 |---|---|
-| Version | 1.4.1 (code 20), package `com.gohar.store` |
-| Size | 17,257,637 bytes |
-| SHA-256 | `3f3e03f86440fa5f2a51b8fc6ed98aaa207da9aa2a602d01b4ffc00faa477702` |
+| Version | 1.4.2 (code 21), package `com.gohar.store` |
+| Size | 17,257,526 bytes |
+| SHA-256 | `d6cd13ea4b4a75288e596dc98a6f492ee7db71b4ccfadec6e6cac30030eb4118` |
 | Signature | `apksigner verify` PASS, 1 signer, CN=Talha Gohar |
 | Certificate SHA-256 | `C0:C6:C3:F2:C8:B1:6B:9D:B8:6C:4A:47:4C:4B:D8:57:11:52:1C:BA:A2:4F:CC:C5:98:5F:B4:0B:53:FE:9B:D8` |
 | Alignment | `zipalign` verified |
@@ -309,6 +309,7 @@ Full steps, including the console's token setup, are in [PUBLISH-GUIDE.md](PUBLI
 | 1.3.14 | 18 | Manifest `<queries>` fix — the 4 catalogue apps can show Open/Update on Android 11+ |
 | **1.4.0** | **19** | **Full redesign (Material 3, dark + light themes, drawer theme switch, skeleton loaders, FAB console, viewer zoom/pan + thumbnails, editor category dropdown + unsaved-changes warning, custom toasts, full Urdu strings, hidden version-tap owner entry, forgot-password).** The earlier planned 1.4.0 scope (email rating/feedback + analytics) is deferred to a later version. |
 | **1.4.1** | **20** | **In-app self-update: the store checks `store-version.json` on launch / "Check for updates", downloads its own APK from R2, verifies SHA-256, and installs from inside the app. All updates optional in this version (mandatory enforcement deferred).** |
+| 1.4.2 | 21 | Drawer tagline is now **All apps** / «تمام ایپس» (was "Free apps by Muhammad Talha Bin Fareed" / «محمد طلحہ بن فرید کی مفت ایپس»). |
 
 ---
 
